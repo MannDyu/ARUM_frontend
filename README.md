@@ -1,6 +1,16 @@
 # ARUM_frontend
 
-
+**요약
+(mac은 필요한 것 찾아서 설치 필요)
+1. git clone
+2. 필수 구성요소 설치
+3. 폰에 Expo Go 앱 설치 -> https://velog.io/@dngur9801/React-Native-expo%EB%A1%9C-React-Native-%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0 참고
+   (mac은 xcode 를 설치해서 웹으로도 개발 가능) 
+5. yarn install / npm install
+6. npm start OR npx expo start
+   (expo go app에서 request timed-out 될 경우 : 명령어 뒤에 --tunnel 붙이기)
+---
+    
 ## 필수 구성 요소
 - Node.js (>= 14.x)
 - Yarn
@@ -11,8 +21,12 @@ npm install -g yarn
 ```sh
 npm install -g expo-cli
 ```
-- Android Studio (Android 개발용)
-- Xcode (iOS 개발용, macOS에서만 필요)
+- 핸드폰 app : Expo Go
+설치 후 회원가입
+expo Go 사용 방법 
+
+
+
 
 ## 프로젝트 클론 방법
 ```sh
