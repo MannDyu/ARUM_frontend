@@ -1,12 +1,12 @@
-import { Text, View } from 'react-native'
-import React, { Component } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
 
-export default class Home extends Component {
-  render() {
-    return (
-      <View>
-        <Text>Home</Text>
-      </View>
-    )
-  }
+export default function Home() {
+  return (
+    <View>
+      <Text>Home</Text>
+    </View>
+  )
 }
+
+const styles = StyleSheet.create({})

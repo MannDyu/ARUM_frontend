@@ -1,12 +1,12 @@
-import { Text, View } from 'react-native'
-import React, { Component } from 'react'
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
 
-export default class Diary extends Component {
-  render() {
-    return (
-      <View>
-        <Text>Diary</Text>
-      </View>
-    )
-  }
+export default function Diary() {
+  return (
+    <View>
+      <Text>Diary</Text>
+    </View>
+  )
 }
+
+const styles = StyleSheet.create({})
