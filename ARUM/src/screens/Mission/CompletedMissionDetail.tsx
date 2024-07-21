@@ -1,67 +1,84 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, Button, Keyboard, TouchableOpacity, Text } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { MissionStackParamList } from '../../assets/types';
-import { CompletedMissionDetailProps  } from '../../assets/types';
-import { useMission } from '../../context/MissionContext'; 
+import { CompletedMission, MissionStackParamList } from '../../assets/types';
+import { useMission } from '../../context/MissionContext';
+import MissionHeader from './MissionHeader';
+import MissionContent from './MissionContent';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 type CompletedMissionDetailRouteProp = RouteProp<MissionStackParamList, 'CompletedMissionDetail'>;
 type CompletedMissionDetailNavigationProp = StackNavigationProp<MissionStackParamList, 'CompletedMissionDetail'>;
 
-type Props = {
+interface CompletedMissionDetailProps {
   route: CompletedMissionDetailRouteProp;
   navigation: CompletedMissionDetailNavigationProp;
-};
+}
 
-// const CompletedMissionDetail: React.FC<Props> = ({ route, navigation }) => {
-const CompletedMissionDetail: React.FC<CompletedMissionDetailProps> = ({ route }) => {
-  
+const CompletedMissionDetail: React.FC<CompletedMissionDetailProps> = ({ route, navigation }) => {
   const { missionId } = route.params;
   const { completedMissions } = useMission();
-
-  const mission = completedMissions.find(m => m.id === missionId);
+  const [mission, setMission] = useState<CompletedMission | null>(null);
   
+  useEffect(() => {
+    const foundMission = completedMissions.find(m => m.id === missionId);
+    setMission(foundMission || null);
+  }, [completedMissions, missionId]);
+
   if (!mission) {
     return (
       <View style={styles.container}>
-        <Text>미션을 찾을 수 없습니다.</Text>
+        <MissionHeader title="미션 상세" onBack={() => navigation.goBack()} />
+        <MissionContent 
+          title="미션을 찾을 수 없습니다."
+          text={`ID: ${missionId}`} date={''}        />
       </View>
     );
   }
+
+  const EditButton = () => (
+    <TouchableOpacity onPress={() => navigation.navigate('EditCompletedMission', { missionId: mission.id })}>
+      <Text style={styles.editButtonText}>수정</Text>
+    </TouchableOpacity>
+  );
+
+
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>{mission.title}</Text>
-      {mission.imageUri && (
-        <Image source={{ uri: mission.imageUri }} style={styles.image} />
-      )}
-      <Text style={styles.text}>{mission.text}</Text>
-    </ScrollView>
+    <View style={styles.container}>
+      <MissionHeader
+        title="완료된 미션"
+        onBack={() => navigation.goBack()}
+        rightButton={<EditButton />}
+      />
+      <MissionContent
+        title={mission.title}
+        imageUri={mission.imageUri}
+        text={mission.text}
+        tag={mission.tag}
+        editable={false} // 텍스트 필드가 읽기 전용임을 설정
+        date={mission.date}      />
+        <Text style={styles.recordDate}>{mission.date}</Text>
+    </View>
   );
 };
 
+
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
-    padding: 20,
-    alignItems: 'center',
+    flex: 1,
+    backgroundColor: '#FDFDED',
   },
-  title: {
-    fontSize: 24,
+  editButtonText: {
+    fontSize: 18,
     fontWeight: 'bold',
-    marginBottom: 20,
+    color: '#007BFF',
   },
-  image: {
-    width: '100%',
-    height: 300,
-    resizeMode: 'cover',
-    marginBottom: 20,
-    borderRadius: 10,
-  },
-  text: {
-    fontSize: 16,
-    lineHeight: 24,
-  },
+  recordDate : {
+    textAlign:'right', 
+    padding: 20,
+    marginTop: 10
+  }
 });
 
 export default CompletedMissionDetail;

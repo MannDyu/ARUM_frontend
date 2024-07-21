@@ -4,6 +4,7 @@ import Mission from './Mission';
 import CompletedMissionRecord from './CompletedMissionRecord';
 import CompletedMissionDetail from './CompletedMissionDetail';
 import { MissionStackParamList } from '../../assets/types';
+import EditCompletedMission from './EditCompletedMission';
 
 const Stack = createStackNavigator<MissionStackParamList>();
 
@@ -12,7 +13,13 @@ export function MissionNavigator() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="MissionMain" component={Mission} />
       <Stack.Screen name="CompletedMissionRecord" component={CompletedMissionRecord} />
-      <Stack.Screen name="CompletedMissionDetail" component={CompletedMissionDetail} />
+      <Stack.Screen name="CompletedMissionDetail" component={CompletedMissionDetail} 
+        options={{ 
+          gestureEnabled: false,
+          headerLeft: () => null  // 헤더의 뒤로가기 버튼도 제거
+        }}
+       />
+       <Stack.Screen name="EditCompletedMission" component={EditCompletedMission} />
     </Stack.Navigator>
   );
 }
