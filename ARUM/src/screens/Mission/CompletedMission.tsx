@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
-import Calendar from '../components/Calendar';
-import CompletedMissionItem from '../components/CompletedMissionItem';
+import Calendar from '../../components/Calendar';
+import CompletedMissionItem from '../../components/CompletedMissionItem';
 
 const CompletedMission = () => {
   const [selectedDate, setSelectedDate] = useState('');
@@ -38,18 +38,21 @@ const styles = StyleSheet.create({
   tabContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginVertical: 10,
+    marginVertical: 15,
   },
   tab: {
-    fontSize: 16,
-    padding: 10,
+    fontSize: 20,
+    padding: 5,
+    
   },
   activeTab: {
     fontWeight: 'bold',
     borderBottomWidth: 2,
   },
   sectionTitle: {
-    fontSize: 18,
+    padding: 10,
+    fontWeight: 'bold',
+    fontSize: 20,
     marginVertical: 10,
     marginLeft: 20,
   },

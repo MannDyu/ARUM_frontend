@@ -23,8 +23,8 @@ const CompletedMissionItem: React.FC<CompletedMissionItemProps> = ({ mission }) 
       onPress={() => navigation.navigate('CompleteMissionDetail', { mission })}
     >
       <Text style={styles.date}>{mission.date}</Text>
-      <Text style={styles.title}>{mission.title}</Text>
       <Text style={styles.category}>{mission.category}</Text>
+      <Text style={styles.title}>{mission.title}</Text>
       <Text style={styles.detailButton}>자세히 보기</Text>
     </TouchableOpacity>
   );
@@ -32,22 +32,32 @@ const CompletedMissionItem: React.FC<CompletedMissionItemProps> = ({ mission }) 
 
 const styles = StyleSheet.create({
   container: {
-    padding: 20,
+    padding:25,
+    margin: 15,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
+    borderWidth: 1, 
+    borderColor: '#ccc', 
+    borderRadius: 10, 
+    marginVertical: 5,
   },
   date: {
-    fontSize: 14,
+    fontSize: 15,
     color: '#888',
-  },
-  title: {
-    fontSize: 16,
-    fontWeight: 'bold',
+    marginBottom: 13,
   },
   category: {
-    fontSize: 14,
-    color: '#888',
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'black',
+    marginBottom: 10,
   },
+  title: {
+    fontSize:17,
+    color: 'gray',
+    marginBottom: 5,
+  },
+  
   detailButton: {
     color: 'blue',
     marginTop: 10,

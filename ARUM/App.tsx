@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
@@ -12,11 +11,13 @@ import Mission from './src/screens/Mission/Mission'
 import SelfTest from './src/screens/SelfTest/SelfTest'
 import Diary from './src/screens/Diary/Diary'
 import Community from './src/screens/Community/Community'
+import CompletedMission from './src/screens/Mission/CompletedMission';
 
 
 export default function App() {
   const Tab = createBottomTabNavigator();
   const Drawer = createDrawerNavigator();
+  
 
   function TabNavigator() {
     return (
@@ -31,6 +32,7 @@ export default function App() {
         <Tab.Screen name="Mission" component={Mission} />
         <Tab.Screen name="SelfTest" component={SelfTest} />
         <Tab.Screen name="Community" component={Community} />
+        <Tab.Screen name="CompletedMission" component={CompletedMission} />
 
       </Tab.Navigator>
     );
@@ -39,11 +41,6 @@ export default function App() {
 
 
   return (
-    // <View style={styles.container}>
-    //   {/* <Text>Open up App.tsx to start working on your app!</Text> */}
-    //   <Text style={{backgroundColor:'yellow'}}>TEAM Manndyu's ARUManzim Project APP START!!! </Text>
-    //   <StatusBar style="auto" />
-    // </View>
         <>
         <StatusBar style="inverted" />
         <NavigationContainer>
@@ -55,6 +52,8 @@ export default function App() {
             />
           </Drawer.Navigator>
         </NavigationContainer>
+        
       </>
   );
 }
+
