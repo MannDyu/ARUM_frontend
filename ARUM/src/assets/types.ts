@@ -10,6 +10,12 @@ export type Mission = {
   tag : string ;
 };
 
+export type CompletedItem = {
+  id:string; 
+  title:string;
+  date : string;
+  tag : string;
+}
 export type CompletedMission = {
   id: string;
   title: string;
@@ -21,6 +27,7 @@ export type CompletedMission = {
 
 export type MissionStackParamList = {
   MissionMain: undefined;
+  CompletedMission: undefined;
   CompletedMissionRecord: undefined;
   CompletedMissionDetail: { missionId: string };
   EditCompletedMission: { missionId: string };
