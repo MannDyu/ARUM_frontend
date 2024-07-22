@@ -20,7 +20,7 @@ const CompletedMissionItem: React.FC<CompletedMissionItemProps> = ({ mission }) 
   return (
     <TouchableOpacity 
       style={styles.container} 
-      onPress={() => navigation.navigate('CompleteMissionDetail', { mission })}
+      onPress={() => navigation.navigate('CompletedMissionDetail', { mission })} // 이름 수정
     >
       <Text style={styles.date}>{mission.date}</Text>
       <Text style={styles.category}>{mission.category}</Text>
@@ -32,7 +32,7 @@ const CompletedMissionItem: React.FC<CompletedMissionItemProps> = ({ mission }) 
 
 const styles = StyleSheet.create({
   container: {
-    padding:25,
+    padding: 25,
     margin: 15,
     borderBottomWidth: 1,
     borderBottomColor: '#ccc',
@@ -53,11 +53,10 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   title: {
-    fontSize:17,
+    fontSize: 17,
     color: 'gray',
     marginBottom: 5,
   },
-  
   detailButton: {
     color: 'blue',
     marginTop: 10,

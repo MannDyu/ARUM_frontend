@@ -44,6 +44,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     padding: 5,
     
+    
   },
   activeTab: {
     fontWeight: 'bold',
