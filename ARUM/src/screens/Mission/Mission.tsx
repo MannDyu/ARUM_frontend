@@ -1,11 +1,11 @@
 import { Text, View } from 'react-native'
 import React, { Component } from 'react'
 
-export default class Quest extends Component {
+export default class Mission extends Component {
   render() {
     return (
       <View>
-        <Text>Quest</Text>
+        <Text>Mission</Text>
       </View>
     )
   }
