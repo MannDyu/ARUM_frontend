@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { View, Image, Text } from 'react-native';
+import { View, Text } from 'react-native';
 import styled from 'styled-components/native';
 import { Button } from 'react-native-elements';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
+import { RootStackParamList } from '../../types/navigation';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 const MissionContainer = styled.View`
   display: flex;
@@ -51,10 +53,14 @@ const MissionTextContainer = styled.View`
 `;
 
 const DailyMission = () => {
-  const [selected, setSelected] = useState<'none' | 'daily' | 'exercise' | 'hobby' | 'me' | 'tidy'>('none');
+  const route = useRoute<RouteProp<RootStackParamList, 'DailyMission'>>(); // 명시적으로 규정 -> String
+  const { selectedArea } = route.params ?? { selectedArea: 'none'}; //? 선택된 분야을 가지고 옴
+  
   const [missionStatus, setMissionStatus] = useState<'select' | 'finish' | 'completed'>('select');
-  const navigation = useNavigation();
+  type IconContentType = 'none' | 'daily' | 'exercise' | 'hobby' | 'me' | 'tidy'; // 선택된 분야가 어떤 것이 될 수 있는지 규정
 
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  
   const date = new Date();
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
@@ -64,7 +70,7 @@ const DailyMission = () => {
   //! 다른 파일에서 가져와야할 변수값들
   const days = 1; // 며칠째 도전 중?
   const missionSelected = false; // 미션이 선택되었는지
-  const iconContent = {
+  const iconContent: Record<IconContentType, string> = { // String이라고 명시적 규정
     none: '?',
     daily: '📅',
     exercise: '🏋️',
@@ -73,6 +79,7 @@ const DailyMission = () => {
     tidy: '🧹',
   }; // 선택된 영역: none, daily, exercise, hobby, me, tidy
 
+  //! 네비게이션 지정!!
   const handleMissionNavigate = () => {
     if (missionStatus === 'select') {
       navigation.navigate('SelectSection');
@@ -87,10 +94,10 @@ const DailyMission = () => {
       <MissionText>{days}번째 일일 랜덤미션</MissionText>
       <MissionSelectContainer>
         <Icon>
-          <MissionText>{iconContent[selected]}</MissionText>
+          <MissionText>{ iconContent[selectedArea as IconContentType] }</MissionText>
         </Icon>
         <View>
-          { missionSelected ? 
+          { missionStatus === "finish" ? 
             <MissionText>임시 미션 텍스트</MissionText> :
             <MissionTextContainer>
               <MissionText>오늘은</MissionText>
