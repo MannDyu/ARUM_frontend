@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Platform } from 'react-native';
+import { View, Text, TouchableOpacity, Platform} from 'react-native';
 import styled from 'styled-components/native';
 import { Button, CheckBox } from 'react-native-elements';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
@@ -16,7 +16,7 @@ const TitleContainer = styled.View`
 `;
 
 const Title = styled.Text`
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   margin: 10px;
 `;
@@ -56,6 +56,7 @@ const SelectSection = () => {
         </TouchableOpacity>
         <Title>랜덤 미션 선택</Title>
       </TitleContainer>
+      <Text style={{ fontSize: 16, margin: 10 }}>어떤 영역을 시도해볼까요?</Text>
       <View>
         {options.map((option) => {
           const isSelected = selectedArea === option.value || selectedArea === 'none';
@@ -70,8 +71,8 @@ const SelectSection = () => {
                 borderWidth: 1,
                 borderColor: 'darkgrey',
                 borderRadius: 13,
-                padding: 20,
-                margin: 12,
+                padding: 17,
+                margin: 10,
                 width: 300,
                 alignItems: 'center',
                 ...(isSelected && selectedArea !== 'none' ? {
