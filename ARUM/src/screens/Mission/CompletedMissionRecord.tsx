@@ -9,11 +9,11 @@ import { CompletedMissionRecordProps } from '../../assets/types';
 import { useMission } from '../../context/MissionContext';
 import { currentDateTime } from '../../utils/currentDateTime' ;
 
-export default function CompletedMissionRecord({ navigation }: CompletedMissionRecordProps) {
+export default function CompletedMissionRecord({ navigation, route }: CompletedMissionRecordProps) {
   const [text, setText] = useState('');
   const [imageUri, setImageUri] = useState('');
   const [isPopupVisible, setIsPopupVisible] = useState(false);
-  const [date, setDate] = useState(currentDateTime());  //string
+  const [date, setDate] = useState(currentDateTime());
   const { addCompletedMission } = useMission();
 
   const handleSubmit = () => {
@@ -31,12 +31,11 @@ export default function CompletedMissionRecord({ navigation }: CompletedMissionR
       imageUri: imageUri || null,
       text,
       date,
-      tag: '일상 그림', // 기록될 때의 태그를 여기에 설정
+      tag: route.params?.selectedArea || '일상',
     };
     const newMissionId = addCompletedMission(newMission);
-    navigation.navigate('CompletedMissionDetail', { missionId: newMissionId });
+    navigation.navigate('Mission', { completedMissionId: newMissionId, missionStatus: 'success' });
   };
-
   const handleCancel = () => {
     setIsPopupVisible(false);
   };
@@ -46,7 +45,7 @@ export default function CompletedMissionRecord({ navigation }: CompletedMissionR
       <MissionHeader title="미션 완료" onBack={() => navigation.goBack()} />
       <MissionContent 
         title="균형있는 식사 한 끼 하기" 
-        tag="일상 그림"
+        tag={route.params?.selectedArea || "일상"}
         imageUri={imageUri}
         onImageUpload={(uri) => setImageUri(uri)}
         text={text}
@@ -62,7 +61,7 @@ export default function CompletedMissionRecord({ navigation }: CompletedMissionR
         isVisible={isPopupVisible}
         onConfirm={handleConfirm}
         onCancel={handleCancel} 
-        title={'일상'}
+        title={route.params?.selectedArea || '일상'}
         description={'해당 미션 영역을 선택합니다. \n 이후에 미션은 수정할 수 없어요!'}
       />
     </KeyboardAwareScrollView>

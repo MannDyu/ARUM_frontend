@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 interface MissionHeaderProps {
   title: string;
@@ -7,12 +8,12 @@ interface MissionHeaderProps {
   rightButton?: React.ReactNode;
 }
 
-
 const MissionHeader: React.FC<MissionHeaderProps> = ({ title, onBack, rightButton }) => (
   <View style={styles.header}>
     {onBack && (
       <TouchableOpacity style={styles.backButton} onPress={onBack}>
-        <Text style={styles.backButtonText}>{'<'}</Text>
+        <Icon name="arrow-back" size={24} color="#000"/>
+        {/* <Text style={styles.backButtonText}>{'<'}</Text> */}
       </TouchableOpacity>
     )}
     <Text style={styles.headerTitle}>{title}</Text>

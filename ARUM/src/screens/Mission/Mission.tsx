@@ -1,22 +1,52 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, Button } from 'react-native'
-import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { NavigationProp, RouteProp, useNavigation } from '@react-navigation/native';
 import ToggleButton from '../../components/ToggleButton';
 import DailyMission from './DailyMisison'; 
 import CompletedMission from './CompletedMission';
+import { DailyMissionScreenNavigationProp, MissionScreenNavigationProp, MissionStackParamList } from '../../assets/types';
 
 
+
+type MissionScreenRouteProp = RouteProp<MissionStackParamList, 'Mission'>;
 
 type MissionProps = {
-  navigation: NavigationProp<any, any>;
+  route: MissionScreenRouteProp;
+  navigation: MissionScreenNavigationProp;
 }
 
-export default function Mission() {
-  const navigation = useNavigation<NavigationProp<any, any>>();
-  const [selectedButton, setSelectedButton] = useState<'left' | 'right'>('left'); // 토글 버튼 관리
+export default function Mission({ route, navigation }: MissionProps) {
+  const [selectedButton, setSelectedButton] = useState<'left' | 'right'>('left');
+  const [missionStatus, setMissionStatus] = useState<'select' | 'finish' | 'completed' | 'success'>('select');
+  const [selectedArea, setSelectedArea] = useState<string | undefined>(undefined);
+  const [completedMissionId, setCompletedMissionId] = useState<string | undefined>(undefined);
+
+  // const [selectedButton, setSelectedButton] = useState<'left' | 'right'>('left'); // 토글 버튼 관리
+  
+  useEffect(() => {
+    if (route.params?.selectedArea) {
+      setSelectedArea(route.params.selectedArea);
+      setMissionStatus('finish');
+    }
+    if (route.params?.completedMissionId) {
+      setCompletedMissionId(route.params.completedMissionId);
+      setMissionStatus('success');
+    }
+  }, [route.params]);
+
   const handleToggle = (button: 'left' | 'right') => {
     setSelectedButton(button);
   };
+  const handleMissionComplete = () => {
+    navigation.navigate('CompletedMissionRecord', { selectedArea });
+  };
+
+  const handleMissionSuccess = () => {
+    if (completedMissionId) {
+      navigation.navigate('CompletedMissionDetail', { missionId: completedMissionId });
+    }
+  };
+
 
 
   return (
@@ -28,9 +58,22 @@ export default function Mission() {
         selectedButton={selectedButton}
         onToggle={handleToggle}
       />
-      {selectedButton === 'left' ? <DailyMission /> : <CompletedMission />}
-
-      <Button title='미션 인증 완료' onPress={() => navigation.navigate('CompletedMissionRecord')}/>
+      {selectedButton === 'left' ? 
+        <DailyMission
+          navigation={navigation as unknown as DailyMissionScreenNavigationProp}
+          route={{
+            params: {
+              selectedArea,
+              missionStatus,
+              onMissionComplete: handleMissionComplete,
+              onMissionSuccess: handleMissionSuccess
+            },
+            key: '',
+            name: 'DailyMission'
+          }}
+        /> : 
+        <CompletedMission />
+      }
     </View>
   )
 }

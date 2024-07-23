@@ -17,9 +17,7 @@ interface Mission {
   category: string;
 }
 type CompletedMissionNavigationProp = StackNavigationProp<MissionStackParamList, 'CompletedMissionDetail'>;
-// interface CompletedMissionItemProps {
-//   mission: Mission;
-// }
+
 
 const CompletedMissionItem: React.FC<CompletedMissionItemProps> = ({ mission }) => {
   const navigation = useNavigation<CompletedMissionNavigationProp>();

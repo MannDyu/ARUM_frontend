@@ -23,7 +23,7 @@ const Title = styled.Text`
 `;
 
 const SelectSection = () => {
-  const [selectedArea, setSelectedArea] = React.useState<string>('none');
+  const [selectedArea, setSelectedArea] = useState<string>('none');
   type RootStackParamList = {
     DailyMission: { selectedArea: string };
   };
@@ -34,14 +34,14 @@ const SelectSection = () => {
     { title: '나', value: 'me' },
     { title: '청결', value: 'tidy' }
   ];
-  // const navigation = useNavigation<StackNavigationProp<RootStackParamList, 'SelectSection'>>(); //! 네비게이션 변수
+  
   const navigation = useNavigation<MissionStackScreenProps<'SelectSection'>['navigation']>();
-  useFocusEffect( // 화면을 벗어나면 리셋
+  
+  useFocusEffect(
     React.useCallback(() => {
       setSelectedArea('none');
     }, [])
   );
-
   //! Back 아이콘에 navigation 존재!
   return (
     <View style={{ alignItems: 'center', backgroundColor: '#FDFDED', height: 1200 }}>
@@ -98,7 +98,7 @@ const SelectSection = () => {
                 fontWeight: '300',
                 fontSize: 18,
               }}
-              checkedIcon={<View />} // 빈 View 컴포넌트로 아이콘 없애기
+              checkedIcon={<View />}
               uncheckedIcon={<View />}
             />
           );
@@ -106,7 +106,11 @@ const SelectSection = () => {
       </View>
       <Button
         title="완료"
-        onPress={() => navigation.navigate('DailyMission', { selectedArea })} //! 네비게이션 지정!!
+        onPress={() => {
+          if (selectedArea !== 'none') {
+            navigation.navigate('Mission', { selectedArea });
+          }
+        }}
         containerStyle={{
           marginBottom: 20,
           marginTop: 12,

@@ -14,14 +14,9 @@ const CompletedMission = () => {
   ];
 
   const filteredMissions = missions.filter(mission => mission.date === selectedDate);
-  // const filteredMissions = completedMissions.filter(mission => mission.date === selectedDate);
-
+  
   return (
     <View style={styles.container}>
-      {/* <View style={styles.tabContainer}>
-        <Text style={styles.tab}>오늘의 미션</Text>
-        <Text style={[styles.tab, styles.activeTab]}>완료한 미션</Text>
-      </View> */}
       <Calendar onDayPress={(day) => setSelectedDate(day.dateString)} />
       <Text style={styles.sectionTitle}>완료한 미션</Text>
       <FlatList

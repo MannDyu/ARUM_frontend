@@ -26,26 +26,33 @@ export type CompletedMission = {
 };
 
 export type MissionStackParamList = {
-  MissionMain: undefined;
+  Mission: { selectedArea?: string; completedMissionId?: string; missionStatus?: 'select' | 'finish' | 'completed' | 'success' };
   CompletedMission: undefined;
-  CompletedMissionRecord: undefined;
+  CompletedMissionRecord: { selectedArea?: string };
   CompletedMissionDetail: { missionId: string };
   EditCompletedMission: { missionId: string };
-  DailyMission: { selectedArea?: string };
   SelectSection: undefined;
+  DailyMission: { 
+    selectedArea?: string;
+    missionStatus: 'select' | 'finish' | 'completed' | 'success';
+    onMissionComplete: () => void;
+    onMissionSuccess: () => void;
+  };
 };
 
 export type MissionStackScreenProps<T extends keyof MissionStackParamList> = 
   StackScreenProps<MissionStackParamList, T>;
 
-export interface CompletedMissionRecordProps {
-  navigation: StackNavigationProp<MissionStackParamList, 'CompletedMissionRecord'>;
-}
-
+  export interface CompletedMissionRecordProps {
+    navigation: StackNavigationProp<MissionStackParamList, 'CompletedMissionRecord'>;
+    route: RouteProp<MissionStackParamList, 'CompletedMissionRecord'>;
+  }
 export interface CompletedMissionDetailProps {
   route: RouteProp<MissionStackParamList, 'CompletedMissionDetail'>;
   navigation: StackNavigationProp<MissionStackParamList, 'CompletedMissionDetail'>;
 }
+export type MissionScreenNavigationProp = StackNavigationProp<MissionStackParamList, 'Mission'>;
+export type DailyMissionScreenNavigationProp = StackNavigationProp<MissionStackParamList, 'DailyMission'>;
 
 export type MissionContextType = {
   missions: Mission[];

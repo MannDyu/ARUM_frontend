@@ -52,18 +52,26 @@ const MissionTextContainer = styled.View`
   margin: 10%;
 `;
 
-const DailyMission = () => {
-  const navigation = useNavigation<StackNavigationProp<MissionStackParamList>>();
-  const route = useRoute();
-  const [missionStatus, setMissionStatus] = useState<'select' | 'finish' | 'completed'>('select');
+
+type DailyMissionProps = {
+  route: RouteProp<MissionStackParamList, 'DailyMission'>;
+  navigation: DailyMissionScreenNavigationProp;
+};
+
+type DailyMissionScreenRouteProp = RouteProp<MissionStackParamList, 'DailyMission'>;
+type DailyMissionScreenNavigationProp = StackNavigationProp<MissionStackParamList, 'DailyMission'>;
+type Props = {
+  route: DailyMissionScreenRouteProp;
+  navigation: DailyMissionScreenNavigationProp;
+};
+
+const DailyMission: React.FC<DailyMissionProps> = ({ route, navigation }) => {
+  const { selectedArea, missionStatus, onMissionComplete, onMissionSuccess } = route.params || {};
   
-  type IconContentType = 'none' | 'daily' | 'exercise' | 'hobby' | 'me' | 'tidy'; // 선택된 분야가 어떤 것이 될 수 있는지 규정
-
-  // const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-
-  // selectedArea를 route.params에서 가져옵니다
-  const selectedArea = (route.params as { selectedArea?: string })?.selectedArea || 'none';
-
+  
+  type IconContentType = 'none' | 'daily' | 'exercise' | 'hobby' | 'me' | 'tidy';
+ 
+  
   const date = new Date();
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
@@ -87,27 +95,37 @@ const DailyMission = () => {
     if (missionStatus === 'select') {
       navigation.navigate('SelectSection');
     } else if (missionStatus === 'finish') {
-      navigation.navigate('CompletedMissionRecord');
+      onMissionComplete?.();
+    } else if (missionStatus === 'success') {
+      onMissionSuccess?.();
     }
   };
+  // const handleMissionNavigate = () => {
+  //   if (missionStatus === 'select') {
+  //     navigation.navigate('SelectSection');
+  //   } else if (missionStatus === 'finish') {
+  //     navigation.navigate('CompletedMissionRecord');
+  //   }
+  // };
+
   return (
     <MissionContainer>
       <Text>{currentDate}</Text>
       <MissionText>{days}번째 일일 랜덤미션</MissionText>
       <MissionSelectContainer>
         <Icon>
-        <MissionText>{iconContent[selectedArea as IconContentType]}</MissionText>
+          <MissionText>{iconContent[selectedArea as IconContentType] || '?'}</MissionText>
         </Icon>
         <View>
           { missionStatus === "finish" ? 
-            <MissionText>임시 미션 텍스트</MissionText> :
+            <MissionText>임시 : 일일 미션 텍스트</MissionText> :
             <MissionTextContainer>
               <MissionText>오늘은</MissionText>
               <MissionText>어떤 미션을 해볼까요?</MissionText>
             </MissionTextContainer> }
         </View>
         <Button
-          title={missionStatus === 'select' ? "미션 선택" : missionStatus === 'finish' ? "미션 완료" : "미션 성공"}
+          title={missionStatus === 'select' ? "미션 선택" : missionStatus === 'finish' ? "미션 완료" : missionStatus === 'success' ? "미션 성공" : "완료됨"}
           buttonStyle={{borderRadius: 10, borderWidth: 1, borderColor: 'black' }}
           containerStyle={{width: 250}}
           onPress={handleMissionNavigate}
