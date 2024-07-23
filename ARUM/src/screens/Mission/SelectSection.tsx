@@ -5,6 +5,7 @@ import { Button, CheckBox } from 'react-native-elements';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { MissionStackScreenProps } from '../../assets/types';
 
 const TitleContainer = styled.View`
   display: flex;
@@ -33,8 +34,8 @@ const SelectSection = () => {
     { title: '나', value: 'me' },
     { title: '청결', value: 'tidy' }
   ];
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList, 'SelectSection'>>(); //! 네비게이션 변수
-
+  // const navigation = useNavigation<StackNavigationProp<RootStackParamList, 'SelectSection'>>(); //! 네비게이션 변수
+  const navigation = useNavigation<MissionStackScreenProps<'SelectSection'>['navigation']>();
   useFocusEffect( // 화면을 벗어나면 리셋
     React.useCallback(() => {
       setSelectedArea('none');

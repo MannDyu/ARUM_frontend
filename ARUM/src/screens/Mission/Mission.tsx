@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { View, Text, StyleSheet, Button } from 'react-native'
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import ToggleButton from '../../components/ToggleButton';
-import DailyMission from './DailyMission';
+import DailyMission from './DailyMisison'; 
 import CompletedMission from './CompletedMission';
 
 

@@ -31,7 +31,12 @@ export type MissionStackParamList = {
   CompletedMissionRecord: undefined;
   CompletedMissionDetail: { missionId: string };
   EditCompletedMission: { missionId: string };
+  DailyMission: { selectedArea?: string };
+  SelectSection: undefined;
 };
+
+export type MissionStackScreenProps<T extends keyof MissionStackParamList> = 
+  StackScreenProps<MissionStackParamList, T>;
 
 export interface CompletedMissionRecordProps {
   navigation: StackNavigationProp<MissionStackParamList, 'CompletedMissionRecord'>;

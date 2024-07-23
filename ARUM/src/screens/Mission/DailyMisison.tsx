@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import styled from 'styled-components/native';
 import { Button } from 'react-native-elements';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../../types/navigation';
+import { MissionStackParamList } from '../../assets/types';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 const MissionContainer = styled.View`
@@ -53,14 +53,17 @@ const MissionTextContainer = styled.View`
 `;
 
 const DailyMission = () => {
-  const route = useRoute<RouteProp<RootStackParamList, 'DailyMission'>>(); // 명시적으로 규정 -> String
-  const { selectedArea } = route.params ?? { selectedArea: 'none'}; //? 선택된 분야을 가지고 옴
-  
+  const navigation = useNavigation<StackNavigationProp<MissionStackParamList>>();
+  const route = useRoute();
   const [missionStatus, setMissionStatus] = useState<'select' | 'finish' | 'completed'>('select');
+  
   type IconContentType = 'none' | 'daily' | 'exercise' | 'hobby' | 'me' | 'tidy'; // 선택된 분야가 어떤 것이 될 수 있는지 규정
 
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  
+  // const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+  // selectedArea를 route.params에서 가져옵니다
+  const selectedArea = (route.params as { selectedArea?: string })?.selectedArea || 'none';
+
   const date = new Date();
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
@@ -84,17 +87,16 @@ const DailyMission = () => {
     if (missionStatus === 'select') {
       navigation.navigate('SelectSection');
     } else if (missionStatus === 'finish') {
-      navigation.navigate('CompleteMissionRecord');
+      navigation.navigate('CompletedMissionRecord');
     }
   };
-
   return (
     <MissionContainer>
       <Text>{currentDate}</Text>
       <MissionText>{days}번째 일일 랜덤미션</MissionText>
       <MissionSelectContainer>
         <Icon>
-          <MissionText>{ iconContent[selectedArea as IconContentType] }</MissionText>
+        <MissionText>{iconContent[selectedArea as IconContentType]}</MissionText>
         </Icon>
         <View>
           { missionStatus === "finish" ? 

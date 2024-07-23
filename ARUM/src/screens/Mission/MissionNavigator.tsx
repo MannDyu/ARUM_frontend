@@ -6,6 +6,8 @@ import CompletedMissionDetail from './CompletedMissionDetail';
 import { MissionStackParamList } from '../../assets/types';
 import EditCompletedMission from './EditCompletedMission';
 import CompletedMission from './CompletedMission';
+import SelectSection from './SelectSection';
+import DailyMission from './DailyMisison';
 
 const Stack = createStackNavigator<MissionStackParamList>();
 
@@ -22,6 +24,8 @@ export function MissionNavigator() {
         }}
        />
        <Stack.Screen name="EditCompletedMission" component={EditCompletedMission} />
+       <Stack.Screen name="SelectSection" component={SelectSection} />
+       <Stack.Screen name="DailyMission"  component={DailyMission} />
     </Stack.Navigator>
   );
 }
