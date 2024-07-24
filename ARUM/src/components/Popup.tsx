@@ -2,6 +2,7 @@ import React from 'react';
 import { View, StyleSheet,  Dimensions } from 'react-native';
 import { Overlay, Text, Button } from '@rneui/themed';
 
+
 const { width, height } = Dimensions.get('window');
 
 interface PopupProps {
