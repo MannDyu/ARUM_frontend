@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useNavigation, NavigationProp, RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../types';
+import MissionHeader from '../Mission/MissionHeader';
+import Popup from '../../components/Popup';
 
 interface TestResultProps {
   route: RouteProp<RootStackParamList, 'TestResult'>;
@@ -50,28 +52,28 @@ const TestResult: React.FC<TestResultProps> = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerContainer}>
-        <Text style={styles.header}>자가진단 테스트 결과보고서</Text>
-      </View>
-      <View style={styles.resultContainer}>
-        <Text style={styles.resultText}>
-          당신의 우울증 자가진단 결과점수는
-        </Text>
-        {renderAdvice()}
-        {score >= 16 && (
+      <MissionHeader title="자가진단 테스트 결과보고서" onBack={() => navigation.navigate('Popup')} />
+      <View style={styles.contentContainer}>
+        <View style={styles.resultContainer}>
+          <Text style={styles.resultText}>
+            당신의 우울증 자가진단 결과점수는
+          </Text>
+          {renderAdvice()}
+          {score >= 16 && (
+            <TouchableOpacity
+              style={styles.findCenterButton}
+              onPress={() => navigation.navigate('FindCenter')}
+            >
+              <Text style={styles.findCenterButtonText}>가까운 상담센터 찾기</Text>
+            </TouchableOpacity>
+          )}
           <TouchableOpacity
-            style={styles.findCenterButton}
-            onPress={() => navigation.navigate('FindCenter')}
+            style={styles.completeButton}
+            onPress={() => navigation.navigate('Home')}
           >
-            <Text style={styles.findCenterButtonText}>가까운 상담센터 찾기</Text>
+            <Text style={styles.completeButtonText}>완료</Text>
           </TouchableOpacity>
-        )}
-        <TouchableOpacity
-          style={styles.completeButton}
-          onPress={() => navigation.navigate('Home')}
-        >
-          <Text style={styles.completeButtonText}>완료</Text>
-        </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
@@ -80,38 +82,33 @@ const TestResult: React.FC<TestResultProps> = ({ route }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 25,
-    justifyContent: 'center',
     backgroundColor: '#FDFDED',
   },
-  
-  headerContainer: { 
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
-  },
-  
-  header: {
-    fontSize: 25,
-    fontWeight: 'bold',
-    marginLeft: 10,
-    marginBottom: 20,
-    textAlign: 'center',
+  contentContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center', 
+    padding: 20,
+    
   },
   resultContainer: {
     backgroundColor: '#ffffff',
     padding: 55,
     borderRadius: 10,
+    borderColor: 'black',
+    borderWidth: 0.7,
     elevation: 2,
+    alignItems: 'center',
+    marginTop: 0,
   },
   resultText: {
     fontSize: 18,
-    marginBottom: 20,
-    textAlign: 'center',
+    marginBottom: 30,
+    textAlign: 'center', 
   },
   adviceContainer: {
-    marginBottom: 40,
-    alignItems: 'center',
+    marginBottom: 20,
+    alignItems: 'center', 
   },
   score: {
     fontSize: 20,
@@ -123,19 +120,23 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     marginTop: 10,
-    marginBottom: 10,
-    textAlign: 'center',
+    marginBottom: 15,
+    textAlign: 'center', 
   },
   adviceText: {
     fontSize: 15,
     color: '#666',
-    textAlign: 'center',
+    textAlign: 'center', 
   },
   findCenterButton: {
     backgroundColor: '#4CAF50',
     padding: 10,
     borderRadius: 5,
     marginBottom: 10,
+    width: 170,
+    height: 40,
+    borderColor: 'black',
+    borderWidth: 0.5,
   },
   findCenterButtonText: {
     color: 'white',
@@ -146,6 +147,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#2196F3',
     padding: 10,
     borderRadius: 5,
+    width: 170,
+    height: 40,
+    borderColor: 'black',
+    borderWidth: 0.5,
   },
   completeButtonText: {
     color: 'white',
@@ -156,7 +161,9 @@ const styles = StyleSheet.create({
     width: 150,
     height: 150,
     marginBottom: 10,
+    borderColor: 'black',
+    borderWidth: 1,
   },
-  });
+});
 
-  export default TestResult;
+export default TestResult;
