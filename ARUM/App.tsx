@@ -6,7 +6,7 @@ import { MissionProvider } from './src/context/MissionContext';
 import { createStackNavigator } from '@react-navigation/stack';
 import Home from './src/screens/Home/Home';
 import FindCenter from './src/screens/SelfTest/FindCenter';
-import TestResult from './src/screens/SelfTest/TestResult';
+import TestReport from './src/screens/SelfTest/TestReport';
 import { RootStackParamList } from './src/types';
 
 const Stack = createStackNavigator<RootStackParamList>();
@@ -22,7 +22,7 @@ export default function App() {
             <Stack.Screen name="DrawerNavigator" component={DrawerNavigator} />
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="FindCenter" component={FindCenter} />
-            <Stack.Screen name="TestResult" component={TestResult} />
+            <Stack.Screen name="TestReport" component={TestReport} />
           </Stack.Navigator>
       </NavigationContainer>
       </MissionProvider>

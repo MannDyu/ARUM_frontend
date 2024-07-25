@@ -4,7 +4,7 @@ import { NavigationProp, RouteProp, useNavigation } from '@react-navigation/nati
 import ToggleButton from '../../components/ToggleButton';
 import DailyMission from './DailyMisison'; 
 import CompletedMission from './CompletedMission';
-import { DailyMissionScreenNavigationProp, MissionScreenNavigationProp, MissionStackParamList } from '../../assets/types';
+import { DailyMissionScreenNavigationProp, MissionScreenNavigationProp, MissionStackParamList } from '../../assets/MissionTypes';
 
 
 

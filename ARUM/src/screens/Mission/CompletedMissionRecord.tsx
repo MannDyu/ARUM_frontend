@@ -5,7 +5,7 @@ import MissionHeader from './MissionHeader';
 import MissionContent from './MissionContent';
 import ActionButton from './ActionButton';
 import Popup from '../../components/Popup';
-import { CompletedMissionRecordProps } from '../../assets/types';
+import { CompletedMissionRecordProps } from '../../assets/MissionTypes';
 import { useMission } from '../../context/MissionContext';
 import { currentDateTime } from '../../utils/currentDateTime' ;
 

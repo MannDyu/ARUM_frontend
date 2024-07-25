@@ -5,13 +5,13 @@ import { RootStackParamList } from '../../types';
 import MissionHeader from '../Mission/MissionHeader';
 import Popup from '../../components/Popup';
 
-interface TestResultProps {
-  route: RouteProp<RootStackParamList, 'TestResult'>;
+interface TestReportProps {
+  route: RouteProp<RootStackParamList, 'TestReport'>;
 }
 
-const TestResult: React.FC<TestResultProps> = ({ route }) => {
+const TestReport: React.FC<TestReportProps> = ({ route }) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const { score } = route.params;
+  const { score } = route.params || {score: 0};
 
   const [isPopupVisible, setIsPopupVisible] = useState(false);
 
@@ -91,7 +91,7 @@ const TestResult: React.FC<TestResultProps> = ({ route }) => {
         }}
         onCancel={() => {
           setIsPopupVisible(false);
-          navigation.navigate('TestResult');
+          navigation.navigate('TestReport');
         }}
       />
     </View>
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FDFDED',
-    paddingTop: 65,
+    paddingTop: 20,
     paddingBottom: 60,
   },
   contentContainer: {
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: 'red',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   adviceTitle: {
     fontSize: 20,
@@ -187,4 +187,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TestResult;
+export default TestReport;

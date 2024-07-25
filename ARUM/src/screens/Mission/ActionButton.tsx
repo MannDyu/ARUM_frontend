@@ -37,5 +37,4 @@ const styles = StyleSheet.create({
     color: '#888888',
   },
 });
-
 export default ActionButton;
