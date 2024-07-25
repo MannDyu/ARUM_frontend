@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Alert, Keyboard, TouchableOpacity, Text} from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { CompletedMission, MissionStackParamList } from '../../assets/types';
+import { CompletedMission, MissionStackParamList } from '../../assets/MissionTypes';
 import { useMission } from '../../context/MissionContext';
 import MissionHeader from './MissionHeader';
 import ImageUploader from './ImageUploader';

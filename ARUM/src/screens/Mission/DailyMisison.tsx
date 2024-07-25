@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import styled from 'styled-components/native';
 import { Button } from 'react-native-elements';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
-import { MissionStackParamList } from '../../assets/types';
+import { MissionStackParamList } from '../../assets/MissionTypes';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 const MissionContainer = styled.View`

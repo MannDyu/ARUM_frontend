@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { CompletedItem, CompletedMission, MissionStackParamList } from '../../assets/types';
+import { CompletedItem, CompletedMission, MissionStackParamList } from '../../assets/MissionTypes';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 

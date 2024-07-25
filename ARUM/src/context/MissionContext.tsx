@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, ReactNode, useEffect } from 'react';
-import { Mission, CompletedMission, MissionContextType } from '../assets/types'
+import { Mission, CompletedMission, MissionContextType } from '../assets/MissionTypes'
 
 // type Mission = {
 //   id: string;

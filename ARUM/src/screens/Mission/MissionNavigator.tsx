@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Mission from './Mission';
 import CompletedMissionRecord from './CompletedMissionRecord';
 import CompletedMissionDetail from './CompletedMissionDetail';
-import { MissionStackParamList } from '../../assets/types';
+import { MissionStackParamList } from '../../assets/MissionTypes';
 import EditCompletedMission from './EditCompletedMission';
 import CompletedMission from './CompletedMission';
 import SelectSection from './SelectSection';
