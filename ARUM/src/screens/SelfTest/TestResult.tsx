@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import { useNavigation, NavigationProp, RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../../types';
@@ -12,6 +12,8 @@ interface TestResultProps {
 const TestResult: React.FC<TestResultProps> = ({ route }) => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const { score } = route.params;
+
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
 
   const renderAdvice = () => {
     if (score <= 15) {
@@ -52,7 +54,10 @@ const TestResult: React.FC<TestResultProps> = ({ route }) => {
 
   return (
     <View style={styles.container}>
-      <MissionHeader title="자가진단 테스트 결과보고서" onBack={() => navigation.navigate('Popup')} />
+      <MissionHeader 
+        title="자가진단 테스트 결과보고서" 
+        onBack={() => setIsPopupVisible(true)} 
+      />
       <View style={styles.contentContainer}>
         <View style={styles.resultContainer}>
           <Text style={styles.resultText}>
@@ -75,6 +80,20 @@ const TestResult: React.FC<TestResultProps> = ({ route }) => {
           </TouchableOpacity>
         </View>
       </View>
+
+      <Popup
+        isVisible={isPopupVisible}
+        title="주의"
+        description= '자가진단 페이지를 벗어나시겠습니까?             답변은 저장되지 않습니다.'
+        onConfirm={() => { 
+          setIsPopupVisible(false);
+          navigation.navigate('SelfTest');
+        }}
+        onCancel={() => {
+          setIsPopupVisible(false);
+          navigation.navigate('TestResult');
+        }}
+      />
     </View>
   );
 };
@@ -83,11 +102,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FDFDED',
+    paddingTop: 65,
+    paddingBottom: 60,
   },
   contentContainer: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center', 
+    alignItems: 'center',
     padding: 20,
     
   },
@@ -133,7 +154,7 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
     marginBottom: 10,
-    width: 170,
+    width: 200,
     height: 40,
     borderColor: 'black',
     borderWidth: 0.5,
@@ -147,7 +168,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#2196F3',
     padding: 10,
     borderRadius: 5,
-    width: 170,
+    width: 200,
     height: 40,
     borderColor: 'black',
     borderWidth: 0.5,

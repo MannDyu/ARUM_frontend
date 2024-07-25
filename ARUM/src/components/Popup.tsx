@@ -2,8 +2,8 @@ import React from 'react';
 import { View, StyleSheet,  Dimensions } from 'react-native';
 import { Overlay, Text, Button } from '@rneui/themed';
 
-
 const { width, height } = Dimensions.get('window');
+
 
 interface PopupProps {
   isVisible: boolean;
@@ -46,6 +46,8 @@ const Popup: React.FC<PopupProps> = ({ isVisible, onConfirm, onCancel, title, de
     </Overlay>
   );
 };
+
+
 
 const styles = StyleSheet.create({
   overlay: {

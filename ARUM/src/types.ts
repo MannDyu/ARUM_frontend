@@ -4,6 +4,6 @@ export type RootStackParamList = {
   TestResult: { score: number };
   SelectSection: undefined;
   DrawerNavigator: undefined;
-  Popup: undefined;
+  Popup: { title: string; description: string; onConfirm: () => void; onCancel: () => void };
  
 };

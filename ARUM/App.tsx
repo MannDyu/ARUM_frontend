@@ -9,9 +9,7 @@ import FindCenter from './src/screens/SelfTest/FindCenter';
 import TestResult from './src/screens/SelfTest/TestResult';
 import { RootStackParamList } from './src/types';
 
-
 const Stack = createStackNavigator<RootStackParamList>();
-
 
 
 export default function App() {
