@@ -9,9 +9,16 @@ type TestPageScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Tes
 
 export default function TestPage() {
   const navigation = useNavigation<TestPageScreenNavigationProp>();
+  
   return (
     <View>
       <Text>TestPage</Text>
+
+
+
+
+
+      {/* 로딩 페이지 보러 가기 네비게이트 */}
       <TouchableOpacity onPress={() => navigation.navigate('TestLoading')}>
           <Text >로딩 페이지 보기 </Text>
         </TouchableOpacity>
