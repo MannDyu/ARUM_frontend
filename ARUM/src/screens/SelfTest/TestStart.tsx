@@ -6,14 +6,13 @@ import Header from '../../components/Header';
 import TestPage from '../SelfTest/TestPage'; 
 import { SelfTestStackParamList } from '../../assets/SelfTestTypes';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RootStackParamList } from '../../navigation/types';
-
 
 const { width, height } = Dimensions.get('window');
-type TestStartScreenNavigationProp = StackNavigationProp<RootStackParamList, 'TestStart'>;
+type SelfTestScreenNavigationProp = StackNavigationProp<SelfTestStackParamList, 'SelfTest'>;
+
 
 const TestStart: React.FC = () => {
-  const navigation = useNavigation<TestStartScreenNavigationProp>();
+  const navigation = useNavigation<SelfTestScreenNavigationProp>();
 
   return (
     <SafeAreaView style={styles.container}>
@@ -36,7 +35,7 @@ const TestStart: React.FC = () => {
           정확한 검사를 위해서는 전문기관을 방문하세요.
         </Text>
         <TouchableOpacity style={styles.startButton} onPress={() => navigation.navigate('TestPage')}>
-          <Text style={styles.startButtonText}>자가진단 시작</Text>
+          <Text style={styles.startButtonText} >자가진단 시작</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

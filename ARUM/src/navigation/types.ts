@@ -28,7 +28,7 @@ export type RootStackParamList = {
   TestStart: undefined;
   TestReport: { score: number };
   TestPage: undefined;
-  TestLoading: undefined;
+  TestLoading: { score: number };
   FindCenter: undefined;
 };
 
@@ -41,12 +41,15 @@ export interface ImageUploaderProps {
 export type RootStackScreenProps<T extends keyof RootStackParamList> = 
   StackScreenProps<RootStackParamList, T>;
 
-// 기존에 정의한 다른 타입들도 여기에 포함...
-
 export type NavigationProp<T extends keyof RootStackParamList> = 
   StackNavigationProp<RootStackParamList, T>;
 
 export type MissionScreenNavigationProp = NavigationProp<'Mission'>;
 export type DailyMissionScreenNavigationProp = NavigationProp<'DailyMission'>;
-export type SelfTestScreenNavigationProp = NavigationProp<'SelfTest'>;
-// 필요한 다른 화면별 NavigationProp 타입들...
+export type SelfTestScreenNavigationProp = StackNavigationProp<RootStackParamList, 'SelfTest'>;
+
+
+export interface QuestionProps {
+  onPressNext: () => void;
+  isLastQuestion: boolean;
+}

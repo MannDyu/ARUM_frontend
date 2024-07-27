@@ -4,7 +4,6 @@ import SelfTest from './SelfTest';
 import TestStart from './TestStart';
 import TestReport from './TestReport'
 import TestLoading from './TestLoading'
-import { SelfTestStackParamList } from '../../assets/SelfTestTypes';
 import TestPage from './TestPage';
 import FindCenter from './FindCenter';
 import { RootStackParamList } from '../../navigation/types';

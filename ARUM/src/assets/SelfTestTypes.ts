@@ -1,8 +1,14 @@
 export type SelfTestStackParamList = {
   SelfTest: undefined;
   TestStart: undefined;
-  TestReport: { score: number }; // score 파라미터 추가
-  TestPage: undefined;
-  TestLoading: undefined;
-  FindCenter: undefined; 
+  SelfTestReport: undefined;
+  TestReport: { score: number };
+  TestPage : undefined,
+  TestLoading: { score: number };
 };
+
+
+export interface QuestionProps {
+  onPressNext: () => void;
+  isLastQuestion: boolean;
+}

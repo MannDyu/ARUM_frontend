@@ -30,11 +30,16 @@ const SelectItemOption: React.FC<SelectItemOptionProps> = ({ index, isSelected, 
   </View>
 );
 
-const SelectItem = () => {
+interface SelectItemProps {
+  onSelect: (index: number) => void;
+}
+
+const SelectItem: React.FC<SelectItemProps> = ({ onSelect }) => {
   const [selectedItem, setSelectedItem] = useState<number | null>(null);
 
   const handleSelection = (index: number) => {
     setSelectedItem(index);
+    onSelect(index);  // 부모 컴포넌트에 선택된 인덱스 전달
   };
 
   return (
