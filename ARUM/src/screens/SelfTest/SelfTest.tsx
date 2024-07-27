@@ -1,12 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Dimensions, Button } from 'react-native';
-import TestStart from './TestStart';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { SelfTestStackParamList } from '../../assets/SelfTestTypes';
+import { RootStackParamList } from '../../navigation/types';
 const { width, height } = Dimensions.get('window');
 
-type SelfTestScreenNavigationProp = StackNavigationProp<SelfTestStackParamList, 'SelfTest'>;
+type SelfTestScreenNavigationProp = StackNavigationProp<RootStackParamList, 'SelfTest'>;
 
 export default function SelfTest() {
   const navigation = useNavigation<SelfTestScreenNavigationProp>();
@@ -65,10 +64,10 @@ export default function SelfTest() {
       </View>
       <Text style={styles.timeEstimate}>소요시간 약 10분</Text>
       <View style={styles.footer}>
-        <TouchableOpacity style={styles.startButton}  onPress={() => navigation.navigate('TestStart')}>
+        <TouchableOpacity style={styles.startButton} onPress={() => navigation.navigate('TestStart')}>
           <Text style={styles.startButtonText}>자가진단 시작</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.reportButton} onPress={() => navigation.navigate('TestReport')}>
+        <TouchableOpacity style={styles.reportButton} onPress={() => navigation.navigate('TestReport', { score: 0 })}>
           <Text style={styles.reportButtonText}>자가진단 결과 보고서</Text>
         </TouchableOpacity>
       </View>

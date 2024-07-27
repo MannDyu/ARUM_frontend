@@ -5,6 +5,7 @@ import { Button } from 'react-native-elements';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { MissionStackParamList } from '../../assets/MissionTypes';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackScreenProps } from '../../navigation/types'; 
 
 const MissionContainer = styled.View`
   display: flex;
@@ -53,21 +54,10 @@ const MissionTextContainer = styled.View`
 `;
 
 
-type DailyMissionProps = {
-  route: RouteProp<MissionStackParamList, 'DailyMission'>;
-  navigation: DailyMissionScreenNavigationProp;
-};
-
-type DailyMissionScreenRouteProp = RouteProp<MissionStackParamList, 'DailyMission'>;
-type DailyMissionScreenNavigationProp = StackNavigationProp<MissionStackParamList, 'DailyMission'>;
-type Props = {
-  route: DailyMissionScreenRouteProp;
-  navigation: DailyMissionScreenNavigationProp;
-};
+type DailyMissionProps = RootStackScreenProps<'DailyMission'>;
 
 const DailyMission: React.FC<DailyMissionProps> = ({ route, navigation }) => {
   const { selectedArea, missionStatus, onMissionComplete, onMissionSuccess } = route.params || {};
-  
   
   type IconContentType = 'none' | 'daily' | 'exercise' | 'hobby' | 'me' | 'tidy';
  
@@ -80,8 +70,7 @@ const DailyMission: React.FC<DailyMissionProps> = ({ route, navigation }) => {
 
   //! 다른 파일에서 가져와야할 변수값들
   const days = 1; // 며칠째 도전 중?
-  const missionSelected = false; // 미션이 선택되었는지
-  const iconContent: Record<IconContentType, string> = { // String이라고 명시적 규정
+  const iconContent: Record<IconContentType, string> = {
     none: '?',
     daily: '📅',
     exercise: '🏋️',

@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../navigation/types';
 import Calendar from '../../components/Calendar';
 import CompletedMissionItem from './CompletedMissionItem';
 import { useMission } from '../../context/MissionContext';
 
-const CompletedMission = () => {
-  const [selectedDate, setSelectedDate] = useState('');
-  const { completedMissions } = useMission(); // MissionContext에서 completedMission을 가져온다. 
+type CompletedMissionScreenNavigationProp = StackNavigationProp<RootStackParamList, 'CompletedMission'>;
 
-  const missions = [
+
+const CompletedMission: React.FC = () => {
+  const [selectedDate, setSelectedDate] = useState('');
+  const { completedMissions } = useMission();
+  const navigation = useNavigation<CompletedMissionScreenNavigationProp>();
+
+   // 임시 데이터 사용 (실제로는 completedMissions를 사용해야 함)
+   const missions = [
     { id: '1', date: '2024-07-15', title: '균형있는 식사 한 끼 하기', tag: '일상' },
     // 추가 미션 데이터
   ];

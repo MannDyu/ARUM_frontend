@@ -22,8 +22,8 @@ export function TabNavigator() {
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Diary" component={Diary} />
       <Tab.Screen name="MyPage" component={MyPage} />
-      <Tab.Screen name="Mission" component={MissionNavigator} />
-      <Tab.Screen name="SelfTest" component={SelfTestNavigator} />
+      <Tab.Screen name="MissionNavigator" component={MissionNavigator} />
+      <Tab.Screen name="SelfTestNavigator" component={SelfTestNavigator} />
       <Tab.Screen name="Community" component={Community} />
     </Tab.Navigator>
   );

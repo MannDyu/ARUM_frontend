@@ -6,13 +6,14 @@ import Header from '../../components/Header';
 import TestPage from '../SelfTest/TestPage'; 
 import { SelfTestStackParamList } from '../../assets/SelfTestTypes';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../navigation/types';
+
 
 const { width, height } = Dimensions.get('window');
-type SelfTestScreenNavigationProp = StackNavigationProp<SelfTestStackParamList, 'SelfTest'>;
-
+type TestStartScreenNavigationProp = StackNavigationProp<RootStackParamList, 'TestStart'>;
 
 const TestStart: React.FC = () => {
-  const navigation = useNavigation<SelfTestScreenNavigationProp>();
+  const navigation = useNavigation<TestStartScreenNavigationProp>();
 
   return (
     <SafeAreaView style={styles.container}>

@@ -3,11 +3,10 @@ import React from 'react'
 import { StackNavigationProp } from '@react-navigation/stack';
 import { SelfTestStackParamList } from '../../assets/SelfTestTypes';
 import { LinearProgress } from 'react-native-elements';
-
+import { RootStackParamList } from '../../navigation/types';
 
 const { width, height } = Dimensions.get('window');
-type SelfTestScreenNavigationProp = StackNavigationProp<SelfTestStackParamList, 'SelfTest'>;
-
+type TestLoadingScreenNavigationProp = StackNavigationProp<RootStackParamList, 'TestLoading'>;
 
 export default function TestLoading() {
   return (

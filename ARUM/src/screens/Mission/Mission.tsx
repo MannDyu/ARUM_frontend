@@ -1,27 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, Button } from 'react-native'
-import { NavigationProp, RouteProp, useNavigation } from '@react-navigation/native';
+import { View, Text, StyleSheet } from 'react-native'
 import ToggleButton from '../../components/ToggleButton';
 import DailyMission from './DailyMisison'; 
 import CompletedMission from './CompletedMission';
-import { DailyMissionScreenNavigationProp, MissionScreenNavigationProp, MissionStackParamList } from '../../assets/MissionTypes';
+import { RootStackScreenProps, NavigationProp } from '../../navigation/types';
 
-
-
-type MissionScreenRouteProp = RouteProp<MissionStackParamList, 'Mission'>;
-
-type MissionProps = {
-  route: MissionScreenRouteProp;
-  navigation: MissionScreenNavigationProp;
-}
+type MissionProps = RootStackScreenProps<'Mission'>;
 
 export default function Mission({ route, navigation }: MissionProps) {
   const [selectedButton, setSelectedButton] = useState<'left' | 'right'>('left');
   const [missionStatus, setMissionStatus] = useState<'select' | 'finish' | 'completed' | 'success'>('select');
   const [selectedArea, setSelectedArea] = useState<string | undefined>(undefined);
   const [completedMissionId, setCompletedMissionId] = useState<string | undefined>(undefined);
-
-  // const [selectedButton, setSelectedButton] = useState<'left' | 'right'>('left'); // 토글 버튼 관리
   
   useEffect(() => {
     if (route.params?.selectedArea) {
@@ -32,11 +22,15 @@ export default function Mission({ route, navigation }: MissionProps) {
       setCompletedMissionId(route.params.completedMissionId);
       setMissionStatus('success');
     }
+    if (route.params?.missionStatus) {
+      setMissionStatus(route.params.missionStatus);
+    }
   }, [route.params]);
 
   const handleToggle = (button: 'left' | 'right') => {
     setSelectedButton(button);
   };
+
   const handleMissionComplete = () => {
     navigation.navigate('CompletedMissionRecord', { selectedArea });
   };
@@ -46,8 +40,6 @@ export default function Mission({ route, navigation }: MissionProps) {
       navigation.navigate('CompletedMissionDetail', { missionId: completedMissionId });
     }
   };
-
-
 
   return (
     <View style={styles.container}>
@@ -60,7 +52,7 @@ export default function Mission({ route, navigation }: MissionProps) {
       />
       {selectedButton === 'left' ? 
         <DailyMission
-          navigation={navigation as unknown as DailyMissionScreenNavigationProp}
+          navigation={navigation as NavigationProp<'DailyMission'>}
           route={{
             params: {
               selectedArea,
@@ -77,7 +69,6 @@ export default function Mission({ route, navigation }: MissionProps) {
     </View>
   )
 }
-
 
 const styles = StyleSheet.create({
   container: {
