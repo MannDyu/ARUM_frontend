@@ -1,15 +1,32 @@
 import { Dimensions, SafeAreaView, StyleSheet, Text, View, Image } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { StackNavigationProp } from '@react-navigation/stack';
 import { SelfTestStackParamList } from '../../assets/SelfTestTypes';
 import { LinearProgress } from 'react-native-elements';
+import { RouteProp, useNavigation } from '@react-navigation/native';
 
 
 const { width, height } = Dimensions.get('window');
-type SelfTestScreenNavigationProp = StackNavigationProp<SelfTestStackParamList, 'SelfTest'>;
+type SelfTestScreenNavigationProp = StackNavigationProp<SelfTestStackParamList, 'TestLoading'>;
+type TestLoadingRouteProp = RouteProp<SelfTestStackParamList, 'TestLoading'>;
+
+interface TestLoadingProps {
+  route: TestLoadingRouteProp;
+}
+
+export default function TestLoading({ route }: TestLoadingProps) {
+  const navigation = useNavigation<SelfTestScreenNavigationProp>();
+  const { score } = route.params;
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      navigation.replace('TestReport', { score });
+    }, 6000); // 6초 후 TestReport로 이동
+
+    return () => clearTimeout(timer);
+  }, [navigation, score]);
 
 
-export default function TestLoading() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.content}>
@@ -21,7 +38,6 @@ export default function TestLoading() {
         />
         <LinearProgress color="black" variant='indeterminate' style={{width:'90%', height:13, borderRadius:15}}/>
       </View>
-      
     </SafeAreaView>
   )
 }
