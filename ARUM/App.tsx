@@ -7,10 +7,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Home from './src/screens/Home/Home';
 import FindCenter from './src/screens/SelfTest/FindCenter';
 import TestReport from './src/screens/SelfTest/TestReport';
+import RecordDiary from './src/screens/Diary/RecordDiary';
 import { RootStackParamList } from './src/types';
 
 const Stack = createStackNavigator<RootStackParamList>();
-
 
 export default function App() {
   return (
@@ -23,6 +23,7 @@ export default function App() {
             <Stack.Screen name="Home" component={Home} />
             <Stack.Screen name="FindCenter" component={FindCenter} />
             <Stack.Screen name="TestReport" component={TestReport} />
+            <Stack.Screen name="RecordDiary" component={RecordDiary} />
           </Stack.Navigator>
       </NavigationContainer>
       </MissionProvider>

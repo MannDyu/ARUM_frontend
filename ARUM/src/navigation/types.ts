@@ -30,6 +30,10 @@ export type RootStackParamList = {
   TestPage: undefined;
   TestLoading: { score: number };
   FindCenter: undefined;
+
+  // Diary related screens
+  Diary: undefined;
+  RecordDiary: undefined;
 };
 
 export interface ImageUploaderProps {
