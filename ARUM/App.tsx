@@ -8,7 +8,9 @@ import Home from './src/screens/Home/Home';
 import FindCenter from './src/screens/SelfTest/FindCenter';
 import TestReport from './src/screens/SelfTest/TestReport';
 import RecordDiary from './src/screens/Diary/RecordDiary';
-import { RootStackParamList } from './src/types';
+import DiaryThumbnail from './src/screens/Diary/DiaryThumbnail';
+import DiaryDetail from './src/screens/Diary/DiaryDetail';
+import { RootStackParamList } from './src/navigation/types';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -24,6 +26,8 @@ export default function App() {
             <Stack.Screen name="FindCenter" component={FindCenter} />
             <Stack.Screen name="TestReport" component={TestReport} />
             <Stack.Screen name="RecordDiary" component={RecordDiary} />
+            <Stack.Screen name="DiaryThumbnail" component={DiaryThumbnail} />
+            <Stack.Screen name="DiaryDetail" component={DiaryDetail} />
           </Stack.Navigator>
       </NavigationContainer>
       </MissionProvider>

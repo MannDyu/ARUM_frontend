@@ -20,7 +20,7 @@ const RecordDiary: React.FC<RootStackScreenProps<'RecordDiary'>> = ({ navigation
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      // 완료 후 처리
+      navigation.navigate('DiaryThumbnail');
     }
   };
 

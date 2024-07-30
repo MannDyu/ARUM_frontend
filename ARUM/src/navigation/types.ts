@@ -4,6 +4,7 @@ import { StackScreenProps, StackNavigationProp } from '@react-navigation/stack';
 
 export type RootStackParamList = {
   Home: undefined;
+  DrawerNavigator: undefined;
   
   // Mission related screens
   Mission: { 
@@ -34,6 +35,8 @@ export type RootStackParamList = {
   // Diary related screens
   Diary: undefined;
   RecordDiary: undefined;
+  DiaryThumbnail: undefined;
+  DiaryDetail: undefined;
 };
 
 export interface ImageUploaderProps {
