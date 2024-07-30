@@ -4,14 +4,15 @@ import { View, Text, TextInput, Button, StyleSheet, ScrollView } from 'react-nat
 interface RecordDiaryComponentProps {
   emoji: string;
   tags: string[];
-  question: string;
+  fixedQuestion: string;
+  placeholderQuestion: string;
   answer: string;
   onAnswerChange: (text: string) => void;
   onNext: () => void;
   onPrev: () => void;
 }
 
-const RecordDiaryComponent: React.FC<RecordDiaryComponentProps> = ({ emoji, tags, question, answer, onAnswerChange, onNext, onPrev }) => {
+const RecordDiaryComponent: React.FC<RecordDiaryComponentProps> = ({ emoji, tags, fixedQuestion, placeholderQuestion, answer, onAnswerChange, onNext, onPrev }) => {
   const [isFocused, setIsFocused] = useState(false);
 
   const handleFocus = () => {
@@ -25,7 +26,7 @@ const RecordDiaryComponent: React.FC<RecordDiaryComponentProps> = ({ emoji, tags
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.emoji}>{emoji}</Text>
-      <Text style={styles.fixedQuestion}>왜 이런 감정을 느꼈나요?</Text>
+      <Text style={styles.fixedQuestion}>{fixedQuestion}</Text>
       <View style={styles.tagsContainer}>
         {tags.map((tag, index) => (
           <Text key={index} style={styles.tag}>{tag}
@@ -37,7 +38,7 @@ const RecordDiaryComponent: React.FC<RecordDiaryComponentProps> = ({ emoji, tags
         multiline
         value={answer}
         onChangeText={onAnswerChange}
-        placeholder={isFocused ? '' : question}
+        placeholder={isFocused ? '' : placeholderQuestion}
         onFocus={handleFocus}
         onBlur={handleBlur}
         placeholderTextColor="gray"
@@ -53,25 +54,27 @@ const RecordDiaryComponent: React.FC<RecordDiaryComponentProps> = ({ emoji, tags
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 10,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: '#fff',
+    width: '100%',
+    borderRadius: 20,
+    backgroundColor: '#ffffff',
   },
   emoji: {
-    marginTop: 20,
-    fontSize: 50,
-    marginBottom: 15,
+    marginTop: 5,
+    fontSize: 45,
+    marginBottom: 10,
   },
   fixedQuestion: {
-    fontSize: 20,
+    fontSize: 19,
     fontWeight: 'bold',
-    marginBottom: 20,
+    marginBottom: 15,
     textAlign: 'center',
   },
   tagsContainer: {
     flexDirection: 'row',
-    marginBottom: 20,
+    marginBottom: 10,
   },
   tag: {
     backgroundColor: '#fff',
@@ -82,14 +85,14 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     marginHorizontal: 7,
     width: 70,
-    fontSize: 15,
+    fontSize: 14,
     textAlign: 'center',
   },
   
   question: {
     fontSize: 18,
     marginBottom: 20,
-    textAlign: 'center',
+    textAlign: 'left',
     color: 'gray',
     flexShrink: 1,
   },
