@@ -5,7 +5,7 @@ import { Button, CheckBox } from 'react-native-elements';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { MissionStackScreenProps } from '../../assets/types';
+import { MissionStackScreenProps } from '../../assets/MissionTypes';
 
 const TitleContainer = styled.View`
   display: flex;
@@ -42,7 +42,7 @@ const SelectSection = () => {
       setSelectedArea('none');
     }, [])
   );
-  //! Back 아이콘에 navigation 존재!
+  
   return (
     <View style={{ alignItems: 'center', backgroundColor: '#FDFDED', height: 1200 }}>
       <TitleContainer>

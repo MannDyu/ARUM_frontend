@@ -5,7 +5,7 @@ import DiaryEmotion from './DiaryEmotion';
 export default function Diary() {
   return (
     <View>
-      <Text>Diary</Text>
+      {/* <DiaryEmotion /> */}
     </View>
   )
 }
