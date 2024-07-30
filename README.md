@@ -1,7 +1,7 @@
 # ARUM_frontend
 
 
-## 필수 구성 요소
+## 환경 세팅
 - Node.js (>= 14.x)
 - Yarn
 ```sh
