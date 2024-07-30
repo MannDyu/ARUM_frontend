@@ -12,7 +12,7 @@ const FindCenter: React.FC = () => {
   const navigation = useNavigation<FindCenterScreenNavigationProp>();
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>가까운 상담센터 찾기</Text>
+      <Text style={styles.text}>심리 상담센터 찾기</Text>
     </View>
   );
 };
