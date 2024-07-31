@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Image, Button } from 'react-native';
 import DateDrawer from './DateDrawer';
 import Icon from 'react-native-vector-icons/AntDesign';
+import ToggleButton from '../../components/ToggleButton';
 
 const DiaryList: React.FC = () => {
   const [isDateDrawerVisible, setIsDateDrawerVisible] = useState(false);
   const [selectedDate, setSelectedDate] = useState({ year: 2024, month: 7 });
+  
+  
 
   const handleDateSelect = (year: number, month: number) => {
     setSelectedDate({ year, month });
@@ -21,22 +24,10 @@ const DiaryList: React.FC = () => {
           </Text>
           <TouchableOpacity onPress={() => setIsDateDrawerVisible(true)}>  
             <Icon name="calendar" size={24} color="black" style={{marginLeft:8}} />
-          </TouchableOpacity>
-          {/* <View style={styles.dateArrow} /> */}
-          
+          </TouchableOpacity>          
         </View>
-      </View>
 
-      <View style={styles.tabContainer}>
-        <TouchableOpacity style={styles.tabButton}>
-          <Text style={styles.tabButtonText}>감정일기</Text>
-        </TouchableOpacity> 
-        <TouchableOpacity style={styles.tabButton}>
-          <Text style={styles.tabButtonText}>감정 리포트</Text>
-        </TouchableOpacity> 
-        {/* <TouchableOpacity style={[styles.tabButton, styles.tabButtonInactive]}>
-          <Text style={styles.tabButtonText}>감정 리포트</Text>
-        </TouchableOpacity> */}
+        
       </View>
 
       <ScrollView style={styles.diaryList}>
@@ -61,20 +52,7 @@ const DiaryList: React.FC = () => {
         </View>
       </ScrollView>
 
-      {/* <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navItem}>
-          <Image source={require('./assets/home-icon.png')} style={styles.navIcon} />
-          <Text style={styles.navText}>홈</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Image source={require('./assets/diary-icon.png')} style={styles.navIcon} />
-          <Text style={styles.navText}>감정일기</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.navItem}>
-          <Image source={require('./assets/mission-icon.png')} style={styles.navIcon} />
-          <Text style={styles.navText}>랜덤미션</Text>
-        </TouchableOpacity>
-      </View> */}
+     
 
       <DateDrawer
         isVisible={isDateDrawerVisible}
@@ -88,12 +66,11 @@ const DiaryList: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FDFDED',
+    
   },
   header: {
     width: '100%',
-    height: 162,
-    backgroundColor: '#6487E5',
+   
     justifyContent: 'flex-end',
     alignItems: 'center',
     paddingBottom: 20,
@@ -164,6 +141,7 @@ const styles = StyleSheet.create({
     color: '#000000',
   },
   diaryContent: {
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
