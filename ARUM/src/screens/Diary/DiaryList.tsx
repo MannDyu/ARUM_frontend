@@ -31,9 +31,12 @@ const DiaryList: React.FC = () => {
         <TouchableOpacity style={styles.tabButton}>
           <Text style={styles.tabButtonText}>감정일기</Text>
         </TouchableOpacity> 
-        <TouchableOpacity style={[styles.tabButton, styles.tabButtonInactive]}>
+        <TouchableOpacity style={styles.tabButton}>
           <Text style={styles.tabButtonText}>감정 리포트</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> 
+        {/* <TouchableOpacity style={[styles.tabButton, styles.tabButtonInactive]}>
+          <Text style={styles.tabButtonText}>감정 리포트</Text>
+        </TouchableOpacity> */}
       </View>
 
       <ScrollView style={styles.diaryList}>
@@ -116,6 +119,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   tabButton: {
+    height: 40,
+    lineHeight:40,
+    width: 120,
     paddingHorizontal: 20,
     paddingVertical: 10,
     backgroundColor: '#000000',
@@ -128,6 +134,7 @@ const styles = StyleSheet.create({
     borderColor: '#000000',
   },
   tabButtonText: {
+    textAlign:'center',
     color: '#FFFFFF',
     fontFamily: 'Inter',
     fontWeight: 'bold',
