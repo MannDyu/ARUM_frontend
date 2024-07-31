@@ -4,8 +4,16 @@ import ToggleButton from '../../components/ToggleButton';
 import DiaryList from './DiaryList';
 import DiaryReport from './DiaryReport';
 import RecordDiary from './RecordDiary';
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
+import { RootStackParamList } from '../../navigation/types';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
-export default function Diary() {
+// type DiaryProps = StackScreenProps<RootStackParamList, 'Diary'>;
+type DiaryProps = StackScreenProps<RootStackParamList, 'Diary'>;
+type RecordDiaryNavigationProp = StackNavigationProp<RootStackParamList, 'RecordDiary'>;
+
+
+const Diary: React.FC<DiaryProps> = ({ navigation, route }) => {
   const [selectedButton, setSelectedButton] = useState<'left' | 'right'>('left');
   const [diaryButtonState, setDiaryButtonState] = useState('작성하기'); // 나중에 백엔드에서 받아올 상태
   const [showRecordDiary, setShowRecordDiary] = useState(false);
@@ -28,7 +36,6 @@ export default function Diary() {
     if (diaryButtonState === '작성하기') {
       setShowRecordDiary(true);
     }
-    // '작성 완료' 상태일 때는 어떤 동작? 디테일 페이지로 가나?
   };
   if (showRecordDiary) {
     return <RecordDiary />;
@@ -76,6 +83,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     paddingHorizontal: 28,
     paddingBottom: 20,
+    marginBottom: 10,
   },
   dateText: {
     color: '#FFFFFF',
@@ -114,3 +122,5 @@ const styles = StyleSheet.create({
     fontSize: 22,
   },
 });
+
+export default Diary;

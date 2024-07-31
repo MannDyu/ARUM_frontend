@@ -1,9 +1,13 @@
 // types.ts
 
+import { Route } from '@react-navigation/native';
 import { StackScreenProps, StackNavigationProp } from '@react-navigation/stack';
+
+
 
 export type RootStackParamList = {
   Home: undefined;
+  DrawerNavigator: undefined;
   
   // Mission related screens
   Mission: { 
@@ -30,6 +34,17 @@ export type RootStackParamList = {
   TestPage: undefined;
   TestLoading: { score: number };
   FindCenter: undefined;
+
+  // Diary related screens
+  Diary: undefined;
+  RecordDiary: { 
+    date?: string; 
+    editMode?: boolean; 
+    diaryId?: string;
+  };
+  // RecordDiary: { date?: string; editMode?: boolean; diaryId?: string };
+  DiaryThumbnail: { diaryId?: string };
+  DiaryDetail: { diaryId?: string };
 };
 
 export interface ImageUploaderProps {
@@ -47,7 +62,22 @@ export type NavigationProp<T extends keyof RootStackParamList> =
 export type MissionScreenNavigationProp = NavigationProp<'Mission'>;
 export type DailyMissionScreenNavigationProp = NavigationProp<'DailyMission'>;
 export type SelfTestScreenNavigationProp = StackNavigationProp<RootStackParamList, 'SelfTest'>;
+export type DiaryScreenNavigationProp = NavigationProp<'Diary'>;
+export type RecordDiaryScreenNavigationProp = NavigationProp<'RecordDiary'>;
+export type DiaryThumbnailScreenNavigationProp = NavigationProp<'DiaryThumbnail'>;
+export type DiaryDetailScreenNavigationProp = NavigationProp<'DiaryDetail'>;
 
+export type CompletedMissionScreenNavigationProp = NavigationProp<'CompletedMission'>;
+export type CompletedMissionRecordScreenNavigationProp = NavigationProp<'CompletedMissionRecord'>;
+export type CompletedMissionDetailScreenNavigationProp = NavigationProp<'CompletedMissionDetail'>;
+export type EditCompletedMissionScreenNavigationProp = NavigationProp<'EditCompletedMission'>;
+export type SelectSectionScreenNavigationProp = NavigationProp<'SelectSection'>;
+
+export type TestStartScreenNavigationProp = NavigationProp<'TestStart'>;
+export type TestReportScreenNavigationProp = NavigationProp<'TestReport'>;
+export type TestPageScreenNavigationProp = NavigationProp<'TestPage'>;
+export type TestLoadingScreenNavigationProp = NavigationProp<'TestLoading'>;
+export type FindCenterScreenNavigationProp = NavigationProp<'FindCenter'>;
 
 export interface QuestionProps {
   onPressNext: () => void;
