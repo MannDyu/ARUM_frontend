@@ -1,26 +1,20 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useNavigation, NavigationProp } from '@react-navigation/native';
-import { CompletedItem, CompletedMission, MissionStackParamList } from '../../assets/MissionTypes';
+import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { RootStackParamList } from '../../navigation/types';
+import { CompletedItem } from '../../assets/MissionTypes';
 
 
+
+type CompletedMissionItemNavigationProp = StackNavigationProp<RootStackParamList, 'CompletedMissionDetail'>;
 
 interface CompletedMissionItemProps {
-  mission:  CompletedItem ;
+  mission: CompletedItem;
 }
-
-interface Mission {
-  id: string;
-  date: string;
-  title: string;
-  category: string;
-}
-type CompletedMissionNavigationProp = StackNavigationProp<MissionStackParamList, 'CompletedMissionDetail'>;
-
 
 const CompletedMissionItem: React.FC<CompletedMissionItemProps> = ({ mission }) => {
-  const navigation = useNavigation<CompletedMissionNavigationProp>();
+  const navigation = useNavigation<CompletedMissionItemNavigationProp>();
 
   return (
     <TouchableOpacity 

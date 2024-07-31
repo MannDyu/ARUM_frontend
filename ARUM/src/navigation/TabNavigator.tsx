@@ -8,7 +8,7 @@ import Community from '../screens/Community/Community';
 // Mission 네비게이터 import
 import { MissionNavigator } from '../screens/Mission/MissionNavigator';
 import { SelfTestNavigator } from '../screens/SelfTest/SelfTestNavigator';
-
+import { DiaryNavigator } from '../screens/Diary/DiaryNavigator';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,11 +20,13 @@ export function TabNavigator() {
       }}
     >
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Diary" component={Diary} />
+      <Tab.Screen name="DiaryNavigator" component={DiaryNavigator} />
       <Tab.Screen name="MyPage" component={MyPage} />
-      <Tab.Screen name="Mission" component={MissionNavigator} />
-      <Tab.Screen name="SelfTest" component={SelfTestNavigator} />
+      <Tab.Screen name="MissionNavigator" component={MissionNavigator} />
+      <Tab.Screen name="SelfTestNavigator" component={SelfTestNavigator} />
       <Tab.Screen name="Community" component={Community} />
     </Tab.Navigator>
   );
 }
+
+export default TabNavigator;

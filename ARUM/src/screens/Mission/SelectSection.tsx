@@ -5,7 +5,7 @@ import { Button, CheckBox } from 'react-native-elements';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { MissionStackScreenProps } from '../../assets/MissionTypes';
+import { MissionStackScreenProps } from '../../assets/types';
 
 const TitleContainer = styled.View`
   display: flex;

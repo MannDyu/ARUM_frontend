@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { View, StyleSheet, Button, Keyboard, TouchableOpacity, Text } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { CompletedMission, MissionStackParamList } from '../../assets/MissionTypes';
+import { RootStackParamList } from '../../navigation/types'; 
+import { CompletedMission } from '../../assets/MissionTypes'; 
 import { useMission } from '../../context/MissionContext';
 import MissionHeader from './MissionHeader';
 import MissionContent from './MissionContent';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-type CompletedMissionDetailRouteProp = RouteProp<MissionStackParamList, 'CompletedMissionDetail'>;
-type CompletedMissionDetailNavigationProp = StackNavigationProp<MissionStackParamList, 'CompletedMissionDetail'>;
+type CompletedMissionDetailRouteProp = RouteProp<RootStackParamList, 'CompletedMissionDetail'>;
+type CompletedMissionDetailNavigationProp = StackNavigationProp<RootStackParamList, 'CompletedMissionDetail'>;
 
 interface CompletedMissionDetailProps {
   route: CompletedMissionDetailRouteProp;
@@ -20,7 +20,8 @@ const CompletedMissionDetail: React.FC<CompletedMissionDetailProps> = ({ route, 
   const { missionId } = route.params;
   const { completedMissions } = useMission();
   const [mission, setMission] = useState<CompletedMission | null>(null);
-  
+
+
   useEffect(() => {
     const foundMission = completedMissions.find(m => m.id === missionId);
     setMission(foundMission || null);
@@ -56,13 +57,13 @@ const CompletedMissionDetail: React.FC<CompletedMissionDetailProps> = ({ route, 
         imageUri={mission.imageUri}
         text={mission.text}
         tag={mission.tag}
-        editable={false} // 텍스트 필드가 읽기 전용임을 설정
-        date={mission.date}      />
-        <Text style={styles.recordDate}>{mission.date}</Text>
+        editable={false}
+        date={mission.date}
+      />
+      <Text style={styles.recordDate}>{mission.date}</Text>
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {

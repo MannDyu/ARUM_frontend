@@ -15,3 +15,5 @@ export function DrawerNavigator() {
     </Drawer.Navigator>
   );
 }
+
+export default DrawerNavigator;
