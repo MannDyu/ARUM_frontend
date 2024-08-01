@@ -42,6 +42,8 @@ export type RootStackParamList = {
     editMode?: boolean; 
     diaryId?: string;
   };
+  DiaryEmoji: undefined; //! 일단 undefined 🔽 !!수정필요!
+  DiaryEmotion: undefined;
   // RecordDiary: { date?: string; editMode?: boolean; diaryId?: string };
   DiaryThumbnail: { diaryId?: string };
   DiaryDetail: { diaryId?: string };

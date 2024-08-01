@@ -7,6 +7,7 @@ import RecordDiary from './RecordDiary';
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../navigation/types';
 import { useNavigation, useRoute } from '@react-navigation/native';
+import DiaryEmoji from './DiaryEmoji';
 
 // type DiaryProps = StackScreenProps<RootStackParamList, 'Diary'>;
 type DiaryProps = StackScreenProps<RootStackParamList, 'Diary'>;
@@ -26,15 +27,14 @@ const Diary: React.FC<DiaryProps> = ({ navigation, route }) => {
   const daysInKorean = ['(일)', '(월)', '(화)', '(수)', '(목)', '(금)', '(토)'];
   const dayOfWeek = daysInKorean[currentDate.getDay()];
 
-  
-
   const handleToggle = (button: 'left' | 'right') => {
     setSelectedButton(button);
   };
 
   const handleDiaryButton = () => {
     if (diaryButtonState === '작성하기') {
-      setShowRecordDiary(true);
+      // setShowRecordDiary(true);
+      navigation.navigate('DiaryEmoji'); //! 이동 수정했음! - 소현
     }
   };
   if (showRecordDiary) {

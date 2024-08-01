@@ -1,27 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { Dimensions, StyleSheet, View, ScrollView, SafeAreaView } from 'react-native';
-import { Button } from '@rneui/themed';
+import React, { useState } from 'react';
+import { Dimensions, StyleSheet, View, SafeAreaView } from 'react-native';
 import LoadingBar from '../../components/LoadingBar';
 import MissionHeader from '../Mission/MissionHeader';
 import { useNavigation } from '@react-navigation/native';
-// import { QuestionProps, SelfTestStackParamList } from '../../assets/SelfTestTypes';
 import Carousel, { ICarouselInstance } from "react-native-reanimated-carousel";
 import Question1 from './Questions/Questions1';
 import Question2 from './Questions/Questions2';
 import Question3 from './Questions/Questions3';
 import Question4 from './Questions/Questions4';
 import Popup from '../../components/Popup';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { QuestionProps, SelfTestScreenNavigationProp } from '../../navigation/types';
-
-
-
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
-
-// type SelfTestScreenNavigationProp = StackNavigationProp<SelfTestScreenNavigationPro, 'SelfTest'>;
-
 
 const TestPage = () => {
   const ref = React.useRef<ICarouselInstance>(null);
