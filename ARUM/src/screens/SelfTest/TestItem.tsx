@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import SelectItem from './SelectItem';
 
 interface TestItemProps {
   questionNum: number;
   question: string;
 }
-
 const TestItem: React.FC<TestItemProps> = ({ questionNum, question }) => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 

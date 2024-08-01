@@ -1,12 +1,12 @@
 import React from 'react';
 import { TouchableOpacity, Text, Image, StyleSheet } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import { ImageUploaderProps } from '../../navigation/types';
 
-interface ImageUploaderProps {
-  imageUri: string;
-  onUpload: (uri: string) => void;
-}
-
+// export interface ImageUploaderProps {
+//   imageUri: string;
+//   onUpload: (uri: string) => void;
+// }
 const ImageUploader: React.FC<ImageUploaderProps> = ({ imageUri, onUpload }) => {
   const handleImageUpload = async () => {
     const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();

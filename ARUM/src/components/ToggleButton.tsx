@@ -76,8 +76,6 @@ const styles = StyleSheet.create({
   },
   unselectedButton: {
     backgroundColor: '#fff',
-    borderWidth: 1,
-    borderColor: '#000',
   },
   buttonText: {
     fontSize: 16,

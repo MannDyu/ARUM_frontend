@@ -12,4 +12,3 @@ export interface QuestionProps {
   onPressNext: () => void;
   isLastQuestion: boolean;
 }
-

@@ -4,10 +4,11 @@ import SelfTest from './SelfTest';
 import TestStart from './TestStart';
 import TestReport from './TestReport'
 import TestLoading from './TestLoading'
-import { SelfTestStackParamList } from '../../assets/SelfTestTypes';
 import TestPage from './TestPage';
+import FindCenter from './FindCenter';
+import { RootStackParamList } from '../../navigation/types';
 
-const Stack = createStackNavigator<SelfTestStackParamList>();
+const Stack = createStackNavigator<RootStackParamList>();
 
 export function SelfTestNavigator() {
   return (
@@ -17,6 +18,7 @@ export function SelfTestNavigator() {
       <Stack.Screen name="TestReport" component={TestReport} />
       <Stack.Screen name="TestPage" component={TestPage} />
       <Stack.Screen name="TestLoading" component={TestLoading} />
+      <Stack.Screen name="FindCenter" component={FindCenter} />
     </Stack.Navigator>
   );
 }

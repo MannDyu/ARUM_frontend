@@ -1,22 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Alert, Keyboard, TouchableOpacity, Text} from 'react-native';
-import { RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
-import { CompletedMission, MissionStackParamList } from '../../assets/MissionTypes';
+import { RootStackScreenProps } from '../../navigation/types';
 import { useMission } from '../../context/MissionContext';
 import MissionHeader from './MissionHeader';
 import ImageUploader from './ImageUploader';
 import MissionTextInput from './MissionTextInput';
-import ActionButton from './ActionButton';
 import Popup from '../../components/Popup';
+import { CompletedMission } from '../../assets/MissionTypes';
 
-type EditCompletedMissionRouteProp = RouteProp<MissionStackParamList, 'EditCompletedMission'>;
-type EditCompletedMissionNavigationProp = StackNavigationProp<MissionStackParamList, 'EditCompletedMission'>;
-
-interface EditCompletedMissionProps {
-  route: EditCompletedMissionRouteProp;
-  navigation: EditCompletedMissionNavigationProp;
-}
+type EditCompletedMissionProps = RootStackScreenProps<'EditCompletedMission'>;
 
 const EditCompletedMission: React.FC<EditCompletedMissionProps> = ({ route, navigation }) => {
   const { missionId } = route.params;
@@ -25,6 +17,7 @@ const EditCompletedMission: React.FC<EditCompletedMissionProps> = ({ route, navi
   const [text, setText] = useState<string>('');
   const [imageUri, setImageUri] = useState<string>('');
   const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false);
+
 
   useEffect(() => {
     const foundMission = completedMissions.find(m => m.id === missionId);
@@ -39,7 +32,6 @@ const EditCompletedMission: React.FC<EditCompletedMissionProps> = ({ route, navi
     setText(newText);
   };
 
-  
   const handleImageUpload = (uri: string) => {
     setImageUri(uri);
   };
@@ -90,6 +82,7 @@ const EditCompletedMission: React.FC<EditCompletedMissionProps> = ({ route, navi
       </View>
     );
   }
+
 
   return (
     <View style={styles.container}>

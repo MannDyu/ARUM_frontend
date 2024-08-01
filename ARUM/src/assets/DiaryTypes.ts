@@ -1,4 +1,5 @@
 export type DiaryStackParamList = {
   DiaryEmotion: undefined;
   Diary: undefined;
+  DiaryEmoji: undefined;
 };

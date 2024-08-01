@@ -1,13 +1,15 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, Alert } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { RootStackScreenProps } from '../../navigation/types'; 
 import MissionHeader from './MissionHeader';
 import MissionContent from './MissionContent';
 import ActionButton from './ActionButton';
 import Popup from '../../components/Popup';
-import { CompletedMissionRecordProps } from '../../assets/MissionTypes';
 import { useMission } from '../../context/MissionContext';
-import { currentDateTime } from '../../utils/currentDateTime' ;
+import { currentDateTime } from '../../utils/currentDateTime';
+
+type CompletedMissionRecordProps = RootStackScreenProps<'CompletedMissionRecord'>;
 
 export default function CompletedMissionRecord({ navigation, route }: CompletedMissionRecordProps) {
   const [text, setText] = useState('');
@@ -39,6 +41,7 @@ export default function CompletedMissionRecord({ navigation, route }: CompletedM
   const handleCancel = () => {
     setIsPopupVisible(false);
   };
+
 
   return (
     <KeyboardAwareScrollView contentContainerStyle={styles.container}>

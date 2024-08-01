@@ -1,17 +1,14 @@
 import React, {useState} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { useNavigation, NavigationProp, RouteProp } from '@react-navigation/native';
-import { RootStackParamList } from '../../types';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackScreenProps } from '../../navigation/types';
 import MissionHeader from '../Mission/MissionHeader';
 import Popup from '../../components/Popup';
 
-interface TestReportProps {
-  route: RouteProp<RootStackParamList, 'TestReport'>;
-}
+type TestReportProps = RootStackScreenProps<'TestReport'>;
 
-const TestReport: React.FC<TestReportProps> = ({ route }) => {
-  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-  const { score } = route.params || {score: 0};
+const TestReport: React.FC<TestReportProps> = ({ route, navigation }) => {
+  const score = route.params?.score ?? 0; 
 
   const [isPopupVisible, setIsPopupVisible] = useState(false);
 
@@ -20,7 +17,7 @@ const TestReport: React.FC<TestReportProps> = ({ route }) => {
       return (
         <View style={styles.adviceContainer}>
           <Image source={require('../../../assets/happy.png')} style={styles.image} />
-          <Text style={styles.score}>11점</Text>
+          <Text style={styles.score}>{score}점</Text>
           <Text style={styles.adviceTitle}>편안한 상태</Text>
           <Text style={styles.adviceText}>
             지속적으로 정신건강에 관심을 갖고 예방을 위해 연 1회 정기검사도 잊지 마세요.
@@ -31,7 +28,7 @@ const TestReport: React.FC<TestReportProps> = ({ route }) => {
       return (
         <View style={styles.adviceContainer}>
           <Image source={require('../../../assets/bored.png')} style={styles.image} />
-          <Text style={styles.score}>20점</Text>
+          <Text style={styles.score}>{score}점</Text>
           <Text style={styles.adviceTitle}>가벼운 우울감</Text>
           <Text style={styles.adviceText}>
             우울증 예방을 위해 운동, 여가활동, 대인관계 맺기 등 즐거움을 주는 활동에 참여해보세요.
@@ -42,7 +39,7 @@ const TestReport: React.FC<TestReportProps> = ({ route }) => {
       return (
         <View style={styles.adviceContainer}>
           <Image source={require('../../../assets/severe.png')} style={styles.image} />
-          <Text style={styles.score}>51점</Text>
+          <Text style={styles.score}>{score}점</Text>
           <Text style={styles.adviceTitle}>다양한 우울증상</Text>
           <Text style={styles.adviceText}>
             일상생활에 영향을 주고 있는 상태입니다. 이러한 상태가 2주 이상 지속된다면 반드시 전문가의 상담을 받아보세요.
@@ -84,19 +81,21 @@ const TestReport: React.FC<TestReportProps> = ({ route }) => {
       <Popup
         isVisible={isPopupVisible}
         title="주의"
-        description= '자가진단 페이지를 벗어나시겠습니까?             답변은 저장되지 않습니다.'
+        description='자가진단 페이지를 벗어나시겠습니까? 답변은 저장되지 않습니다.'
         onConfirm={() => { 
           setIsPopupVisible(false);
           navigation.navigate('SelfTest');
         }}
         onCancel={() => {
           setIsPopupVisible(false);
-          navigation.navigate('TestReport');
         }}
       />
     </View>
   );
 };
+
+export default TestReport;
+
 
 const styles = StyleSheet.create({
   container: {
@@ -187,5 +186,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default TestReport;
+
 

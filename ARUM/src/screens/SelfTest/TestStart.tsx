@@ -35,7 +35,7 @@ const TestStart: React.FC = () => {
           정확한 검사를 위해서는 전문기관을 방문하세요.
         </Text>
         <TouchableOpacity style={styles.startButton} onPress={() => navigation.navigate('TestPage')}>
-          <Text style={styles.startButtonText}>자가진단 시작</Text>
+          <Text style={styles.startButtonText} >자가진단 시작</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

@@ -1,22 +1,16 @@
 import { Dimensions, SafeAreaView, StyleSheet, Text, View, Image } from 'react-native'
 import React, { useEffect } from 'react'
-import { StackNavigationProp } from '@react-navigation/stack';
-import { SelfTestStackParamList } from '../../assets/SelfTestTypes';
 import { LinearProgress } from 'react-native-elements';
-import { RouteProp, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackScreenProps, SelfTestScreenNavigationProp } from '../../navigation/types'; 
 
 
 const { width, height } = Dimensions.get('window');
-type SelfTestScreenNavigationProp = StackNavigationProp<SelfTestStackParamList, 'TestLoading'>;
-type TestLoadingRouteProp = RouteProp<SelfTestStackParamList, 'TestLoading'>;
 
-interface TestLoadingProps {
-  route: TestLoadingRouteProp;
-}
-
-export default function TestLoading({ route }: TestLoadingProps) {
+const TestLoading: React.FC<RootStackScreenProps<'TestLoading'>> = ({ route }) => {
   const navigation = useNavigation<SelfTestScreenNavigationProp>();
   const { score } = route.params;
+
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -25,7 +19,6 @@ export default function TestLoading({ route }: TestLoadingProps) {
 
     return () => clearTimeout(timer);
   }, [navigation, score]);
-
 
   return (
     <SafeAreaView style={styles.container}>
@@ -41,7 +34,6 @@ export default function TestLoading({ route }: TestLoadingProps) {
     </SafeAreaView>
   )
 }
-
 
 
 
@@ -63,3 +55,4 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   }
 })
+export default TestLoading;

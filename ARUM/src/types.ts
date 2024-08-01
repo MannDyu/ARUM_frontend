@@ -5,5 +5,4 @@ export type RootStackParamList = {
   SelectSection: undefined;
   DrawerNavigator: undefined;
   Popup: { title: string; description: string; onConfirm: () => void; onCancel: () => void };
- 
 };
