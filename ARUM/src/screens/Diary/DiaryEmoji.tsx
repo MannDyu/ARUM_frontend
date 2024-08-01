@@ -50,18 +50,18 @@ export default function DiaryEmoji() {
       <View style={styles.wholeContainer}>
         <View style={styles.emojiContainer}>
           <View style={styles.select}>
-            <Text style={{ fontSize: 20, margin: 30, marginTop: 50 }}>오늘 기분이 어땠나요?</Text>
+            <Text style={{ fontSize: 18, margin: 10, marginTop: 40 }}>오늘 기분이 어땠나요?</Text>
             <View style={styles.emojiImage}>
               {(isEmoji!==null) ? //! 텍스트가 아니라 View로 이미지 불러와야함
                 <Text style={styles.emojiText}>
                   {emojis[isEmoji]}
                 </Text> :
-                <Text style={{ fontSize: 20, textAlign: 'center' }}>{`기분을\n선택해주세요`}</Text>
+                <Text style={{ fontSize: 18, textAlign: 'center' }}>{`기분을\n선택해주세요`}</Text>
               }
             </View>
             <View style={styles.horizontalLine}/>
             <View style={styles.selectEmoji}>
-              <Text style={{ fontSize: 20, margin: 20 }}>기분 선택</Text>
+              <Text style={{ fontSize: 18, margin: 0 }}>기분 선택</Text>
               <View style={styles.emojis}>
                 {emojis.map((emoji, index) => ( //! 텍스트가 아니라 View로 이미지 불러와야함
                   <CheckBox 
@@ -101,9 +101,11 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    margin: 0,
   },
   emojiContainer: {
     backgroundColor: 'white',
+    height: '90%',
     width: '90%',
     display: 'flex',
     justifyContent: 'center',
@@ -112,21 +114,23 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 10,
+    marginTop: -40,
   },
   select: {
+    height: '75%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 15,
   },
   emojiImage: {
-    width: 250,
-    height: 250,
+    width: 200,
+    height: 200,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 300,
-    margin: 20,
+    margin: 5,
     backgroundColor: '#D9D9D9',
   },
   horizontalLine: {
@@ -147,7 +151,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   emojiText: {
-    fontSize: 50,
+    fontSize: 40,
     margin: -10,
   },
   buttonContainer: {
