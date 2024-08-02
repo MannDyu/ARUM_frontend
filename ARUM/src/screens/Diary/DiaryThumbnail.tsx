@@ -95,7 +95,8 @@ const DiaryThumbnail: React.FC<RootStackScreenProps<'DiaryThumbnail'>> = ({ navi
     <View style={styles.container}>
       <Text style={styles.title}>감정일기</Text>
       <Image
-        source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3YzEXu-vFvOPNwLs1Tn4Oeo97mFazUTOvIw&s' }}
+        // source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3YzEXu-vFvOPNwLs1Tn4Oeo97mFazUTOvIw&s' }}
+        source={require('../../assets/images/good.png')}
         style={styles.image}
       />
       <Text style={styles.date}>2024. 07. 15</Text>
@@ -121,7 +122,7 @@ const DiaryThumbnail: React.FC<RootStackScreenProps<'DiaryThumbnail'>> = ({ navi
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9f9f9',
+    backgroundColor: '#FDFDED',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 24,
@@ -130,21 +131,23 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginTop: 50,
+    marginTop: '10%',
   },
   image: {
     width: 250,
     height: 250,
-    marginTop: 65,
+    marginTop: '5%',
+    borderColor: '#000',
+    borderWidth: 1,
   },
   date: {
     fontSize: 18,
-    marginTop: -10,
+    marginTop: 0,
     marginBottom: -20,
   },
   text: {
     fontSize: 18,
-    marginTop: -25,
+    marginTop: 20,
     marginBottom: 10,
   },
   buttonContainer: {
