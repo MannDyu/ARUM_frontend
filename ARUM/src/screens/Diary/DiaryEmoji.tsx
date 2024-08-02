@@ -90,6 +90,7 @@ export default function DiaryEmoji() {
           buttonStyle={styles.buttonStyle}
           containerStyle={styles.containerStyle}
           onPress={() => navigation.navigate('DiaryEmotion')} //! 선택되면 활성화 -> 선택되어야 넘어가야함!!
+          disabled={isEmoji !== null ? false : true}
         />
       </View>
     </View>

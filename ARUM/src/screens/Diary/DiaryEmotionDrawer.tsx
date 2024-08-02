@@ -148,6 +148,7 @@ const EmotionBottomSheet: React.FC<EmotionBottomSheetProps> = ({ selectedEmotion
               onPress={handleSave}
               buttonStyle={styles.buttonStyle}
               containerStyle={{}}
+              disabled={selectedAdjectives.length > 0 ? false : true}
             />
           </View>
         </View>
