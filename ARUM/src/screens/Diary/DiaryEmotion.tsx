@@ -151,13 +151,14 @@ export default function Diary() {
             title="이전"
             buttonStyle={styles.buttonStyle}
             containerStyle={styles.containerStyle}
-            onPress={() => navigation.navigate('DiaryEmotion')}
+            onPress={() => navigation.navigate('DiaryEmoji')}
             />
           <Button
             title="다음"
             buttonStyle={styles.buttonStyle}
             containerStyle={styles.containerStyle}
             onPress={() => navigation.navigate('RecordDiary')} //! 선택되면 활성화 -> 선택되어야 넘어가야함!!
+            disabled={selected !== null ? false : true}
           />
         </View>
         <DiaryEmotionDrawer
