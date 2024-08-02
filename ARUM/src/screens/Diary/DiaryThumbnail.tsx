@@ -137,8 +137,6 @@ const styles = StyleSheet.create({
     width: 250,
     height: 250,
     marginTop: '5%',
-    borderColor: '#000',
-    borderWidth: 1,
   },
   date: {
     fontSize: 18,
