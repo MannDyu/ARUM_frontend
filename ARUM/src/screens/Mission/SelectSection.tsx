@@ -42,7 +42,7 @@ const SelectSection = () => {
       setSelectedArea('none');
     }, [])
   );
-  //! Back 아이콘에 navigation 존재!
+  
   return (
     <View style={{ alignItems: 'center', backgroundColor: '#FDFDED', height: 1200 }}>
       <TitleContainer>

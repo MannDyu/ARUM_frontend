@@ -151,13 +151,14 @@ export default function Diary() {
             title="이전"
             buttonStyle={styles.buttonStyle}
             containerStyle={styles.containerStyle}
-            onPress={() => navigation.navigate('DiaryEmotion')}
+            onPress={() => navigation.navigate('DiaryEmoji')}
             />
           <Button
             title="다음"
             buttonStyle={styles.buttonStyle}
             containerStyle={styles.containerStyle}
             onPress={() => navigation.navigate('RecordDiary')} //! 선택되면 활성화 -> 선택되어야 넘어가야함!!
+            disabled={selected !== null ? false : true}
           />
         </View>
         <DiaryEmotionDrawer
@@ -178,7 +179,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     position: 'absolute',
-    bottom: '25%',
+    bottom: '27%',
   },
   buttonStyle: {
     backgroundColor: '#181818',
@@ -191,9 +192,9 @@ const styles = StyleSheet.create({
   },
   buttonTitle: {},
   selectContainer: {
-    height: '100%',
+    height: '105%',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 0,
   },
   selections: {
     display: 'flex',
@@ -208,8 +209,8 @@ const styles = StyleSheet.create({
     paddingBottom: '10%',
   },
   title: {
-    fontSize: 20,
-    margin: 20,
+    fontSize: 18,
+    margin: 10,
     marginTop: 60,
   },
   emotionsContainer: {
@@ -217,10 +218,10 @@ const styles = StyleSheet.create({
   },
   emotionOptions: {
     borderRadius: 50,
-    height: 45,
+    height: 40,
     display: 'flex',
     borderWidth: 1,
-    marginBottom: 15,
+    marginBottom: '2%',
   },
   checkedIcon: {},
   uncheckedIcon: {},
@@ -228,6 +229,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     flex: 1,
     fontWeight: 400,
-    fontSize: 20,
+    fontSize: 18,
   },
 });
