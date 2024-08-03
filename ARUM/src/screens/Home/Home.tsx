@@ -142,6 +142,9 @@ export default function Home() {
       <TouchableOpacity style={styles.button} onPress={handleLogout}>
         <Text style={styles.buttonText}>로그아웃</Text>
       </TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={()=> navigation.navigate('FindCenter')}>
+        <Text style={styles.buttonText}>센터 찾기</Text>
+      </TouchableOpacity>
     </View>
   );
 }
