@@ -85,50 +85,7 @@ export default function Home() {
       }
     }
   };
-  // const handleLogout = async () => {
-  //   try {
-  //     // 저장된 토큰 가져오기
-  //     const token = await AsyncStorage.getItem('userToken');
-
-  //     if (!token) {
-  //       Alert.alert('로그아웃 오류', '토큰을 찾을 수 없습니다.');
-  //       navigation.navigate('Login');
-  //       return;
-  //     }
-  //     // 서버에 로그아웃 요청
-  //     const response = await axios.post(
-  //       `${API_URL}/users/logout/`,
-  //       {},
-  //       {
-  //         headers: {
-  //           'Authorization': `${token}`, // "Token " 접두사 제거
-  //           'Content-Type': 'application/json',
-  //         }
-  //       }
-  //     );
-
-  //     console.log('Logout response:', response.data); // 응답 로깅
-      
-  //     // 토큰 삭제
-  //     await AsyncStorage.removeItem('userToken');
-
-  //     // 성공 메시지 표시
-  //     Alert.alert('로그아웃 성공', '로그인 화면으로 이동합니다.');
-
-  //     // 로그인 화면으로 이동
-  //     navigation.navigate('Login');
-  //   } catch (error) {
-  //     if (axios.isAxiosError(error) && error.response) {
-  //       console.error('Logout error response:', error.response.data);
-  //       console.error('Logout error status:', error.response.status);
-  //     }
-  //     console.error('Logout error:', error);
-  //     Alert.alert('로그아웃 실패', '다시 시도해 주세요.');
-  //   }
-  // };
-
-
-
+ 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome, {username}</Text>
