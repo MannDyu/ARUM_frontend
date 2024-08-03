@@ -86,6 +86,10 @@ export default function Home() {
     }
   };
  
+import { StyleSheet, Text, View } from 'react-native'
+import React from 'react'
+
+export default function Home() {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome, {username}</Text>
