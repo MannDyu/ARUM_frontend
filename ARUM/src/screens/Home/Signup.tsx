@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SignupScreenNavigationProp } from '../../navigation/types';
 import { validateEmail, validatePassword, storeToken } from '../../utils/authUtils';
 import axios from 'axios';
 
-const API_URL = 'http://192.168.35.208:8000'; // 실제 서버 주소로 변경 필요
+
+const API_URL = 'https://90b0-1-240-231-249.ngrok-free.app'
 
 export default function Signup() {
   const navigation = useNavigation<SignupScreenNavigationProp>();
@@ -14,11 +15,13 @@ export default function Signup() {
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
   const [error, setError] = useState('');
+ 
 
   const handleSignup = async () => {
-    console.log('here')
+    console.log('Sending registration request...');
     setError('');
 
+    // 클라이언트 측 유효성 검사
     if (!validateEmail(email)) {
       setError('유효한 이메일 주소를 입력해주세요.');
       return;
@@ -34,46 +37,43 @@ export default function Signup() {
       return;
     }
 
-    try {
-      const response = await axios.post(`${API_URL}/users/register/`, {
-        username,
-        email,
-        password,
-        password2
-      });
-    
-      if (response.status === 201) {
-        // 회원가입 성공 후 로그인 요청
-        const loginResponse = await axios.post(`${API_URL}/users/login/`, {
-          username,
-          password
-        });
+    if (username.length < 3) {
+      setError('사용자 이름은 최소 3자 이상이어야 합니다.');
+      return;
+    }
 
-        if (loginResponse.status === 200) {
-          const { token } = loginResponse.data;
-          await storeToken(token);
-          Alert.alert('회원가입 성공', '홈 화면으로 이동합니다.');
-          navigation.navigate('Home');
-        }
-      }
+    try {
+      const response = await axios.post(
+        `${API_URL}/users/register/`,
+        {
+          username,
+          email,
+          password,
+          password2,
+        },
+        { timeout: 30000 }
+      );
+      console.log('Registration response:', response.data);
+
+      // 회원가입 성공 시 Home 화면으로 이동하고 사용자 이름 전달
+      navigation.navigate('Home', { username: response.data.username });
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.error('Axios error:', error.response?.data, error.message);
-        if (error.response) {
-          const errorMessage = error.response.data.email || 
-                               error.response.data.username || 
-                               error.response.data.password ||
-                               JSON.stringify(error.response.data);
-          setError(errorMessage || '회원가입 중 오류가 발생했습니다. 다시 시도해주세요.');
+        console.error('Axios error:', error.message);
+        if (error.response && error.response.data) {
+          console.error('Server response:', error.response.data);
+          setError(`서버 오류: ${JSON.stringify(error.response.data)}`);
         } else {
-          setError('서버와의 연결에 실패했습니다. 네트워크 연결을 확인해주세요.');
+          setError('서버에 연결할 수 없습니다.');
         }
       } else {
-        console.error('Unexpected error:', error);
-        setError('예기치 못한 오류가 발생했습니다. 다시 시도해주세요.');
+        console.error('Non-Axios error:', error);
+        setError('예기치 못한 오류가 발생했습니다.');
       }
     }
+    
   };
+
 
 
   return (

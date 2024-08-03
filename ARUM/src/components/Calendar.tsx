@@ -10,19 +10,20 @@ interface DateObject {
 }
 
 interface CalendarProps {
-  onDayPress: (day: DateObject) => void;
+  onDayPress?: (day: DateObject) => void;
+  markedDates?: { [key: string]: any };
 }
 
-const Calendar: React.FC<CalendarProps> = ({ onDayPress }) => {
+const Calendar: React.FC<CalendarProps> = ({ onDayPress, markedDates }) => {
   return (
     <RNCalendar
-      onDayPress={(day:any) => onDayPress(day as DateObject)}
-      markedDates={{
-        '2024-07-15': { marked: true, dotColor: 'blue' }, 
-      }}
+      onDayPress={(day: DateObject) => onDayPress?.(day)}
+      markedDates={markedDates} 
     />
   );
 };
 
 export default Calendar;
+
+
 

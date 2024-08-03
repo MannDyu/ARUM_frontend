@@ -1,37 +1,79 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { LoginScreenNavigationProp } from  '../../navigation/types';
-import { validateEmail } from  '../../utils/authUtils';
+import { LoginScreenNavigationProp } from '../../navigation/types';
+import { validateEmail } from '../../utils/authUtils';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // AsyncStorage를 사용하여 토큰 저장
+
+
+
+const API_URL = 'https://90b0-1-240-231-249.ngrok-free.app'
 
 export default function Login() {
   const navigation = useNavigation<LoginScreenNavigationProp>();
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState(''); // 사용자 이름 추가
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const handleLogin = async () => {
     setError('');
 
-    if (!validateEmail(email)) {
-      setError('유효한 이메일 주소를 입력해주세요.');
+    if (username.trim() === '') {
+      setError('유효한 사용자 이름을 입력해주세요.');
       return;
     }
 
     try {
-      const response = await axios.post('http://your-backend-url/api/login/', {
-        email,
+      const response = await axios.post(`${API_URL}/users/login/`, {
+        username, // 사용자 이름으로 로그인
         password,
       });
 
       if (response.status === 200) {
-        // 여기서 토큰을 저장하고 메인 화면으로 이동
+        const { token, username } = response.data;
+        console.log('Saving token:', token);
+        console.log('Username:', username);
+        // 토큰 저장
+        try {
+          await AsyncStorage.setItem('userToken', token);
+          const storedToken = await AsyncStorage.getItem('userToken');
+          console.log('Stored token:', storedToken);
+
+          if (storedToken !== token) {
+            throw new Error('Token storage failed');
+          }
+
+
+        } catch (error) {
+          console.error('Error storing token:', error);
+          Alert.alert('로그인 오류', '토큰 저장에 실패했습니다. 다시 시도해주세요.');
+          return;
+        }
+        
+
+        // 로그인 성공 시 사용자 이름을 Home 화면으로 전달
+        // 네비게이션 전에 토큰이 정말 저장되었는지 확인
+        const storedToken = await AsyncStorage.getItem('userToken');
+        console.log('Stored token:', storedToken);
+
         Alert.alert('로그인 성공', '메인 화면으로 이동합니다.');
-        navigation.navigate('Home');
+        console.log(username)
+        // navigation.navigate('Home', { username });
+        navigation.navigate('Home', { username: response.data.username });
       }
     } catch (error) {
-      setError('로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.');
+      console.error('Login error:', error);
+      if (axios.isAxiosError(error) && error.response) {
+        const { data } = error.response;
+        if (data && data.error) {
+          setError(data.error);
+        } else {
+          setError('로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.');
+        }
+      } else {
+        setError('서버에 연결할 수 없습니다.');
+      }
     }
   };
 
@@ -40,10 +82,10 @@ export default function Login() {
       <Text style={styles.title}>로그인</Text>
       <TextInput
         style={styles.input}
-        placeholder="이메일"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
+        placeholder="사용자 이름"
+        value={username}
+        onChangeText={setUsername}
+        autoCapitalize="none"
       />
       <TextInput
         style={styles.input}

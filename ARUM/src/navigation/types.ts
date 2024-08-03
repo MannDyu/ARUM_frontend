@@ -6,7 +6,7 @@ import { StackScreenProps, StackNavigationProp } from '@react-navigation/stack';
 
 
 export type RootStackParamList = {
-  Home: undefined;
+  Home: { username: string };
   Signup: undefined;
   Login: undefined;
   DrawerNavigator: undefined;
