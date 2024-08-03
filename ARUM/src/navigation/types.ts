@@ -6,7 +6,9 @@ import { StackScreenProps, StackNavigationProp } from '@react-navigation/stack';
 
 
 export type RootStackParamList = {
-  Home: undefined;
+  Home: { username: string };
+  Signup: undefined;
+  Login: undefined;
   DrawerNavigator: undefined;
   
   // Mission related screens
@@ -61,6 +63,12 @@ export type RootStackScreenProps<T extends keyof RootStackParamList> =
 export type NavigationProp<T extends keyof RootStackParamList> = 
   StackNavigationProp<RootStackParamList, T>;
 
+// Home 
+export type HomeScreenNavigationProp = NavigationProp<'Home'>;
+export type SignupScreenNavigationProp = NavigationProp<'Signup'>;
+export type LoginScreenNavigationProp = NavigationProp<'Login'>;
+
+//Mission
 export type MissionScreenNavigationProp = NavigationProp<'Mission'>;
 export type DailyMissionScreenNavigationProp = NavigationProp<'DailyMission'>;
 export type SelfTestScreenNavigationProp = StackNavigationProp<RootStackParamList, 'SelfTest'>;
@@ -75,6 +83,8 @@ export type CompletedMissionDetailScreenNavigationProp = NavigationProp<'Complet
 export type EditCompletedMissionScreenNavigationProp = NavigationProp<'EditCompletedMission'>;
 export type SelectSectionScreenNavigationProp = NavigationProp<'SelectSection'>;
 
+
+// Self Test
 export type TestStartScreenNavigationProp = NavigationProp<'TestStart'>;
 export type TestReportScreenNavigationProp = NavigationProp<'TestReport'>;
 export type TestPageScreenNavigationProp = NavigationProp<'TestPage'>;
