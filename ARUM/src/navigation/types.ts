@@ -9,6 +9,14 @@ export type RootStackParamList = {
   Home: undefined;
   DrawerNavigator: undefined;
   
+  // 탭 네비게이터 스크린들
+  "홈": undefined;
+  "감정일기": undefined;
+  "랜덤미션": undefined;
+  "자가테스트": undefined;
+  "마이페이지": undefined;
+
+  
   // Mission related screens
   Mission: { 
     selectedArea?: string; 
@@ -49,17 +57,14 @@ export type RootStackParamList = {
   DiaryDetail: { diaryId?: string };
 };
 
-export interface ImageUploaderProps {
-  imageUri: string;
-  onUpload: (uri: string) => void;
-}
 
-
+// 스크린 네비게이션 관련 타입
 export type RootStackScreenProps<T extends keyof RootStackParamList> = 
   StackScreenProps<RootStackParamList, T>;
 
 export type NavigationProp<T extends keyof RootStackParamList> = 
   StackNavigationProp<RootStackParamList, T>;
+
 
 export type MissionScreenNavigationProp = NavigationProp<'Mission'>;
 export type DailyMissionScreenNavigationProp = NavigationProp<'DailyMission'>;
@@ -80,6 +85,12 @@ export type TestReportScreenNavigationProp = NavigationProp<'TestReport'>;
 export type TestPageScreenNavigationProp = NavigationProp<'TestPage'>;
 export type TestLoadingScreenNavigationProp = NavigationProp<'TestLoading'>;
 export type FindCenterScreenNavigationProp = NavigationProp<'FindCenter'>;
+
+// 인터페이스 정의
+export interface ImageUploaderProps {
+  imageUri: string;
+  onUpload: (uri: string) => void;
+}
 
 export interface QuestionProps {
   onPressNext: () => void;
