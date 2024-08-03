@@ -4,9 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { SignupScreenNavigationProp } from '../../navigation/types';
 import { validateEmail, validatePassword, storeToken } from '../../utils/authUtils';
 import axios from 'axios';
-
-
-const API_URL = 'https://90b0-1-240-231-249.ngrok-free.app'
+import { API_URL, API_HOST } from '../../../ngrok_url';  // ngrok_url 파일에서 변수 가져오기
 
 export default function Signup() {
   const navigation = useNavigation<SignupScreenNavigationProp>();

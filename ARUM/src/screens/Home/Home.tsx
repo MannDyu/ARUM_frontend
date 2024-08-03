@@ -5,8 +5,8 @@ import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { HomeScreenNavigationProp, RootStackParamList } from '../../navigation/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import { API_URL, API_HOST } from '../../../ngrok_url';  // ngrok_url 파일에서 변수 가져오기
 
-const API_URL = 'https://90b0-1-240-231-249.ngrok-free.app'
 
 
 export default function Home() {
