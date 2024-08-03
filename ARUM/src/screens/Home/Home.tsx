@@ -56,10 +56,10 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',  
-    alignItems: 'center',      
-    backgroundColor: '#FDFDED', 
-    paddingBottom: 1,         
+    justifyContent: 'center',  // 화면 중앙에 컨텐츠 배치
+    alignItems: 'center',       // 화면 중앙에 컨텐츠 배치
+    backgroundColor: '#FDFDED', // 배경색상
+    paddingBottom: 1,         // 하단 바와의 여백
   },
   grid: {
     width: 330,
