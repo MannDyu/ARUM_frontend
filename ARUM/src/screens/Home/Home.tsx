@@ -1,44 +1,28 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList, NavigationProp } from '../../navigation/types'; 
 
 type HomeScreenNavigationProp = NavigationProp<'Home'>;
-type TabParamList = {
-  "홈": undefined;
-  "감정일기": undefined;
-  "랜덤미션": undefined;
-  "자가테스트": undefined;
-  "마이페이지": undefined;
-};
 
 const HomeScreen = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
 
-  const navigateToDiary = () => navigation.navigate('감정일기');
-  const navigateToMission = (params: RootStackParamList['Mission']) => navigation.navigate('랜덤미션', {screen:'Mission', params}); 
-  const navigateToSelfTest = () => navigation.navigate('자가테스트');
+  const navigateToDiary = () => navigation.navigate('Diary');
+  
+  const navigateToMission = (params: RootStackParamList['Mission']) => navigation.navigate('Mission', params); 
+  
+  const navigateToSelfTest = () => navigation.navigate('SelfTest');
+  
   const navigateToFindCenter = () => navigation.navigate('FindCenter');
-
-  // function handleNavigation(
-  //   screen: keyof RootStackParamList,
-  //   params?: RootStackParamList[keyof RootStackParamList]
-  // ): void {
-  //   if (params !== undefined) {
-  //     navigation.navigate(screen as any, params);
-  //   } else {
-  //     navigation.navigate(screen);
-  //   }
-  // }
 
   return (
     <View style={styles.container}>
       <View style={styles.grid}>
-        <TouchableOpacity style={styles.card}  onPress={navigateToDiary}>
+        <TouchableOpacity style={styles.card} onPress={navigateToDiary}>
           <Text style={styles.cardText}>감정일기 쓰기</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.card}  onPress={() => navigateToMission({ missionStatus: 'select' })}>
+        <TouchableOpacity style={styles.card} onPress={() => navigateToMission({ missionStatus: 'select' })}>
           <Text style={styles.cardText}>일일 랜덤미션</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.card} onPress={navigateToSelfTest}>
@@ -56,10 +40,10 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',  // 화면 중앙에 컨텐츠 배치
-    alignItems: 'center',       // 화면 중앙에 컨텐츠 배치
-    backgroundColor: '#FDFDED', // 배경색상
-    paddingBottom: 1,         // 하단 바와의 여백
+    justifyContent: 'center', 
+    alignItems: 'center',      
+    backgroundColor: '#FDFDED', 
+    paddingBottom: 1,        
   },
   grid: {
     width: 330,
