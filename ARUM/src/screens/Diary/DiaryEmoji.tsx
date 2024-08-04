@@ -20,7 +20,15 @@ const emojiComments = [
   '괜찮아요',
   '좋아요',
   '아주 좋아요'
-]
+];
+
+const unselectedEmojis = [
+  require('../../assets/images/emoji/black_01_verybad.png'),
+  require('../../assets/images/emoji/black_02_bad.png'),
+  require('../../assets/images/emoji/black_03_okay.png'),
+  require('../../assets/images/emoji/black_04_good.png'),
+  require('../../assets/images/emoji/black_05_verygood.png'),
+];
 
 export default function DiaryEmoji() {
   const navigation = useNavigation<DiaryScreenNavigationProp>();
@@ -72,15 +80,13 @@ export default function DiaryEmoji() {
             <View style={styles.selectEmoji}>
               <Text style={{ fontSize: 18, margin: 0 }}>기분 선택</Text>
               <View style={styles.emojis}>
-                {emojis.map((emoji, index) => ( //! 텍스트가 아니라 View로 이미지 불러와야함
+                {emojis.map((emoji, index) => (
                   <CheckBox 
                     key={index}
                     checked={isEmoji === index}
                     onPress={() => setEmoji(isEmoji === index ? null : index)}
                     checkedIcon={<Image source={emoji} style={{ width: 40, height: 40, margin: -10, marginTop: 5, marginBottom: 10 }} />}
-                    uncheckedIcon={<Image source={emoji} style={{ width: 40, height: 40, margin: -10, marginTop: 5, marginBottom: 10 }} />}
-                    // checkedIcon={emojis[index]}
-                    // uncheckedIcon={emojis[index]}
+                    uncheckedIcon={<Image source={isEmoji === null || isEmoji === index ? emoji : unselectedEmojis[index]} style={{ width: 40, height: 40, margin: -10, marginTop: 5, marginBottom: 10 }} />}
                     containerStyle={{backgroundColor: 'transparent', borderWidth: 0}}
                   />
                 ))}

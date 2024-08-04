@@ -207,7 +207,7 @@ const styles = StyleSheet.create({
   },
   flatStyle: {
     width: '100%',
-    height: '45%',
+    height: '47%',
   },
   checkContainer: {
     borderWidth: 0,
@@ -226,6 +226,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     // borderWidth: 1,
     width: '100%',
+    paddingTop: 5,
+    paddingBottom: 0,
   },
   hashtagStyle: {
     marginTop: 5,
@@ -236,6 +238,7 @@ const styles = StyleSheet.create({
     height: 30,
     margin: 5,
     marginBottom: 0,
+    paddingBottom: 0,
   },
   buttonContainer: {
     display: 'flex',
@@ -243,7 +246,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     position: 'absolute',
-    bottom: '-5%',
+    bottom: '-7%',
     width: '100%',
   },
   buttonStyle: {
