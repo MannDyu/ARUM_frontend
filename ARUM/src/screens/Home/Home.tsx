@@ -3,16 +3,16 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackParamList, NavigationProp } from '../../navigation/types'; 
 
-type HomeScreenNavigationProp = NavigationProp<'Home'>;
+type HomeScreenNavigationProp = NavigationProp<'HomeMain'>;
 
 const HomeScreen = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
 
-  const navigateToDiary = () => navigation.navigate('Diary');
+  const navigateToDiary = () => navigation.navigate('DiaryMain');
   
-  const navigateToMission = (params: RootStackParamList['Mission']) => navigation.navigate('Mission', params); 
+  const navigateToMission = (params: RootStackParamList['MissionMain']) => navigation.navigate('MissionMain', params); 
   
-  const navigateToSelfTest = () => navigation.navigate('SelfTest');
+  const navigateToSelfTest = () => navigation.navigate('SelfTestMain');
   
   const navigateToFindCenter = () => navigation.navigate('FindCenter');
 

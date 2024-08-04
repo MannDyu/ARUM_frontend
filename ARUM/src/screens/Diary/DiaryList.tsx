@@ -15,21 +15,28 @@ const DiaryList: React.FC = () => {
     setIsDateDrawerVisible(false);
   };
 
-  // 임시 데이터
+  //! 임시 데이터 -> emotion이름으로 이모지 변경
   const diaries = [
     {
       date: '15',
       dayOfWeek: '(월)',
-      emoji: '화난 이모지',
+      emotion: '슬픔',
       title: '2024.07.15 감정일기',
-      tags: ['속상한', '괴로운', '슬픈']
+      tags: ['의기소침한', '공포에 질린', '불만스러운']
     },
     {
       date: '8',
       dayOfWeek: '(월)',
-      emoji: '웃는 이모지',
+      emotion: '즐거움',
       title: '2024.07.08 감정일기',
       tags: ['행복한', '즐거운']
+    },
+    {
+      date: '20',
+      dayOfWeek: '(화)',
+      emotion: '화남',
+      title: '2024.08.20 감정일기',
+      tags: ['증오스러운', '경멸하는', '소름끼치는']
     }
   ];
 
@@ -49,17 +56,17 @@ const DiaryList: React.FC = () => {
       <ScrollView style={styles.diaryList}>
         {diaries.length > 0 ? (
           diaries.map((diary, index) => (
-            <DiaryItem 
-              key={index} 
-              {...diary} 
-              // onPress={() => console.log('Diary item pressed')}
-            />
+            <View key={index}>
+              <DiaryItem {...diary} />
+              {diaries.length > 2 && index < diaries.length - 1 && (
+              <View style={styles.verticalLine}></View>
+            )}
+            </View>
           ))
         ) : (
           <Text style={styles.noDiaryText}>아직 작성하지 않았어요</Text>
         )}
       </ScrollView>
-
       <DateDrawer
         isVisible={isDateDrawerVisible}
         onClose={() => setIsDateDrawerVisible(false)}
@@ -97,6 +104,15 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 16,
     color: '#000000',
+  },
+  verticalLine: {
+    borderLeftWidth: 1.2,
+    borderLeftColor: 'black',
+    position: 'absolute',
+    top: 70,
+    left: '6.5%',
+    height: '40%',
+    width: 0,
   },
 });
 
