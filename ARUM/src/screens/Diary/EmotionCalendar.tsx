@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import { Calendar, DateData } from 'react-native-calendars';
 
 interface DateWithEmotion {
@@ -10,6 +10,14 @@ interface DateWithEmotion {
 interface EmotionCalendarProps {
   datesWithEmotions: DateWithEmotion[];
 }
+
+const emojis: Record<string, any> = {
+  '아주 나빠요': require('../../assets/images/emoji/emoji_01_verybad.png'),
+  '나빠요': require('../../assets/images/emoji/emoji_02_bad.png'),
+  '괜찮아요': require('../../assets/images/emoji/emoji_03_okay.png'),
+  '좋아요': require('../../assets/images/emoji/emoji_04_good.png'),
+  '아주 좋아요': require('../../assets/images/emoji/emoji_05_verygood.png'),
+};
 
 const EmotionCalendar: React.FC<EmotionCalendarProps> = ({ datesWithEmotions }) => {
   const markedDates = datesWithEmotions.reduce((acc, item) => {
@@ -28,7 +36,10 @@ const EmotionCalendar: React.FC<EmotionCalendarProps> = ({ datesWithEmotions }) 
           const day = date?.day;
           return (
             <View style={styles.dayContainer}>
-              <Text style={styles.emoji}>{emoji}</Text>
+              <Image 
+                source={emojis[emoji]}
+                style={styles.emoji}
+              />
               <Text style={styles.dayText}>{day}</Text>
             </View>
           );
@@ -43,23 +54,27 @@ const EmotionCalendar: React.FC<EmotionCalendarProps> = ({ datesWithEmotions }) 
 const styles = StyleSheet.create({
   container: {
     padding: 1,
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   calendar: {
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 10,
     height: 300,
+    width: 330,
   },
   dayContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    height: 25,
-    width: 25,
+    height: 29,
+    width: 29,
   },
   emoji: {
-    fontSize: 20,
+    width: 22,
     height: 22,
-    textAlign: 'center',
+    marginBottom: 2,
   },
   dayText: {
     fontSize: 14,

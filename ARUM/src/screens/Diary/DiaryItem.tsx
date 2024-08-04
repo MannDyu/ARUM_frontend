@@ -1,21 +1,31 @@
 // DiaryItem.tsx
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
 import HashTag from './HashTag';
+import { DiaryDetailScreenNavigationProp } from '../../navigation/types';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import DiaryDetail from './DiaryDetail';
 import { RootStackParamList } from '../../types';
-import { DiaryDetailScreenNavigationProp } from '../../navigation/types';
 
 interface DiaryItemProps {
   date: string;
   dayOfWeek: string;
-  emoji: string;
+  emotion: string;
   title: string;
   tags: string[];
 }
 
-const DiaryItem: React.FC<DiaryItemProps> = ({ date, dayOfWeek, emoji, title, tags }) => {
+const emotions: { [key: string]: any } = {
+  기쁨: require('../../assets/images/emotion/joy.png'),
+  화남: require('../../assets/images/emotion/mad.png'),
+  슬픔: require('../../assets/images/emotion/sad.png'),
+  즐거움: require('../../assets/images/emotion/playful.png'),
+  사랑: require('../../assets/images/emotion/love.png'),
+  미움: require('../../assets/images/emotion/dislike.png'),
+  바람: require('../../assets/images/emotion/want.png'),
+};
+
+const DiaryItem: React.FC<DiaryItemProps> = ({ date, dayOfWeek, emotion, title, tags }) => {
   const navigation = useNavigation<DiaryDetailScreenNavigationProp>();
 
   const handlePress = () => {
@@ -29,8 +39,11 @@ const DiaryItem: React.FC<DiaryItemProps> = ({ date, dayOfWeek, emoji, title, ta
         <Text style={styles.dayOfWeekText}>{dayOfWeek}</Text>
       </View>
       <TouchableOpacity style={styles.contentContainer} onPress={handlePress}>
-        <View style={styles.emojiContainer}>
-          <Text style={styles.emojiText}>{emoji}</Text>
+        <View>
+          <Image 
+            source={emotions[emotion]}
+            style={styles.emojiContainer}
+          />
         </View>
         <View style={styles.infoContainer}>
           <Text style={styles.titleText}>{title}</Text>
@@ -41,7 +54,6 @@ const DiaryItem: React.FC<DiaryItemProps> = ({ date, dayOfWeek, emoji, title, ta
             ))}
           </View> */}
         </View>
-
       </TouchableOpacity>
     </View>
   );
@@ -52,12 +64,15 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     marginBottom: 10,
-    paddingHorizontal: 20,
+    paddingRight: 20,
+    paddingLeft: 10,
+    height: 100,
   },
   dateContainer: {
     alignItems: 'center',
     marginRight: 10,
     width: 30,
+    marginTop: 15,
   },
   dateDot: {
     width: 8,
@@ -69,7 +84,7 @@ const styles = StyleSheet.create({
   dateText: {
     fontFamily: 'Inter',
     fontSize: 17,
-    fontWeight: 'bold',
+    fontWeight: '400',
     color: '#000000',
   },
   dayOfWeekText: {
@@ -80,35 +95,34 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#FFFFFF',
-    borderRadius: 10,
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingRight: 20,
-    paddingLeft: 20,
+    backgroundColor: '#fff',
     alignItems: 'center',
+    borderWidth: 1,
+    borderRadius: 10,
   },
   emojiContainer: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 45,
+    height: 45,
+    borderRadius: 25,
     backgroundColor: '#F0F0F0',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 20,
-  },
-  emojiText: {
-    fontSize: 24,
+    marginHorizontal: 10,
+    borderWidth: 1,
   },
   infoContainer: {
     flex: 1,
+    height: 60,
+    width: '100%',
   },
   titleText: {
     fontFamily: 'Inter',
-    fontSize: 14,
-    fontWeight: 'bold',
+    fontSize: 17,
+    fontWeight: '400',
     color: '#000000',
-    marginBottom: 4,
+    margin: 5,
+    marginLeft: 0,
+    marginBottom: 10,
   },
   tagsContainer: {
     flexDirection: 'row',
