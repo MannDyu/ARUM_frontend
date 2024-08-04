@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   grid: {
     width: 330,
-    height: 80,
+    height: 140,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',

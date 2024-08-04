@@ -5,7 +5,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../navigation/types';
 const { width, height } = Dimensions.get('window');
 
-type SelfTestScreenNavigationProp = StackNavigationProp<RootStackParamList, 'SelfTest'>;
+type SelfTestScreenNavigationProp = StackNavigationProp<RootStackParamList, 'SelfTestMain'>; //! 이름 수정
 
 export default function SelfTest() {
   const navigation = useNavigation<SelfTestScreenNavigationProp>();
@@ -20,7 +20,7 @@ export default function SelfTest() {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>우울증 자가진단</Text>
         <Text style={styles.subtitle}>1달마다 나의 마음 상태를 살펴보아요</Text>
@@ -67,11 +67,12 @@ export default function SelfTest() {
         <TouchableOpacity style={styles.startButton} onPress={() => navigation.navigate('TestStart')}>
           <Text style={styles.startButtonText}>자가진단 시작</Text>
         </TouchableOpacity>
+        {/* 사용자 id 통해 지난 결과 보고서 불러오기 */}
         <TouchableOpacity style={styles.reportButton} onPress={() => navigation.navigate('TestReport', { score: 0 })}>
           <Text style={styles.reportButtonText}>자가진단 결과 보고서</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 

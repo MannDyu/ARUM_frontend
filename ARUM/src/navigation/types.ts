@@ -6,8 +6,9 @@ import { StackScreenProps, StackNavigationProp } from '@react-navigation/stack';
 
 
 export type RootStackParamList = {
-  Home: { username: string };
-  Signup: undefined;
+  Main: undefined; //! 추가: 중복방지 위해 수정
+  HomeMain: { username: string };
+  Signup: undefined; //! Home -> HomeMain 중복방지 위해 수정
   Login: undefined;
   DrawerNavigator: undefined;
   
@@ -20,7 +21,7 @@ export type RootStackParamList = {
 
   
   // Mission related screens
-  Mission: { 
+  MissionMain: {  //! Mission -> MissionMain 중복방지 위해 수정
     selectedArea?: string; 
     completedMissionId?: string; 
     missionStatus?: 'select' | 'finish' | 'completed' | 'success' 
@@ -38,7 +39,7 @@ export type RootStackParamList = {
   };
 
   // SelfTest related screens
-  SelfTest: undefined;
+  SelfTestMain: undefined;  //! SelfTest -> SelfTestMain 중복방지 위해 수정
   TestStart: undefined;
   TestReport: { score: number };
   TestPage: undefined;
@@ -46,7 +47,7 @@ export type RootStackParamList = {
   FindCenter: undefined;
 
   // Diary related screens
-  Diary: undefined;
+  DiaryMain: undefined; //! Diary -> DiaryMain 중복방지 위해 수정
   RecordDiary: { 
     date?: string; 
     editMode?: boolean; 
@@ -67,10 +68,10 @@ export type RootStackScreenProps<T extends keyof RootStackParamList> =
 export type NavigationProp<T extends keyof RootStackParamList> = 
   StackNavigationProp<RootStackParamList, T>;
 
-export type MissionScreenNavigationProp = NavigationProp<'Mission'>;
-export type DailyMissionScreenNavigationProp = NavigationProp<'DailyMission'>;
-export type SelfTestScreenNavigationProp = StackNavigationProp<RootStackParamList, 'SelfTest'>;
-export type DiaryScreenNavigationProp = NavigationProp<'Diary'>;
+export type MissionScreenNavigationProp = NavigationProp<'MissionMain'>; //! 수정
+export type DailyMissionScreenNavigationProp = NavigationProp<'DailyMission'>; //! 수정
+export type SelfTestScreenNavigationProp = StackNavigationProp<RootStackParamList, 'SelfTestMain'>;
+export type DiaryScreenNavigationProp = NavigationProp<'DiaryMain'>; //! 수정
 export type RecordDiaryScreenNavigationProp = NavigationProp<'RecordDiary'>;
 export type DiaryThumbnailScreenNavigationProp = NavigationProp<'DiaryThumbnail'>;
 export type DiaryDetailScreenNavigationProp = NavigationProp<'DiaryDetail'>;
@@ -80,7 +81,6 @@ export type CompletedMissionRecordScreenNavigationProp = NavigationProp<'Complet
 export type CompletedMissionDetailScreenNavigationProp = NavigationProp<'CompletedMissionDetail'>;
 export type EditCompletedMissionScreenNavigationProp = NavigationProp<'EditCompletedMission'>;
 export type SelectSectionScreenNavigationProp = NavigationProp<'SelectSection'>;
-
 
 // Self Test
 export type TestStartScreenNavigationProp = NavigationProp<'TestStart'>;

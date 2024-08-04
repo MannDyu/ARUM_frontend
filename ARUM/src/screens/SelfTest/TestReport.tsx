@@ -71,7 +71,7 @@ const TestReport: React.FC<TestReportProps> = ({ route, navigation }) => {
           )}
           <TouchableOpacity
             style={styles.completeButton}
-            onPress={() => navigation.navigate('Home')}
+            onPress={() => navigation.navigate('SelfTest')}
           >
             <Text style={styles.completeButtonText}>완료</Text>
           </TouchableOpacity>

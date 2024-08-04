@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { View, Text, StyleSheet, FlatList} from 'react-native';
+import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
 import { CheckBox, Button } from 'react-native-elements';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -23,9 +23,20 @@ interface EmotionBottomSheetProps {
   selectedEmotion: string | null;
   isVisible: boolean;
   onClose: () => void;
-}
+  index: number;
+};
 
-const EmotionBottomSheet: React.FC<EmotionBottomSheetProps> = ({ selectedEmotion, isVisible, onClose }) => {
+const emotions = [
+  require('../../assets/images/emotion/joy.png'),
+  require('../../assets/images/emotion/mad.png'),
+  require('../../assets/images/emotion/sad.png'),
+  require('../../assets/images/emotion/playful.png'),
+  require('../../assets/images/emotion/love.png'),
+  require('../../assets/images/emotion/dislike.png'),
+  require('../../assets/images/emotion/want.png'),
+];
+
+const EmotionBottomSheet: React.FC<EmotionBottomSheetProps> = ({ selectedEmotion, isVisible, onClose, index }) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const adjectives = useMemo(() => {
     if (selectedEmotion) {
@@ -109,8 +120,12 @@ const EmotionBottomSheet: React.FC<EmotionBottomSheetProps> = ({ selectedEmotion
         backgroundStyle={styles.sheetStyle}
       >
         <View style={styles.sheetContent}>
-          <View style={styles.image}>
+          <View>
             {/* 이모지 불러올 부분 */}
+            <Image
+              source={emotions[index]}
+              style={styles.image}
+            />
           </View>
           <Text style={styles.title}>감정을 더 자세히 묘사해주세요</Text>
           <Text style={styles.comment}>감정은 세 개까지 선택할 수 있어요.</Text>
@@ -171,9 +186,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-    width: 40,
-    height: 40,
-    borderWidth: 1,
+    width: 45,
+    height: 45,
+    borderWidth: 0.5,
     borderColor: 'black',
     borderRadius: 50,
     marginBottom: 10,
@@ -185,14 +200,14 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   comment: {
-    marginBottom: 10,
+    marginBottom: 5,
     fontSize: 12,
     color: 'gray',
     textAlign: 'center',
   },
   flatStyle: {
     width: '100%',
-    height: '45%',
+    height: '47%',
   },
   checkContainer: {
     borderWidth: 0,
@@ -211,6 +226,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     // borderWidth: 1,
     width: '100%',
+    paddingTop: 5,
+    paddingBottom: 0,
   },
   hashtagStyle: {
     marginTop: 5,
@@ -221,6 +238,7 @@ const styles = StyleSheet.create({
     height: 30,
     margin: 5,
     marginBottom: 0,
+    paddingBottom: 0,
   },
   buttonContainer: {
     display: 'flex',
@@ -228,7 +246,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
     position: 'absolute',
-    bottom: '-5%',
+    bottom: '-7%',
     width: '100%',
   },
   buttonStyle: {

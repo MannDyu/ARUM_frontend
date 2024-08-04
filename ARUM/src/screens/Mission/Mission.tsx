@@ -5,7 +5,7 @@ import DailyMission from './DailyMisison';
 import CompletedMission from './CompletedMission';
 import { RootStackScreenProps, NavigationProp } from '../../navigation/types';
 
-type MissionProps = RootStackScreenProps<'Mission'>;
+type MissionProps = RootStackScreenProps<'MissionMain'>;
 
 export default function Mission({ route, navigation }: MissionProps) {
   const [selectedButton, setSelectedButton] = useState<'left' | 'right'>('left');
@@ -73,8 +73,8 @@ export default function Mission({ route, navigation }: MissionProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     paddingTop: 40,
+    backgroundColor: '#FDFDED',
   },
   title: {
     fontSize: 24,

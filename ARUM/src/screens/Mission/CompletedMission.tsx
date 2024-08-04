@@ -16,7 +16,7 @@ const CompletedMission: React.FC = () => {
   const navigation = useNavigation<CompletedMissionScreenNavigationProp>();
 
    // 임시 데이터 사용 (실제로는 completedMissions를 사용해야 함)
-   const missions = [
+  const missions = [
     { id: '1', date: '2024-07-15', title: '균형있는 식사 한 끼 하기', tag: '일상' },
     // 추가 미션 데이터
   ];
@@ -39,7 +39,7 @@ const CompletedMission: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#FDFDED',
   },
   tabContainer: {
     flexDirection: 'row',
@@ -49,8 +49,6 @@ const styles = StyleSheet.create({
   tab: {
     fontSize: 20,
     padding: 5,
-    
-    
   },
   activeTab: {
     fontWeight: 'bold',
@@ -60,7 +58,7 @@ const styles = StyleSheet.create({
     padding: 10,
     fontWeight: 'bold',
     fontSize: 20,
-    marginVertical: 10,
+    marginVertical: 0,
     marginLeft: 20,
   },
 });

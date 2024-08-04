@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import React, { useState } from 'react';
 import {Button, CheckBox} from '@rneui/themed';
 import Header from '../../components/Header';
@@ -7,13 +7,28 @@ import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { DiaryScreenNavigationProp } from '../../navigation/types';
 
 const emojis = [
-  "😭",
-  "😩",
-  "😕",
-  "😚",
-  "😆"
+  require('../../assets/images/emoji/emoji_01_verybad.png'),
+  require('../../assets/images/emoji/emoji_02_bad.png'),
+  require('../../assets/images/emoji/emoji_03_okay.png'),
+  require('../../assets/images/emoji/emoji_04_good.png'),
+  require('../../assets/images/emoji/emoji_05_verygood.png'),
 ];
 
+const emojiComments = [
+  '아주 나빠요',
+  '나빠요',
+  '괜찮아요',
+  '좋아요',
+  '아주 좋아요'
+];
+
+const unselectedEmojis = [
+  require('../../assets/images/emoji/black_01_verybad.png'),
+  require('../../assets/images/emoji/black_02_bad.png'),
+  require('../../assets/images/emoji/black_03_okay.png'),
+  require('../../assets/images/emoji/black_04_good.png'),
+  require('../../assets/images/emoji/black_05_verygood.png'),
+];
 
 export default function DiaryEmoji() {
   const navigation = useNavigation<DiaryScreenNavigationProp>();
@@ -51,11 +66,13 @@ export default function DiaryEmoji() {
         <View style={styles.emojiContainer}>
           <View style={styles.select}>
             <Text style={{ fontSize: 18, margin: 10, marginTop: 40 }}>오늘 기분이 어땠나요?</Text>
-            <View style={styles.emojiImage}>
+            <View style={[styles.emojiImage, { backgroundColor: isEmoji !== null ? 'transparent' : '#D9D9D9' }]} >
               {(isEmoji!==null) ? //! 텍스트가 아니라 View로 이미지 불러와야함
-                <Text style={styles.emojiText}>
-                  {emojis[isEmoji]}
-                </Text> :
+                <>
+                  <Image source={emojis[isEmoji]} style={{ width: 150, height: 150 }} />
+                  <Text style={{ marginTop: 10, fontSize: 18 }}>{emojiComments[isEmoji]}</Text>
+                </>
+                :
                 <Text style={{ fontSize: 18, textAlign: 'center' }}>{`기분을\n선택해주세요`}</Text>
               }
             </View>
@@ -63,13 +80,13 @@ export default function DiaryEmoji() {
             <View style={styles.selectEmoji}>
               <Text style={{ fontSize: 18, margin: 0 }}>기분 선택</Text>
               <View style={styles.emojis}>
-                {emojis.map((emoji, index) => ( //! 텍스트가 아니라 View로 이미지 불러와야함
+                {emojis.map((emoji, index) => (
                   <CheckBox 
                     key={index}
                     checked={isEmoji === index}
                     onPress={() => setEmoji(isEmoji === index ? null : index)}
-                    checkedIcon={<View><Text style={styles.emojiText}>{emoji}</Text></View>}
-                    uncheckedIcon={<View><Text style={styles.emojiText}>{emoji}</Text></View>}
+                    checkedIcon={<Image source={emoji} style={{ width: 40, height: 40, margin: -10, marginTop: 5, marginBottom: 10 }} />}
+                    uncheckedIcon={<Image source={isEmoji === null || isEmoji === index ? emoji : unselectedEmojis[index]} style={{ width: 40, height: 40, margin: -10, marginTop: 5, marginBottom: 10 }} />}
                     containerStyle={{backgroundColor: 'transparent', borderWidth: 0}}
                   />
                 ))}
@@ -83,8 +100,8 @@ export default function DiaryEmoji() {
           title="이전"
           buttonStyle={styles.buttonStyle}
           containerStyle={styles.containerStyle}
-          onPress={() => navigation.navigate('Diary')}
-          />
+          onPress={() => (setIsPopupVisible(true))}
+        />
         <Button
           title="다음"
           buttonStyle={styles.buttonStyle}
@@ -132,7 +149,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 300,
     margin: 5,
-    backgroundColor: '#D9D9D9',
   },
   horizontalLine: {
     width: 350,
@@ -150,10 +166,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-  },
-  emojiText: {
-    fontSize: 40,
-    margin: -10,
   },
   buttonContainer: {
     display: 'flex',

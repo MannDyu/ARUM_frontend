@@ -19,13 +19,13 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
       <TouchableOpacity
         style={[
           styles.button,
-          selectedButton === 'left' && styles.selectedButton,
+          selectedButton === 'left' ? styles.selectedButton : styles.unselectedButton,
         ]}
         onPress={() => onToggle('left')}
       >
         <Text style={[
           styles.buttonText,
-          selectedButton === 'left' && styles.selectedButtonText,
+          selectedButton === 'left' ? styles.selectedButtonText : styles.unselectedButtonText,
         ]}>
           {leftButton}
         </Text>
@@ -33,13 +33,13 @@ const ToggleButton: React.FC<ToggleButtonProps> = ({
       <TouchableOpacity
         style={[
           styles.button,
-          selectedButton === 'right' && styles.selectedButton,
+          selectedButton === 'right' ? styles.selectedButton : styles.unselectedButton,
         ]}
         onPress={() => onToggle('right')}
       >
         <Text style={[
           styles.buttonText,
-          selectedButton === 'right' && styles.selectedButtonText,
+          selectedButton === 'right' ? styles.selectedButtonText : styles.unselectedButtonText,
         ]}>
           {rightButton}
         </Text>
@@ -57,11 +57,12 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 1,
-    paddingVertical: 10,
+    paddingVertical: 5,
     paddingHorizontal: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: 30
+    borderRadius: 30,
+    marginHorizontal: 5,
   },
   leftButton: {
     borderTopLeftRadius: 20,
@@ -76,6 +77,8 @@ const styles = StyleSheet.create({
   },
   unselectedButton: {
     backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: 'black',
   },
   buttonText: {
     fontSize: 16,
