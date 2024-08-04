@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 interface HeaderProps {
   title: string;
   onBack?: () => void;
+  style?: object;
   rightButton?: React.ReactNode;
 }
 

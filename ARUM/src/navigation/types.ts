@@ -2,6 +2,7 @@
 
 import { Route } from '@react-navigation/native';
 import { StackScreenProps, StackNavigationProp } from '@react-navigation/stack';
+import { ImageSourcePropType } from 'react-native';
 
 
 
@@ -57,7 +58,13 @@ export type RootStackParamList = {
   DiaryEmotion: undefined;
   // RecordDiary: { date?: string; editMode?: boolean; diaryId?: string };
   DiaryThumbnail: { diaryId?: string };
-  DiaryDetail: { diaryId?: string };
+  DiaryDetail: { 
+    diaryId?: string;
+    emoji: any;
+    date: string;
+    tags: string[];
+    answers: string[];
+  };
 };
 
 
