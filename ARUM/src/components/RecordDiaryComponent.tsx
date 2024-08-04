@@ -12,6 +12,16 @@ interface RecordDiaryComponentProps {
   onPrev: () => void;
 }
 
+const emotions = [
+  require('../assets/images/emotion/joy.png'),
+  require('../assets/images/emotion/mad.png'),
+  require('../assets/images/emotion/sad.png'),
+  require('../assets/images/emotion/playful.png'),
+  require('../assets/images/emotion/love.png'),
+  require('../assets/images/emotion/dislike.png'),
+  require('../assets/images/emotion/want.png'),
+];
+
 const RecordDiaryComponent: React.FC<RecordDiaryComponentProps> = ({ emoji, tags, fixedQuestion, placeholderQuestion, answer, onAnswerChange, onNext, onPrev }) => {
   const [isFocused, setIsFocused] = useState(false);
 

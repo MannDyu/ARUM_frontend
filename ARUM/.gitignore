@@ -33,3 +33,6 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+.DS_Store
+.DS_Store
+.DS_Store

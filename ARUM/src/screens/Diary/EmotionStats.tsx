@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Image } from 'react-native';
 
 interface EmotionData {
   emoji: string;
@@ -10,8 +10,25 @@ interface EmotionStatsProps {
   emotionData: EmotionData[];
 }
 
+const emojis: Record<string, any> = {
+  '아주 나빠요': require('../../assets/images/emoji/emoji_01_verybad.png'),
+  '나빠요': require('../../assets/images/emoji/emoji_02_bad.png'),
+  '괜찮아요': require('../../assets/images/emoji/emoji_03_okay.png'),
+  '좋아요': require('../../assets/images/emoji/emoji_04_good.png'),
+  '아주 좋아요': require('../../assets/images/emoji/emoji_05_verygood.png'),
+};
+
+const grayEmojis: Record<string, any> = {
+  '아주 나빠요': require('../../assets/images/emoji/gray_01_verybad.png'),
+  '나빠요': require('../../assets/images/emoji/gray_02_bad.png'),
+  '괜찮아요': require('../../assets/images/emoji/gray_03_okay.png'),
+  '좋아요': require('../../assets/images/emoji/gray_04_good.png'),
+  '아주 좋아요': require('../../assets/images/emoji/gray_05_verygood.png'),
+};
+
 const EmotionStats: React.FC<EmotionStatsProps> = ({ emotionData }) => {
   const totalCount = emotionData.reduce((acc, item) => acc + item.count, 0);
+  const maxCount = Math.max(...emotionData.map(item => item.count));
 
   return (
     <View style={styles.container}>
@@ -23,7 +40,11 @@ const EmotionStats: React.FC<EmotionStatsProps> = ({ emotionData }) => {
             return (
               <View key={index} style={styles.emojiContainer}>
                 <View style={[styles.emojiCircle, { backgroundColor: getColor(item.emoji) }]}>
-                  <Text style={styles.emoji}>{item.emoji}</Text>
+                  {item.count === maxCount ? (
+                    <Image source={emojis[item.emoji]} style={styles.bigEmoji} />
+                  ) : (
+                    <Image source={grayEmojis[item.emoji]} style={styles.emoji} />
+                  )}
                 </View>
                 <Text style={styles.percentText}>{Math.round(percent * 100)}%</Text>
               </View>
@@ -51,18 +72,18 @@ const EmotionStats: React.FC<EmotionStatsProps> = ({ emotionData }) => {
 
 const getColor = (emoji: string) => {
   switch (emoji) {
-    case '😭':
-      return 'red';
-    case '😩':
-      return 'orange';
-    case '😕':
-      return 'yellow';
-    case '😚':
-      return 'green';
-    case '😆':
-      return 'blue';
+    case '아주 나빠요':
+      return '#697284';
+    case '나빠요':
+      return '#779BED';
+    case '괜찮아요':
+      return '#71E065';
+    case '좋아요':
+      return '#BDF476';
+    case '아주 좋아요':
+      return '#F7E874';
     default:
-      return '#dddddd';
+      return 'transparent';
   }
 };
 
@@ -100,7 +121,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   emoji: {
-    fontSize: 24,
+    width: 35,
+    height: 35,
+  },
+  bigEmoji: {
+    width: 43,
+    height: 43,
   },
   percentText: {
     marginTop: 5,
