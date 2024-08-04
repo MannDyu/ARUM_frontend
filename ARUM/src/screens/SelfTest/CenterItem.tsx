@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 interface CenterItemProps {
   name: string;
@@ -9,11 +9,11 @@ interface CenterItemProps {
 
 const CenterItem: React.FC<CenterItemProps> = ({ name, address, phone }) => {
   return (
-    <View style={styles.centerItem}>
+    <TouchableOpacity style={styles.centerItem}>
       <Text style={styles.centerName}>{name}</Text>
       <Text style={styles.centerAddress}>{address}</Text>
       <Text style={styles.centerPhone}>{phone}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 

@@ -94,6 +94,13 @@ const RegionSelection: React.FC = () => {
           <Text style={styles.closeButton}>×</Text>
         </TouchableOpacity>
       </View>
+      <View style={styles.selectedTagsContainer}>
+        {selectedDistricts.map((district, index) => (
+          <View key={index} style={styles.selectedTag}>
+            <Text style={styles.selectedTagText}>{district} ×</Text>
+          </View>
+        ))}
+      </View>
       <View style={styles.modalContent}>
         <View style={styles.regionDistrictContainer}>
           <ScrollView
@@ -149,28 +156,21 @@ const RegionSelection: React.FC = () => {
               </Text>
             )}
           </ScrollView>
-        </View>
-        <View style={styles.selectedTagsContainer}>
-          {selectedDistricts.map((district, index) => (
-            <View key={index} style={styles.selectedTag}>
-              <Text style={styles.selectedTagText}>{district} ×</Text>
-            </View>
-          ))}
-        </View>
-        <View style={styles.modalFooter}>
-          <TouchableOpacity
-            style={styles.cancelButton}
-            onPress={() => navigation.goBack()}
-          >
-            <Text style={styles.cancelButtonText}>취소</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.applyButton}
-            onPress={applySelection}
-          >
-            <Text style={styles.applyButtonText}>완료</Text>
-          </TouchableOpacity>
-        </View>
+          </View>
+      </View>
+      <View style={styles.modalFooter}>
+        <TouchableOpacity
+          style={styles.cancelButton}
+          onPress={() => navigation.goBack()}
+        >
+          <Text style={styles.cancelButtonText}>취소</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.applyButton}
+          onPress={applySelection}
+        >
+          <Text style={styles.applyButtonText}>완료</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

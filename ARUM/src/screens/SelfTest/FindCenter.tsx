@@ -50,7 +50,7 @@ const regions = [
 ];
 
 const districts: { [key: string]: string[] } = {
-  서울: ['송파구', '강서구', '강남구'],
+  서울: ['송파구', '강서구', '강남구', '중랑구', '마포구'],
   경기: ['구리시', '수원시'],
   인천: ['남동구', '연수구', '계양구'],
   대전: ['동구', '중구', '서구'],
@@ -101,21 +101,45 @@ export default function FindCenter() {
     <View style={styles.container}>
       <Text style={styles.title}>심리상담센터 찾기</Text>
       <View style={styles.subtitleContainer}>
-        
-          { !selectedDistricts &&
-                    <Text style={styles.subtitle}>
-                    가까운 상담센터를 찾아보세요
-                    </Text>}
-          {selectedDistricts?.map((it)=>(
-            <Text style={{justifyContent:'flex-start'}}>{it}</Text>
-          ))
-          }
-          
-        
+      <ScrollView 
+        horizontal={true} 
+        showsHorizontalScrollIndicator={false}
+        style={styles.tagsScrollView}
+      >
+        {selectedDistricts.length === 0 ? (
+          <Text style={styles.subtitle}>
+            가까운 상담센터를 찾아보세요
+          </Text>
+        ) : (
+          <View style={styles.tagsContainer}>
+            {selectedDistricts.map((it, index) => (
+              <Text key={index} style={styles.tag}># {it}</Text>
+            ))}
+          </View>
+        )}
+      </ScrollView>
+      <TouchableOpacity style={styles.regionButton} onPress={toggleModal}>
+        <Text style={styles.regionButtonText}>지역선택</Text>
+      </TouchableOpacity>
+    </View>
+      {/* <View style={styles.subtitleContainer}>
+        <View style={styles.subtitleTextContainer}>
+          {selectedDistricts.length === 0 ? (
+            <Text style={styles.subtitle}>
+              가까운 상담센터를 찾아보세요
+            </Text>
+          ) : (
+            selectedDistricts.map((it, index) => (
+              <View style={styles.tagsContainer}>
+               <Text key={index} style={styles.tag}># {it}</Text>
+              </View> 
+            ))
+          )}
+        </View>
         <TouchableOpacity style={styles.regionButton} onPress={toggleModal}>
           <Text style={styles.regionButtonText}>지역선택</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
       <ScrollView contentContainerStyle={styles.centerList}>
         {centerData.map((center, index) => (
           <CenterItem
@@ -230,7 +254,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FDFDED',
-    padding: 20,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 60,
+
   },
   title: {
     fontSize: 24,
@@ -238,26 +265,74 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
   },
+  // subtitleContainer: {
+  //   flexDirection: 'row',
+  //   justifyContent: 'space-between',
+  //   alignItems: 'center',
+  //   marginBottom: 10,
+  // },
+  subtitle: {
+    fontSize: 16,
+    color: '#333',
+  },
+  // subtitleTextContainer: {
+  //   flex: 1,
+  // },
+  // selectedDistrictText: {
+  //   fontSize: 16,
+  //   color: '#333',
+  //   marginBottom: 5,
+  // },
+  // regionButton: {
+  //   backgroundColor: '#333',
+  //   paddingVertical: 6,
+  //   paddingHorizontal: 12,
+  //   borderRadius: 5,
+  //   marginLeft: 10, // 왼쪽 텍스트와의 간격
+  // },
+  regionButtonText: {
+    color: '#FFF',
+    fontSize: 14,
+  },
   subtitleContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 10,
   },
-  subtitle: {
-    fontSize: 16,
+  tagsScrollView: {
+    flex: 1,
+  },
+  tagsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    // marginBottom: 10,
+    paddingVertical: 6,
+    paddingHorizontal: 12,
+    //   marginBottom: 10,
+    //   paddingVertical: 6,
+    //   paddingHorizontal: 12,
+  },
+  tag: {
+    fontSize: 14,
     color: '#333',
+    backgroundColor: '#fff',
+    padding: 6,
+    paddingVertical: 4,
+    borderRadius: 13,
+    borderWidth: 1,
+    borderColor: '#000',
+    marginRight: 7,
+    textAlign: 'center',
   },
   regionButton: {
     backgroundColor: '#333',
     paddingVertical: 6,
     paddingHorizontal: 12,
     borderRadius: 5,
+    marginLeft: 10,
   },
-  regionButtonText: {
-    color: '#FFF',
-    fontSize: 14,
-  },
+
   centerList: {
     paddingBottom: 20,
   },
@@ -279,6 +354,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: '#333',
+  
   },
   closeButton: {
     fontSize: 28,
@@ -380,97 +456,27 @@ const styles = StyleSheet.create({
     color: '#FFF',
     fontSize: 16,
   },
+  // tagsContainer: {
+  //   flexDirection: 'row',
+  //   marginBottom: 10,
+  //   paddingVertical: 6,
+  //   paddingHorizontal: 12,
+  // },
+  // tag: {
+  //   fontSize: 14,
+  //   color: '#333',
+  //   marginBottom: 5,
+  //   backgroundColor: '#fff',
+  //   padding: 6,
+  //   paddingVertical: 4,
+  //   borderRadius: 13,
+  //   borderWidth: 1,
+  //   borderColor: '#000',
+  //   marginHorizontal: 7,
+  //   // width: 'fit-cent',
+  //   // fontSize: 14,
+  //   textAlign: 'center',
+  // },
 });
 
 
-//------------------------------------------------
-// import { useNavigation } from '@react-navigation/native';
-// import { StackNavigationProp } from '@react-navigation/stack';
-// import React from 'react';
-// import { View, Text, StyleSheet , TouchableOpacity, ScrollView} from 'react-native';
-// import { RootStackParamList } from '../../navigation/types';
-// import { SelfTestStackParamList } from '../../assets/SelfTestTypes';
-// import CenterItem from './CenterItem';
-
-// type FindCenterScreenNavigationProp = StackNavigationProp<RootStackParamList, 'FindCenter'>;
-
-// // 샘플 데이터
-// const centerData = [
-//   {
-//     name: '상담센터 A',
-//     address: '서울특별시 강남구 테헤란로 123',
-//     phone: '02-123-4567',
-//   },
-//   {
-//     name: '상담센터 B',
-//     address: '서울특별시 서초구 강남대로 456',
-//     phone: '02-987-6543',
-//   },
-//   // 추가적인 상담센터 데이터
-// ];
-
-
-
-// export default function FindCenter() {
-//   const navigation = useNavigation<FindCenterScreenNavigationProp>();
-
-//   return (
-//     <View style={styles.container}>
-//       <Text style={styles.title}>심리상담센터 찾기</Text>
-//       <View style={styles.subtitleContainer}>
-//         <Text style={styles.subtitle}>가까운 상담센터를 찾아보세요</Text>
-//         <TouchableOpacity style={styles.regionButton}>
-//           <Text style={styles.regionButtonText}>지역선택</Text>
-//         </TouchableOpacity>
-//       </View>
-//       <ScrollView contentContainerStyle={styles.centerList}>
-//         {centerData.map((center, index) => (
-//           <CenterItem
-//             key={index}
-//             name={center.name}
-//             address={center.address}
-//             phone={center.phone}
-//           />
-//         ))}
-//       </ScrollView>
-//     </View>
-//   );
-// };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#FDFDED',
-//     paddingTop: 80,
-//     padding: 20,
-//   },
-//   title: {
-//     fontSize: 24,
-//     fontWeight: 'bold',
-//     marginBottom: 20,
-//     textAlign: 'center',
-//   },
-//   subtitleContainer: {
-//     flexDirection: 'row',
-//     justifyContent: 'space-between',
-//     alignItems: 'center',
-//     marginBottom: 10,
-//   },
-//   subtitle: {
-//     fontSize: 16,
-//     color: '#333',
-//   },
-//   regionButton: {
-//     backgroundColor: '#333',
-//     paddingVertical: 6,
-//     paddingHorizontal: 12,
-//     borderRadius: 5,
-//   },
-//   regionButtonText: {
-//     color: '#FFF',
-//     fontSize: 14,
-//   },
-//   centerList: {
-//     paddingBottom: 20,
-//   },
-// });
