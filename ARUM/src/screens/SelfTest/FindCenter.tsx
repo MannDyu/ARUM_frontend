@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   Modal,
+  SafeAreaView,
 } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -79,7 +80,7 @@ export default function FindCenter() {
 
   const selectRegion = (region: string) => {
     setSelectedRegion(region);
-    setSelectedDistricts([]); // Reset selected districts
+    setSelectedDistricts([]);
   };
 
   const selectDistrict = (district: string) => {
@@ -94,52 +95,33 @@ export default function FindCenter() {
     toggleModal();
     console.log('Selected region:', selectedRegion);
     console.log('Selected districts:', selectedDistricts);
-    // Additional logic for selected region and districts
   };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>심리상담센터 찾기</Text>
       <View style={styles.subtitleContainer}>
-      <ScrollView 
-        horizontal={true} 
-        showsHorizontalScrollIndicator={false}
-        style={styles.tagsScrollView}
-      >
-        {selectedDistricts.length === 0 ? (
-          <Text style={styles.subtitle}>
-            가까운 상담센터를 찾아보세요
-          </Text>
-        ) : (
-          <View style={styles.tagsContainer}>
-            {selectedDistricts.map((it, index) => (
-              <Text key={index} style={styles.tag}># {it}</Text>
-            ))}
-          </View>
-        )}
-      </ScrollView>
-      <TouchableOpacity style={styles.regionButton} onPress={toggleModal}>
-        <Text style={styles.regionButtonText}>지역선택</Text>
-      </TouchableOpacity>
-    </View>
-      {/* <View style={styles.subtitleContainer}>
-        <View style={styles.subtitleTextContainer}>
+        <ScrollView 
+          horizontal={true} 
+          showsHorizontalScrollIndicator={false}
+          style={styles.tagsScrollView}
+        >
           {selectedDistricts.length === 0 ? (
             <Text style={styles.subtitle}>
               가까운 상담센터를 찾아보세요
             </Text>
           ) : (
-            selectedDistricts.map((it, index) => (
-              <View style={styles.tagsContainer}>
-               <Text key={index} style={styles.tag}># {it}</Text>
-              </View> 
-            ))
+            <View style={styles.tagsContainer}>
+              {selectedDistricts.map((it, index) => (
+                <Text key={index} style={styles.tag}># {it}</Text>
+              ))}
+            </View>
           )}
-        </View>
+        </ScrollView>
         <TouchableOpacity style={styles.regionButton} onPress={toggleModal}>
           <Text style={styles.regionButtonText}>지역선택</Text>
         </TouchableOpacity>
-      </View> */}
+      </View>
       <ScrollView contentContainerStyle={styles.centerList}>
         {centerData.map((center, index) => (
           <CenterItem
@@ -158,19 +140,17 @@ export default function FindCenter() {
         visible={modalVisible}
         onRequestClose={toggleModal}
       >
-        <View style={styles.modalContainer}>
+        <SafeAreaView style={styles.modalContainer}>
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>지역 선택</Text>
             <TouchableOpacity onPress={toggleModal}>
               <Text style={styles.closeButton}>×</Text>
             </TouchableOpacity>
           </View>
+          
           <View style={styles.modalContent}>
             <View style={styles.regionDistrictContainer}>
-              <ScrollView
-                style={styles.regionList}
-                showsVerticalScrollIndicator={false}
-              >
+              <ScrollView style={styles.regionList}>
                 {regions.map((region, index) => (
                   <TouchableOpacity
                     key={index}
@@ -183,8 +163,7 @@ export default function FindCenter() {
                     <Text
                       style={[
                         styles.regionItemText,
-                        selectedRegion === region &&
-                          styles.selectedRegionItemText,
+                        selectedRegion === region && styles.selectedRegionItemText,
                       ]}
                     >
                       {region}
@@ -199,16 +178,14 @@ export default function FindCenter() {
                       key={index}
                       style={[
                         styles.districtItem,
-                        selectedDistricts.includes(district) &&
-                          styles.selectedDistrictItem,
+                        selectedDistricts.includes(district) && styles.selectedDistrictItem,
                       ]}
                       onPress={() => selectDistrict(district)}
                     >
                       <Text
                         style={[
                           styles.districtItemText,
-                          selectedDistricts.includes(district) &&
-                            styles.selectedDistrictItemText,
+                          selectedDistricts.includes(district) && styles.selectedDistrictItemText,
                         ]}
                       >
                         {district}
@@ -216,35 +193,29 @@ export default function FindCenter() {
                     </TouchableOpacity>
                   ))
                 ) : (
-                  <Text style={styles.noDistrictsText}>
-                    해당 지역에 등록된 구가 없습니다.
-                  </Text>
+                  <Text style={styles.noDistrictsText}>해당 지역에 등록된 구가 없습니다.</Text>
                 )}
               </ScrollView>
             </View>
-            <View style={styles.selectedTagsContainer}>
-              {selectedDistricts.map((district, index) => (
-                <View key={index} style={styles.selectedTag}>
-                  <Text style={styles.selectedTagText}>{district} ×</Text>
-                </View>
-              ))}
-            </View>
-            <View style={styles.modalFooter}>
-              <TouchableOpacity
-                style={styles.cancelButton}
-                onPress={toggleModal}
-              >
-                <Text style={styles.cancelButtonText}>취소</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.applyButton}
-                onPress={applySelection}
-              >
-                <Text style={styles.applyButtonText}>완료</Text>
-              </TouchableOpacity>
-            </View>
           </View>
-        </View>
+          
+          <View style={styles.selectedTagsContainer}>
+            {selectedDistricts.map((district, index) => (
+              <View key={index} style={styles.selectedTag}>
+                <Text style={styles.selectedTagText}>{district} ×</Text>
+              </View>
+            ))}
+          </View>
+          
+          <View style={styles.modalFooter}>
+            <TouchableOpacity style={styles.cancelButton} onPress={toggleModal}>
+              <Text style={styles.buttonText}>취소</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.applyButton} onPress={applySelection}>
+              <Text style={styles.buttonText}>완료</Text>
+            </TouchableOpacity>
+          </View>
+        </SafeAreaView>
       </Modal>
     </View>
   );
@@ -257,7 +228,6 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     paddingTop: 60,
-
   },
   title: {
     fontSize: 24,
@@ -265,40 +235,15 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlign: 'center',
   },
-  // subtitleContainer: {
-  //   flexDirection: 'row',
-  //   justifyContent: 'space-between',
-  //   alignItems: 'center',
-  //   marginBottom: 10,
-  // },
-  subtitle: {
-    fontSize: 16,
-    color: '#333',
-  },
-  // subtitleTextContainer: {
-  //   flex: 1,
-  // },
-  // selectedDistrictText: {
-  //   fontSize: 16,
-  //   color: '#333',
-  //   marginBottom: 5,
-  // },
-  // regionButton: {
-  //   backgroundColor: '#333',
-  //   paddingVertical: 6,
-  //   paddingHorizontal: 12,
-  //   borderRadius: 5,
-  //   marginLeft: 10, // 왼쪽 텍스트와의 간격
-  // },
-  regionButtonText: {
-    color: '#FFF',
-    fontSize: 14,
-  },
   subtitleContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 10,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: '#333',
   },
   tagsScrollView: {
     flex: 1,
@@ -306,12 +251,8 @@ const styles = StyleSheet.create({
   tagsContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    // marginBottom: 10,
     paddingVertical: 6,
     paddingHorizontal: 12,
-    //   marginBottom: 10,
-    //   paddingVertical: 6,
-    //   paddingHorizontal: 12,
   },
   tag: {
     fontSize: 14,
@@ -332,92 +273,44 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginLeft: 10,
   },
-
+  regionButtonText: {
+    color: '#FFF',
+    fontSize: 14,
+  },
   centerList: {
     paddingBottom: 20,
   },
   modalContainer: {
     flex: 1,
-    justifyContent: 'flex-start',
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    paddingTop: 50,
+    backgroundColor: '#FFFFFF',
   },
   modalHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#FDFDED',
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingVertical: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: '#CCC',
+  },
+  modalContent: {
+    flex: 1,
   },
   modalTitle: {
     fontSize: 20,
     fontWeight: 'bold',
     color: '#333',
-  
   },
   closeButton: {
     fontSize: 28,
     color: '#333',
   },
-  modalContent: {
-    backgroundColor: '#FDFDED',
-    flex: 1,
-    paddingHorizontal: 20,
-  },
-  regionDistrictContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  regionList: {
-    flex: 1,
-    borderRightWidth: 1,
-    borderRightColor: '#CCC',
-  },
-  regionItem: {
-    paddingVertical: 15,
-    paddingHorizontal: 10,
-    backgroundColor: '#F0F0F0',
-  },
-  selectedRegionItem: {
-    backgroundColor: '#5A82E6',
-  },
-  regionItemText: {
-    color: '#666',
-  },
-  selectedRegionItemText: {
-    color: '#FFF',
-  },
-  districtList: {
-    flex: 2,
-    paddingLeft: 10,
-  },
-  districtItem: {
-    paddingVertical: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#CCC',
-  },
-  districtItemText: {
-    color: '#666',
-    fontSize: 16,
-  },
-  selectedDistrictItem: {
-    backgroundColor: '#E6E6FA', // Background color for selected items
-  },
-  selectedDistrictItemText: {
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  noDistrictsText: {
-    fontSize: 16,
-    color: '#999',
-    textAlign: 'center',
-    marginTop: 20,
-  },
   selectedTagsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginVertical: 10,
+    padding: 10,
+    borderTopWidth: 1,
+    borderTopColor: '#CCC',
   },
   selectedTag: {
     backgroundColor: '#EEE',
@@ -431,52 +324,88 @@ const styles = StyleSheet.create({
     color: '#333',
     fontSize: 14,
   },
+  regionDistrictContainer: {
+    flexDirection: 'row',
+    flex: 1,
+  },
+  regionList: {
+    flex: 2,
+    backgroundColor: '#DEDEDE',
+  },
+  regionItem: {
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+  },
+  selectedRegionItem: {
+    backgroundColor: '#5A82E6',
+  },
+  regionItemText: {
+    color: '#666',
+  },
+  selectedRegionItemText: {
+    color: '#FFF',
+  },
+  districtList: {
+    flex: 3,
+    backgroundColor: '#FFFFFF',
+  },
+  districtItem: {
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: '#EEE',
+  },
+  districtItemText: {
+    color: '#666',
+    fontSize: 16,
+  },
+  selectedDistrictItem: {
+    backgroundColor: '#E6E6FA',
+  },
+  selectedDistrictItemText: {
+    fontWeight: 'bold',
+    color: '#333',
+  },
+  noDistrictsText: {
+    fontSize: 16,
+    color: '#999',
+    textAlign: 'center',
+    marginTop: 20,
+  },
   modalFooter: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 10,
+    padding: 10,
+    backgroundColor: '#F0F0F0',
   },
   cancelButton: {
+    flex: 1,
     backgroundColor: '#333',
     paddingVertical: 10,
-    paddingHorizontal: 20,
     borderRadius: 5,
+    marginRight: 5,
   },
   applyButton: {
+    flex: 1,
     backgroundColor: '#333',
     paddingVertical: 10,
-    paddingHorizontal: 20,
     borderRadius: 5,
+    marginLeft: 5,
+  },
+  buttonText: {
+    color: '#FFF',
+    textAlign: 'center',
+    fontSize: 16,
   },
   cancelButtonText: {
     color: '#FFF',
     fontSize: 16,
+    textAlign: 'center',
   },
   applyButtonText: {
     color: '#FFF',
     fontSize: 16,
+    textAlign: 'center',
   },
-  // tagsContainer: {
-  //   flexDirection: 'row',
-  //   marginBottom: 10,
-  //   paddingVertical: 6,
-  //   paddingHorizontal: 12,
-  // },
-  // tag: {
-  //   fontSize: 14,
-  //   color: '#333',
-  //   marginBottom: 5,
-  //   backgroundColor: '#fff',
-  //   padding: 6,
-  //   paddingVertical: 4,
-  //   borderRadius: 13,
-  //   borderWidth: 1,
-  //   borderColor: '#000',
-  //   marginHorizontal: 7,
-  //   // width: 'fit-cent',
-  //   // fontSize: 14,
-  //   textAlign: 'center',
-  // },
+  
 });
-
-

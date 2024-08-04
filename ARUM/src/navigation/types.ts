@@ -43,6 +43,7 @@ export type RootStackParamList = {
   TestReport: { score: number };
   TestPage: undefined;
   TestLoading: { score: number };
+  
   FindCenter: { selectedDistricts?: string[] }; // 선택된 구 정보를 전달받음
   RegionSelection: { selectedDistricts: string[] }; // 선택된 구 정보를 전달
   

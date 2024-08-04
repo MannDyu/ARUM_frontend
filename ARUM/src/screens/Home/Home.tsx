@@ -35,14 +35,14 @@ const HomeScreen = () => {
     navigation.navigate('FindCenter', { selectedDistricts });
   };
 
-  
-  useEffect(() => {
-    console.log('Route params:', route.params);
-    if (route.params?.username) {
-      console.log('Updating username to:', route.params.username);
-      setUsername(route.params.username);
-    }
-  }, [route.params?.username]);
+  // 일단 주석처리
+  // useEffect(() => {
+  //   console.log('Route params:', route.params);
+  //   if (route.params?.username) {
+  //     console.log('Updating username to:', route.params.username);
+  //     setUsername(route.params.username);
+  //   }
+  // }, [route.params?.username]);
 
 
   // function handleNavigation(
