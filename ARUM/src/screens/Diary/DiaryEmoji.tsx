@@ -14,6 +14,14 @@ const emojis = [
   require('../../assets/images/emoji/emoji_05_verygood.png'),
 ];
 
+const emojiComments = [
+  '아주 나빠요',
+  '나빠요',
+  '괜찮아요',
+  '좋아요',
+  '아주 좋아요'
+]
+
 export default function DiaryEmoji() {
   const navigation = useNavigation<DiaryScreenNavigationProp>();
   const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false);
@@ -52,7 +60,11 @@ export default function DiaryEmoji() {
             <Text style={{ fontSize: 18, margin: 10, marginTop: 40 }}>오늘 기분이 어땠나요?</Text>
             <View style={[styles.emojiImage, { backgroundColor: isEmoji !== null ? 'transparent' : '#D9D9D9' }]} >
               {(isEmoji!==null) ? //! 텍스트가 아니라 View로 이미지 불러와야함
-                <Image source={emojis[isEmoji]} style={{ width: 150, height: 150 }} /> :
+                <>
+                  <Image source={emojis[isEmoji]} style={{ width: 150, height: 150 }} />
+                  <Text style={{ marginTop: 10, fontSize: 18 }}>{emojiComments[isEmoji]}</Text>
+                </>
+                :
                 <Text style={{ fontSize: 18, textAlign: 'center' }}>{`기분을\n선택해주세요`}</Text>
               }
             </View>

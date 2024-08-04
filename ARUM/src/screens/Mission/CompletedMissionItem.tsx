@@ -32,24 +32,24 @@ const CompletedMissionItem: React.FC<CompletedMissionItemProps> = ({ mission }) 
 const styles = StyleSheet.create({
   container: {
     padding: 25,
+    paddingVertical: 15,
     margin: 15,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ccc',
     borderWidth: 1, 
-    borderColor: '#ccc', 
+    borderColor: '#000', 
     borderRadius: 10, 
     marginVertical: 5,
+    backgroundColor: "#fff",
   },
   date: {
     fontSize: 15,
     color: '#888',
-    marginBottom: 13,
+    marginBottom: 7,
   },
   category: {
     fontSize: 20,
     fontWeight: 'bold',
     color: 'black',
-    marginBottom: 10,
+    marginBottom: 5,
   },
   title: {
     fontSize: 17,
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   },
   detailButton: {
     color: 'blue',
-    marginTop: 10,
+    marginTop: 5,
   },
 });
 

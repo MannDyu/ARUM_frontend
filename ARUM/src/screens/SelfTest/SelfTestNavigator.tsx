@@ -13,7 +13,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 export function SelfTestNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="SelfTest" component={SelfTest} />
+      <Stack.Screen name="SelfTestMain" component={SelfTest} />
       <Stack.Screen name="TestStart" component={TestStart} />
       <Stack.Screen name="TestReport" component={TestReport} />
       <Stack.Screen name="TestPage" component={TestPage} />

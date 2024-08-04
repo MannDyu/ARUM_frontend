@@ -10,7 +10,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import DiaryEmoji from './DiaryEmoji';
 
 // type DiaryProps = StackScreenProps<RootStackParamList, 'Diary'>;
-type DiaryProps = StackScreenProps<RootStackParamList, 'Diary'>;
+type DiaryProps = StackScreenProps<RootStackParamList, 'DiaryMain'>; //! 이름 수정!
 type RecordDiaryNavigationProp = StackNavigationProp<RootStackParamList, 'RecordDiary'>;
 
 

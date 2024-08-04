@@ -1,4 +1,5 @@
 import React from 'react';
+import { View, StyleSheet } from 'react-native';
 import { Calendar as RNCalendar } from 'react-native-calendars';
 
 interface DateObject {
@@ -19,9 +20,19 @@ const Calendar: React.FC<CalendarProps> = ({ onDayPress, markedDates }) => {
     <RNCalendar
       onDayPress={(day: DateObject) => onDayPress?.(day)}
       markedDates={markedDates} 
+      style={styles.calendarContainer}
     />
   );
 };
+
+const styles = StyleSheet.create({
+  calendarContainer: {
+    margin: 10,
+    marginHorizontal: 15,
+    borderWidth: 1,
+    borderRadius: 10,
+  },
+})
 
 export default Calendar;
 
