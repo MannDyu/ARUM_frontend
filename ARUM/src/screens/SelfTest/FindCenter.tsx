@@ -12,6 +12,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../navigation/types';
 import CenterItem from './CenterItem';
+import Header from '../../components/Header';
 
 type FindCenterScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -68,6 +69,8 @@ const districts: { [key: string]: string[] } = {
   // More regions and districts...
 };
 
+
+
 export default function FindCenter() {
   const navigation = useNavigation<FindCenterScreenNavigationProp>();
   const [modalVisible, setModalVisible] = useState(false);
@@ -97,9 +100,16 @@ export default function FindCenter() {
     console.log('Selected districts:', selectedDistricts);
   };
 
+  const handleBackPress = () => {
+    navigation.navigate('Home', { username:'Guest' }); //수정 필요
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>심리상담센터 찾기</Text>
+    <SafeAreaView style={styles.container}>
+      <Header
+        title="심리상담센터 찾기"
+        onBack={handleBackPress}
+      />
       <View style={styles.subtitleContainer}>
         <ScrollView 
           horizontal={true} 
@@ -123,15 +133,15 @@ export default function FindCenter() {
         </TouchableOpacity>
       </View>
       <ScrollView contentContainerStyle={styles.centerList}>
-        {centerData.map((center, index) => (
-          <CenterItem
-            key={index}
-            name={center.name}
-            address={center.address}
-            phone={center.phone}
-          />
-        ))}
-      </ScrollView>
+          {centerData.map((center, index) => (
+            <CenterItem
+              key={index}
+              name={center.name}
+              address={center.address}
+              phone={center.phone}
+            />
+          ))}
+        </ScrollView>
 
       {/* Region Selection Modal */}
       <Modal
@@ -147,7 +157,16 @@ export default function FindCenter() {
               <Text style={styles.closeButton}>×</Text>
             </TouchableOpacity>
           </View>
-          
+          <View style={styles.selectedTagsContainer}>
+            {selectedDistricts.length === 0 &&
+            <Text>지역을 선택해주세요.</Text>
+            }
+            {selectedDistricts.map((district, index) => (
+              <View key={index} style={styles.selectedTag}>
+                <Text style={styles.selectedTagText}>{district} ×</Text>
+              </View>
+            ))}
+          </View>
           <View style={styles.modalContent}>
             <View style={styles.regionDistrictContainer}>
               <ScrollView style={styles.regionList}>
@@ -199,13 +218,7 @@ export default function FindCenter() {
             </View>
           </View>
           
-          <View style={styles.selectedTagsContainer}>
-            {selectedDistricts.map((district, index) => (
-              <View key={index} style={styles.selectedTag}>
-                <Text style={styles.selectedTagText}>{district} ×</Text>
-              </View>
-            ))}
-          </View>
+          
           
           <View style={styles.modalFooter}>
             <TouchableOpacity style={styles.cancelButton} onPress={toggleModal}>
@@ -217,7 +230,7 @@ export default function FindCenter() {
           </View>
         </SafeAreaView>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -228,6 +241,10 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
     paddingTop: 60,
+  },
+  content: {
+    flex: 1,
+    paddingHorizontal: 20,
   },
   title: {
     fontSize: 24,
