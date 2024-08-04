@@ -110,7 +110,7 @@ const DiaryThumbnail: React.FC<RootStackScreenProps<'DiaryThumbnail'>> = ({ navi
         />
         <Button
           title="돌아가기"
-          onPress={() => navigation.navigate('Diary')}
+          onPress={() => navigation.navigate('DiaryMain')}
           buttonStyle={[styles.button, styles.backButton]}
           titleStyle={[styles.buttonTitle, styles.backButtonTitle]}
         />
