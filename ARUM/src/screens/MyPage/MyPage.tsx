@@ -53,7 +53,7 @@ export default function MyPage() {
         console.log('No token found, proceeding with local logout');
         setUsername('Guest');
         setIsLoggedIn(false);
-        navigation.navigate('Login');
+        navigation.navigate('MyPage');
         return;
       }
   

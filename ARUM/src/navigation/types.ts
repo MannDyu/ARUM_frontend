@@ -7,10 +7,13 @@ import { ImageSourcePropType } from 'react-native';
 
 
 export type RootStackParamList = {
+  Auth: undefined;
   Main: undefined; //! 추가: 중복방지 위해 수정
-  HomeMain: { username: string };
+  HomeMain: undefined,
   Signup: undefined; //! Home -> HomeMain 중복방지 위해 수정
   Login: undefined;
+
+  TabNavigator: undefined;
   DrawerNavigator: undefined;
   
   // 탭 네비게이터 스크린들
@@ -70,6 +73,14 @@ export type RootStackParamList = {
 
 };
 
+export type TabNavigatorParamList = {
+  HomeMain: undefined;
+  Diary: undefined;
+  Mission: undefined;
+  SelfTest: undefined;
+  MyPage: undefined;
+};
+
 
 // 스크린 네비게이션 관련 타입
 export type RootStackScreenProps<T extends keyof RootStackParamList> = 
@@ -93,8 +104,9 @@ export type EditCompletedMissionScreenNavigationProp = NavigationProp<'EditCompl
 export type SelectSectionScreenNavigationProp = NavigationProp<'SelectSection'>;
 
 // Home 
+export type AuthScreenNavigationProp = NavigationProp<'Auth'>;
 export type HomeScreenNavigationProp = NavigationProp<'HomeMain'>;
-export type SignupScreenNavigationProp = NavigationProp<'Signup'>;
+export type SignupScreenNavigationProp = NavigationProp< 'Signup'>;
 export type LoginScreenNavigationProp = NavigationProp<'Login'>;
 
 // Self Test

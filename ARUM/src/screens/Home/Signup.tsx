@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { SignupScreenNavigationProp } from '../../navigation/types';
-import { validateEmail, validatePassword, storeToken } from '../../utils/authUtils';
-import axios from 'axios';
-
-
-// import { API_URL, API_HOST } from '../../ngrok_url';  // ngrok_url 파일에서 변수 가져오기
-import {API_URL} from '../../api_url'
+import { validateEmail, validatePassword } from '../../utils/authUtils'; // Remove storeToken if not used
+import axios, { AxiosError } from 'axios';
+import { API_URL } from '../../api_url';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Signup() {
   const navigation = useNavigation<SignupScreenNavigationProp>();
@@ -16,7 +14,6 @@ export default function Signup() {
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
   const [error, setError] = useState('');
- 
 
   const handleSignup = async () => {
     console.log('Sending registration request...');
@@ -44,7 +41,8 @@ export default function Signup() {
     }
 
     try {
-      const response = await axios.post(
+      console.log('Sending signup request...');
+      const signupResponse = await axios.post(
         `${API_URL}/users/register/`,
         {
           username,
@@ -54,29 +52,74 @@ export default function Signup() {
         },
         { timeout: 30000 }
       );
-      console.log('Registration response:', response.data);
 
-      // 회원가입 성공 시 Home 화면으로 이동하고 사용자 이름 전달
-      // navigation.navigate('HomeMain', { username: response.data.username });
-      navigation.navigate('MyPage');
-    } catch (error) {
-      if (axios.isAxiosError(error)) {
-        console.error('Axios error:', error.message);
-        if (error.response && error.response.data) {
-          console.error('Server response:', error.response.data);
-          setError(`서버 오류: ${JSON.stringify(error.response.data)}`);
-        } else {
-          setError('서버에 연결할 수 없습니다.');
+      console.log('Signup response:', signupResponse.status, signupResponse.data);
+
+      if (signupResponse.status === 201) {
+        console.log('Signup successful, attempting login...');
+        try {
+          const loginResponse = await axios.post(`${API_URL}/users/login/`, {
+            username,
+            password,
+          });
+
+          console.log('Login response:', loginResponse.status, loginResponse.data);
+
+          if (loginResponse.status === 200) {
+            const { token } = loginResponse.data;
+            console.log('Login successful, token received:', token);
+            
+            try {
+              await AsyncStorage.setItem('userToken', token);
+              await AsyncStorage.setItem('username', username);
+
+              const storedToken = await AsyncStorage.getItem('userToken');
+              console.log('Stored token:', storedToken);
+
+              if (storedToken !== token) {
+                console.error('Token storage mismatch');
+                throw new Error('Token storage failed');
+              }
+
+              console.log('Token stored successfully, navigating to HomeMain...');
+              Alert.alert('회원가입 및 로그인 성공', '메인 화면으로 이동합니다.');
+              navigation.reset({
+                index: 0,
+                routes: [{ name: 'Main' }],
+              });
+
+              
+            } catch (storageError) {
+              console.error('Error storing token:', storageError);
+              Alert.alert('오류', '토큰 저장 중 문제가 발생했습니다.');
+            }
+          } else {
+            console.warn('Unexpected login response status:', loginResponse.status);
+            Alert.alert('로그인 오류', '예기치 않은 응답을 받았습니다.');
+          }
+        } catch (loginError) {
+          console.error('Login after signup error:', (loginError as AxiosError).response?.data || (loginError as Error).message);
+          Alert.alert('회원가입 성공', '회원가입은 완료되었지만 자동 로그인에 실패했습니다. 로그인 화면으로 이동합니다.');
+          navigation.navigate('Login');
         }
       } else {
-        console.error('Non-Axios error:', error);
-        setError('예기치 못한 오류가 발생했습니다.');
+        console.warn('Unexpected signup response status:', signupResponse.status);
+        setError('회원가입 처리 중 오류가 발생했습니다.');
+      }
+    } catch (signupError) {
+      console.error('Signup error:', (signupError as AxiosError).response?.data || (signupError as Error).message);
+      if (axios.isAxiosError(signupError) && signupError.response) {
+        const { data } = signupError.response;
+        if (data && data.error) {
+          setError(data.error);
+        } else {
+          setError('회원가입에 실패했습니다. 정보를 확인해주세요.');
+        }
+      } else {
+        setError('서버에 연결할 수 없습니다.');
       }
     }
-    
   };
-
-
 
   return (
     <View style={styles.container}>
@@ -112,12 +155,11 @@ export default function Signup() {
       />
       {error ? <Text style={styles.errorText}>{error}</Text> : null}
       <TouchableOpacity style={styles.button} onPress={handleSignup}>
-        <Text style={styles.buttonText} >가입하기</Text>
+        <Text style={styles.buttonText}>가입하기</Text>
       </TouchableOpacity>
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
