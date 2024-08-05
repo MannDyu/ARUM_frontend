@@ -167,7 +167,11 @@ export default function Diary() {
             title="다음"
             buttonStyle={styles.buttonStyle}
             containerStyle={styles.containerStyle}
-            onPress={() => navigation.navigate('RecordDiary')}
+            onPress={() => {
+              if (selected !== null) {
+                navigation.navigate('RecordDiary', { selectedEmotionIndex: selected });
+              }
+            }}
             disabled={selected !== null ? false : true}
           />
         </View>

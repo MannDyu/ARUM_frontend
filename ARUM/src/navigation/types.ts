@@ -66,6 +66,8 @@ export type RootStackParamList = {
     tags: string[];
     answers: string[];
   };
+  MyPage: undefined; 
+
 };
 
 
@@ -101,6 +103,10 @@ export type TestReportScreenNavigationProp = NavigationProp<'TestReport'>;
 export type TestPageScreenNavigationProp = NavigationProp<'TestPage'>;
 export type TestLoadingScreenNavigationProp = NavigationProp<'TestLoading'>;
 export type FindCenterScreenNavigationProp = NavigationProp<'FindCenter'>;
+
+
+export type MyPageNavigationProp = StackNavigationProp<RootStackParamList, 'MyPage'>;
+
 
 // 인터페이스 정의
 export interface ImageUploaderProps {

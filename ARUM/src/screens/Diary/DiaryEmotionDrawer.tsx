@@ -3,11 +3,11 @@ import { View, Text, StyleSheet, FlatList, Image } from 'react-native';
 import { CheckBox, Button } from 'react-native-elements';
 import BottomSheet from '@gorhom/bottom-sheet';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { DiaryStackParamList } from '../../assets/DiaryTypes';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import EmotionPopup from './EmotionPopup';
+import { DiaryStackParamList } from '../../assets/DiaryTypes';
 
-type DiaryScreenNavigationProp = StackNavigationProp<DiaryStackParamList, 'Diary'>;
+type DiaryScreenNavigationProp = StackNavigationProp<DiaryStackParamList, 'RecordDiary'>;
 
 const emotionAdjectives: { [key: string]: string[] } = {
   기쁨: ['행복한', '감사한', '감동적인', '만족스러운', '통쾌한', '후련한', '흐뭇한', '흥분된', '짜릿한', '벅찬'],
@@ -24,7 +24,7 @@ interface EmotionBottomSheetProps {
   isVisible: boolean;
   onClose: () => void;
   index: number;
-};
+}
 
 const emotions = [
   require('../../assets/images/emotion/joy.png'),
@@ -47,36 +47,26 @@ const EmotionBottomSheet: React.FC<EmotionBottomSheetProps> = ({ selectedEmotion
   const [selectedAdjectives, setSelectedAdjectives] = useState<string[]>([]);
   const [selectedEmotionCategory, setSelectedEmotionCategory] = useState<string | null>(null);
   const [hashtags, setHashtags] = useState<string[]>([]);
-  const [hashtagCount, setHashtagCount] = useState<number>(0);
   const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false);
   const navigation = useNavigation<DiaryScreenNavigationProp>();
 
-  useFocusEffect(
-    React.useCallback(() => {
-      setSelectedAdjectives([]);
-    }, [])
-  );
-
   const toggleAdjective = (adjective: string) => {
     const currentEmotionCategory = Object.keys(emotionAdjectives).find(category => emotionAdjectives[category].includes(adjective)) || null;
-    // 감정 카테고리 저장, 찾는 카테고리 없으면 null
-
     if (selectedEmotionCategory && selectedEmotionCategory !== currentEmotionCategory) {
-      // 선택된 감정 카테고리 있고 현재 선택된 형용사가 선택된 카테고리와 다르면
-      setSelectedAdjectives([adjective]); // 현재 선택된 형용사로 새로 업데이트
-      setSelectedEmotionCategory(currentEmotionCategory); // 카테고리도 업데이트
-    } else { // 선택된 카테고리 내에서 선택
+      setSelectedAdjectives([adjective]);
+      setSelectedEmotionCategory(currentEmotionCategory);
+    } else {
       setSelectedAdjectives((prevSelected) => {
-        if (prevSelected.includes(adjective)) { // 이미 선택된 형용사이면
-          return prevSelected.filter((item) => item !== adjective); // 선택 취소
-        } else if (prevSelected.length < 3) { // 배열 길이 < 3
-          return [...prevSelected, adjective]; // 형용사 추가
-        } else { // 배열 길이 > 3
-          setIsPopupVisible(true); // 팝업
-          return prevSelected; // 현재 형용사 업데이트
+        if (prevSelected.includes(adjective)) {
+          return prevSelected.filter((item) => item !== adjective);
+        } else if (prevSelected.length < 3) {
+          return [...prevSelected, adjective];
+        } else {
+          setIsPopupVisible(true);
+          return prevSelected;
         }
       });
-      setSelectedEmotionCategory(currentEmotionCategory); // 카테고리 업데이트
+      setSelectedEmotionCategory(currentEmotionCategory);
     }
   };
 
@@ -85,6 +75,11 @@ const EmotionBottomSheet: React.FC<EmotionBottomSheetProps> = ({ selectedEmotion
   };
 
   const handleSave = () => {
+    // selectedAdjectives (선택된 해시태그)와 index (선택된 감정) 전달
+    navigation.navigate('RecordDiary', {
+      selectedTags: selectedAdjectives,
+      selectedEmotionIndex: index,
+    });
     onClose();
   };
 
@@ -99,14 +94,7 @@ const EmotionBottomSheet: React.FC<EmotionBottomSheetProps> = ({ selectedEmotion
   useEffect(() => {
     const newHashtags = selectedAdjectives.map(adjective => `#${adjective}`);
     setHashtags(newHashtags);
-    setHashtagCount(selectedAdjectives.length);
   }, [selectedAdjectives]);
-
-  useEffect(() => {
-    if (hashtagCount > 3) {
-      setIsPopupVisible(true);
-    }
-  }, [hashtagCount]);
 
   return (
     <>
@@ -121,11 +109,7 @@ const EmotionBottomSheet: React.FC<EmotionBottomSheetProps> = ({ selectedEmotion
       >
         <View style={styles.sheetContent}>
           <View>
-            {/* 이모지 불러올 부분 */}
-            <Image
-              source={emotions[index]}
-              style={styles.image}
-            />
+            <Image source={emotions[index]} style={styles.image} />
           </View>
           <Text style={styles.title}>감정을 더 자세히 묘사해주세요</Text>
           <Text style={styles.comment}>감정은 세 개까지 선택할 수 있어요.</Text>
@@ -137,11 +121,11 @@ const EmotionBottomSheet: React.FC<EmotionBottomSheetProps> = ({ selectedEmotion
                 title={item}
                 checked={selectedAdjectives.includes(item)}
                 onPress={() => toggleAdjective(item)}
-                containerStyle={{...styles.checkContainer, backgroundColor: selectedAdjectives.includes(item) ? '#D9D9D9' : 'white'}}
+                containerStyle={{
+                  ...styles.checkContainer,
+                  backgroundColor: selectedAdjectives.includes(item) ? '#D9D9D9' : 'white',
+                }}
                 textStyle={styles.textStyle}
-                // checkedColor="#6487E5"
-                // checkedIcon={<View/>}
-                // uncheckedIcon={<View/>}
               />
             )}
             keyExtractor={(item) => item}
@@ -168,17 +152,13 @@ const EmotionBottomSheet: React.FC<EmotionBottomSheetProps> = ({ selectedEmotion
           </View>
         </View>
       </BottomSheet>
-      <EmotionPopup
-        isPopupVisible={isPopupVisible}
-        removePopup={removePopup}
-      />
+      <EmotionPopup isPopupVisible={isPopupVisible} removePopup={removePopup} />
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  sheetStyle: {
-  },
+  sheetStyle: {},
   sheetContent: {
     padding: 16,
     display: 'flex',
@@ -224,7 +204,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center',
     flexDirection: 'row',
-    // borderWidth: 1,
     width: '100%',
     paddingTop: 5,
     paddingBottom: 0,
@@ -238,7 +217,6 @@ const styles = StyleSheet.create({
     height: 30,
     margin: 5,
     marginBottom: 0,
-    paddingBottom: 0,
   },
   buttonContainer: {
     display: 'flex',

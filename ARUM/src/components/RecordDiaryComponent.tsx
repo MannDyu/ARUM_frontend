@@ -53,10 +53,10 @@ const RecordDiaryComponent: React.FC<RecordDiaryComponentProps> = ({ emoji, tags
         onBlur={handleBlur}
         placeholderTextColor="gray"
       />
-      <View style={styles.buttonContainer}>
+      {/* <View style={styles.buttonContainer}>
         <Button title="이전" onPress={onPrev} />
         <Button title="다음" onPress={onNext} />
-      </View>
+      </View> */}
     </ScrollView>
   );
 };
@@ -114,11 +114,11 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     textAlignVertical: 'top',
   },
-  buttonContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    width: '100%',
-  },
+  // buttonContainer: {
+  //   flexDirection: 'row',
+  //   justifyContent: 'space-between',
+  //   width: '100%',
+  // },
 });
 
 export default RecordDiaryComponent;

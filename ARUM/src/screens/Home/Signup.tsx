@@ -6,7 +6,8 @@ import { validateEmail, validatePassword, storeToken } from '../../utils/authUti
 import axios from 'axios';
 
 
-import { API_URL, API_HOST } from '../../ngrok_url';  // ngrok_url 파일에서 변수 가져오기
+// import { API_URL, API_HOST } from '../../ngrok_url';  // ngrok_url 파일에서 변수 가져오기
+const API_URL = 'http://localhost:8080'
 
 export default function Signup() {
   const navigation = useNavigation<SignupScreenNavigationProp>();
@@ -56,7 +57,8 @@ export default function Signup() {
       console.log('Registration response:', response.data);
 
       // 회원가입 성공 시 Home 화면으로 이동하고 사용자 이름 전달
-      navigation.navigate('HomeMain', { username: response.data.username });
+      // navigation.navigate('HomeMain', { username: response.data.username });
+      navigation.navigate('MyPage');
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error('Axios error:', error.message);

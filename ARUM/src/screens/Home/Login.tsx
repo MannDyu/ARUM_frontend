@@ -5,7 +5,8 @@ import { LoginScreenNavigationProp } from '../../navigation/types';
 import { validateEmail } from '../../utils/authUtils';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // AsyncStorage를 사용하여 토큰 저장
-import { API_URL, API_HOST } from '../../ngrok_url';  // ngrok_url 파일에서 변수 가져오기
+// import { API_URL, API_HOST } from '../../ngrok_url';  // ngrok_url 파일에서 변수 가져오기
+const API_URL = 'http://localhost:8080'
 
 
 
@@ -36,6 +37,7 @@ export default function Login() {
         // 토큰 저장
         try {
           await AsyncStorage.setItem('userToken', token);
+          await AsyncStorage.setItem('username', username);  // 여기에 username 저장 추가
           const storedToken = await AsyncStorage.getItem('userToken');
           console.log('Stored token:', storedToken);
 
@@ -59,7 +61,8 @@ export default function Login() {
         Alert.alert('로그인 성공', '메인 화면으로 이동합니다.');
         console.log(username)
         // navigation.navigate('Home', { username });
-        navigation.navigate('HomeMain', { username: response.data.username });
+        // navigation.navigate('HomeMain', { username: response.data.username });
+        navigation.navigate('MyPage');
       }
     } catch (error) {
       console.error('Login error:', error);
