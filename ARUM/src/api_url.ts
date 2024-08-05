@@ -1,1 +1,1 @@
-export const API_URL = 'http://localhost:8080'  //포트번호는 다를 수 있음
+export const API_URL = 'http://localhost:8000'  //포트번호는 다를 수 있음
