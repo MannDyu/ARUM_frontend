@@ -5,10 +5,9 @@ import { LoginScreenNavigationProp } from '../../navigation/types';
 import { validateEmail } from '../../utils/authUtils';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // AsyncStorage를 사용하여 토큰 저장
+import { API_URL, API_HOST } from '../../ngrok_url';  // ngrok_url 파일에서 변수 가져오기
 
 
-
-const API_URL = 'https://90b0-1-240-231-249.ngrok-free.app'
 
 export default function Login() {
   const navigation = useNavigation<LoginScreenNavigationProp>();

@@ -8,6 +8,7 @@ import DiaryDetail from './DiaryDetail';
 import DiaryThumbnail from './DiaryThumbnail';
 import Home from '../Home/Home'
 import { RootStackParamList } from '../../navigation/types';
+import DiaryThumbnail from './DiaryThumbnail';
 
 const Stack = createStackNavigator<RootStackParamList>();
 

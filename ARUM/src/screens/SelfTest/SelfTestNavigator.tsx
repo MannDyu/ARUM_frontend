@@ -7,6 +7,7 @@ import TestLoading from './TestLoading'
 import TestPage from './TestPage';
 import FindCenter from './FindCenter';
 import { RootStackParamList } from '../../navigation/types';
+import RegionSelection from './RegionSelection';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -19,6 +20,7 @@ export function SelfTestNavigator() {
       <Stack.Screen name="TestPage" component={TestPage} />
       <Stack.Screen name="TestLoading" component={TestLoading} />
       <Stack.Screen name="FindCenter" component={FindCenter} />
+      <Stack.Screen name="RegionSelection" component={RegionSelection} />
     </Stack.Navigator>
   );
 }

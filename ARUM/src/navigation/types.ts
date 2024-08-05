@@ -44,7 +44,10 @@ export type RootStackParamList = {
   TestReport: { score: number };
   TestPage: undefined;
   TestLoading: { score: number };
-  FindCenter: undefined;
+  
+  FindCenter: { selectedDistricts?: string[] }; // 선택된 구 정보를 전달받음
+  RegionSelection: { selectedDistricts: string[] }; // 선택된 구 정보를 전달
+  
 
   // Diary related screens
   DiaryMain: undefined; //! Diary -> DiaryMain 중복방지 위해 수정
@@ -82,12 +85,18 @@ export type CompletedMissionDetailScreenNavigationProp = NavigationProp<'Complet
 export type EditCompletedMissionScreenNavigationProp = NavigationProp<'EditCompletedMission'>;
 export type SelectSectionScreenNavigationProp = NavigationProp<'SelectSection'>;
 
+// Home 
+export type HomeScreenNavigationProp = NavigationProp<'Home'>;
+export type SignupScreenNavigationProp = NavigationProp<'Signup'>;
+export type LoginScreenNavigationProp = NavigationProp<'Login'>;
+
 // Self Test
-export type TestStartScreenNavigationProp = NavigationProp<'TestStart'>;
-export type TestReportScreenNavigationProp = NavigationProp<'TestReport'>;
-export type TestPageScreenNavigationProp = NavigationProp<'TestPage'>;
-export type TestLoadingScreenNavigationProp = NavigationProp<'TestLoading'>;
-export type FindCenterScreenNavigationProp = NavigationProp<'FindCenter'>;
+export type TestStartScreenNavigationProp = StackNavigationProp<RootStackParamList, 'TestStart'>;
+export type TestReportScreenNavigationProp = StackNavigationProp<RootStackParamList, 'TestReport'>;
+export type TestPageScreenNavigationProp = StackNavigationProp<RootStackParamList, 'TestPage'>;
+export type TestLoadingScreenNavigationProp = StackNavigationProp<RootStackParamList, 'TestLoading'>;
+export type FindCenterScreenNavigationProp = StackNavigationProp<RootStackParamList, 'FindCenter'>;
+
 
 // 인터페이스 정의
 export interface ImageUploaderProps {
