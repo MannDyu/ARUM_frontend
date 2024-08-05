@@ -398,8 +398,8 @@ const styles = StyleSheet.create({
   },
   characterImage: {
     marginTop: 30,
-    width: 270,
-    height: 270,
+    width: 230,
+    height: 230,
   },
   timeEstimate: {
     fontSize: 16,
