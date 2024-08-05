@@ -89,7 +89,10 @@ export default function MyPage() {
         await AsyncStorage.removeItem('username');
         setUsername('Guest');
         setIsLoggedIn(false);
-        navigation.navigate('Login');
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Login' }],
+        });
       } catch (e) {
         console.error('Error removing data from AsyncStorage:', e);
       }
