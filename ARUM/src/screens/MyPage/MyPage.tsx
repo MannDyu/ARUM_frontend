@@ -6,7 +6,7 @@ import axios from 'axios';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { MyPageNavigationProp } from '../../navigation/types';
 // import { API_URL } from '../../ngrok_url';  // ngrok_url 파일에서 API_URL 가져오기
-const API_URL = 'http://localhost:8080'
+import {API_URL} from '../../api_url'
 
 export default function MyPage() {
   const navigation = useNavigation<MyPageNavigationProp>();

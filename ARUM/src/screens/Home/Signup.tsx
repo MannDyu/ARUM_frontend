@@ -7,7 +7,7 @@ import axios from 'axios';
 
 
 // import { API_URL, API_HOST } from '../../ngrok_url';  // ngrok_url 파일에서 변수 가져오기
-const API_URL = 'http://localhost:8080'
+import {API_URL} from '../../api_url'
 
 export default function Signup() {
   const navigation = useNavigation<SignupScreenNavigationProp>();

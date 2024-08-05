@@ -6,7 +6,8 @@ import { validateEmail } from '../../utils/authUtils';
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage'; // AsyncStorage를 사용하여 토큰 저장
 // import { API_URL, API_HOST } from '../../ngrok_url';  // ngrok_url 파일에서 변수 가져오기
-const API_URL = 'http://localhost:8080'
+// const API_URL = 'http://localhost:8080'
+import {API_URL} from '../../api_url'
 
 
 
