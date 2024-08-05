@@ -7,7 +7,7 @@ import { RootStackParamList } from '../../navigation/types';
 import EditCompletedMission from './EditCompletedMission';
 import CompletedMission from './CompletedMission';
 import SelectSection from './SelectSection';
-import DailyMission from './DailyMisison';
+import DailyMission from './DailyMission';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
