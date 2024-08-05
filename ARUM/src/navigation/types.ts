@@ -2,12 +2,14 @@
 
 import { Route } from '@react-navigation/native';
 import { StackScreenProps, StackNavigationProp } from '@react-navigation/stack';
+import { ImageSourcePropType } from 'react-native';
 
 
 
 export type RootStackParamList = {
-  Home: { username: string };
-  Signup: undefined;
+  Main: undefined; //! 추가: 중복방지 위해 수정
+  HomeMain: { username: string };
+  Signup: undefined; //! Home -> HomeMain 중복방지 위해 수정
   Login: undefined;
   DrawerNavigator: undefined;
   
@@ -20,7 +22,7 @@ export type RootStackParamList = {
 
   
   // Mission related screens
-  Mission: { 
+  MissionMain: {  //! Mission -> MissionMain 중복방지 위해 수정
     selectedArea?: string; 
     completedMissionId?: string; 
     missionStatus?: 'select' | 'finish' | 'completed' | 'success' 
@@ -36,20 +38,18 @@ export type RootStackParamList = {
     onMissionComplete: () => void;
     onMissionSuccess: () => void;
   };
+  
 
   // SelfTest related screens
-  SelfTest: undefined;
+  SelfTestMain: undefined;  //! SelfTest -> SelfTestMain 중복방지 위해 수정
   TestStart: undefined;
   TestReport: { score: number };
   TestPage: undefined;
   TestLoading: { score: number };
-  
-  FindCenter: { selectedDistricts?: string[] }; // 선택된 구 정보를 전달받음
-  RegionSelection: { selectedDistricts: string[] }; // 선택된 구 정보를 전달
-  
+  FindCenter: undefined;
 
   // Diary related screens
-  Diary: undefined;
+  DiaryMain: undefined; //! Diary -> DiaryMain 중복방지 위해 수정
   RecordDiary: { 
     date?: string; 
     editMode?: boolean; 
@@ -59,7 +59,13 @@ export type RootStackParamList = {
   DiaryEmotion: undefined;
   // RecordDiary: { date?: string; editMode?: boolean; diaryId?: string };
   DiaryThumbnail: { diaryId?: string };
-  DiaryDetail: { diaryId?: string };
+  DiaryDetail: { 
+    diaryId?: string;
+    emoji: any;
+    date: string;
+    tags: string[];
+    answers: string[];
+  };
 };
 
 
@@ -70,10 +76,10 @@ export type RootStackScreenProps<T extends keyof RootStackParamList> =
 export type NavigationProp<T extends keyof RootStackParamList> = 
   StackNavigationProp<RootStackParamList, T>;
 
-export type MissionScreenNavigationProp = NavigationProp<'Mission'>;
-export type DailyMissionScreenNavigationProp = NavigationProp<'DailyMission'>;
-export type SelfTestScreenNavigationProp = StackNavigationProp<RootStackParamList, 'SelfTest'>;
-export type DiaryScreenNavigationProp = NavigationProp<'Diary'>;
+export type MissionScreenNavigationProp = NavigationProp<'MissionMain'>; //! 수정
+export type DailyMissionScreenNavigationProp = NavigationProp<'DailyMission'>; //! 수정
+export type SelfTestScreenNavigationProp = StackNavigationProp<RootStackParamList, 'SelfTestMain'>;
+export type DiaryScreenNavigationProp = NavigationProp<'DiaryMain'>; //! 수정
 export type RecordDiaryScreenNavigationProp = NavigationProp<'RecordDiary'>;
 export type DiaryThumbnailScreenNavigationProp = NavigationProp<'DiaryThumbnail'>;
 export type DiaryDetailScreenNavigationProp = NavigationProp<'DiaryDetail'>;
@@ -85,17 +91,16 @@ export type EditCompletedMissionScreenNavigationProp = NavigationProp<'EditCompl
 export type SelectSectionScreenNavigationProp = NavigationProp<'SelectSection'>;
 
 // Home 
-export type HomeScreenNavigationProp = NavigationProp<'Home'>;
+export type HomeScreenNavigationProp = NavigationProp<'HomeMain'>;
 export type SignupScreenNavigationProp = NavigationProp<'Signup'>;
 export type LoginScreenNavigationProp = NavigationProp<'Login'>;
 
 // Self Test
-export type TestStartScreenNavigationProp = StackNavigationProp<RootStackParamList, 'TestStart'>;
-export type TestReportScreenNavigationProp = StackNavigationProp<RootStackParamList, 'TestReport'>;
-export type TestPageScreenNavigationProp = StackNavigationProp<RootStackParamList, 'TestPage'>;
-export type TestLoadingScreenNavigationProp = StackNavigationProp<RootStackParamList, 'TestLoading'>;
-export type FindCenterScreenNavigationProp = StackNavigationProp<RootStackParamList, 'FindCenter'>;
-
+export type TestStartScreenNavigationProp = NavigationProp<'TestStart'>;
+export type TestReportScreenNavigationProp = NavigationProp<'TestReport'>;
+export type TestPageScreenNavigationProp = NavigationProp<'TestPage'>;
+export type TestLoadingScreenNavigationProp = NavigationProp<'TestLoading'>;
+export type FindCenterScreenNavigationProp = NavigationProp<'FindCenter'>;
 
 // 인터페이스 정의
 export interface ImageUploaderProps {

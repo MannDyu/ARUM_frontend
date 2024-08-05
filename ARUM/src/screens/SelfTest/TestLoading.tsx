@@ -26,7 +26,7 @@ const TestLoading: React.FC<RootStackScreenProps<'TestLoading'>> = ({ route }) =
         <Text style={{fontSize: 18}}>결과 분석 중입니다...</Text>
         
         <Image
-          source={require('../../assets/images/test.png')}
+          source={require('../../assets/images/selfTest/loading.png')}
           style={styles.image}
         />
         <LinearProgress color="black" variant='indeterminate' style={{width:'90%', height:13, borderRadius:15}}/>

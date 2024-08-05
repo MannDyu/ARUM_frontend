@@ -1,14 +1,16 @@
-import React, {useState} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { RootStackScreenProps } from '../../navigation/types';
-import MissionHeader from '../Mission/MissionHeader';
 import Popup from '../../components/Popup';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
+const { width, height } = Dimensions.get('window');
 
 type TestReportProps = RootStackScreenProps<'TestReport'>;
 
 const TestReport: React.FC<TestReportProps> = ({ route, navigation }) => {
-  const score = route.params?.score ?? 0; 
+  const score = route.params?.score ?? 0;
 
   const [isPopupVisible, setIsPopupVisible] = useState(false);
 
@@ -16,7 +18,7 @@ const TestReport: React.FC<TestReportProps> = ({ route, navigation }) => {
     if (score <= 15) {
       return (
         <View style={styles.adviceContainer}>
-          <Image source={require('../../../assets/happy.png')} style={styles.image} />
+          <Image source={require('../../assets/images/selfTest/best.png')} style={styles.image} />
           <Text style={styles.score}>{score}점</Text>
           <Text style={styles.adviceTitle}>편안한 상태</Text>
           <Text style={styles.adviceText}>
@@ -27,7 +29,7 @@ const TestReport: React.FC<TestReportProps> = ({ route, navigation }) => {
     } else if (score <= 24) {
       return (
         <View style={styles.adviceContainer}>
-          <Image source={require('../../../assets/bored.png')} style={styles.image} />
+          <Image source={require('../../assets/images/selfTest/soso.png')} style={styles.image} />
           <Text style={styles.score}>{score}점</Text>
           <Text style={styles.adviceTitle}>가벼운 우울감</Text>
           <Text style={styles.adviceText}>
@@ -38,7 +40,7 @@ const TestReport: React.FC<TestReportProps> = ({ route, navigation }) => {
     } else {
       return (
         <View style={styles.adviceContainer}>
-          <Image source={require('../../../assets/severe.png')} style={styles.image} />
+          <Image source={require('../../assets/images/selfTest/bad.png')} style={styles.image} />
           <Text style={styles.score}>{score}점</Text>
           <Text style={styles.adviceTitle}>다양한 우울증상</Text>
           <Text style={styles.adviceText}>
@@ -51,10 +53,12 @@ const TestReport: React.FC<TestReportProps> = ({ route, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <MissionHeader 
-        title="자가진단 테스트 결과보고서" 
-        onBack={() => setIsPopupVisible(true)} 
-      />
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => setIsPopupVisible(true)} style={styles.backButton}>
+          <Icon name="arrow-back" size={24} color="#FFFFFF" />
+        </TouchableOpacity>
+        <Text style={styles.title}>자가진단 테스트 결과보고서</Text>
+      </View>
       <View style={styles.contentContainer}>
         <View style={styles.resultContainer}>
           <Text style={styles.resultText}>
@@ -71,7 +75,7 @@ const TestReport: React.FC<TestReportProps> = ({ route, navigation }) => {
           )}
           <TouchableOpacity
             style={styles.completeButton}
-            onPress={() => navigation.navigate('Home')}
+            onPress={() => navigation.navigate('SelfTestMain')}
           >
             <Text style={styles.completeButtonText}>완료</Text>
           </TouchableOpacity>
@@ -84,7 +88,7 @@ const TestReport: React.FC<TestReportProps> = ({ route, navigation }) => {
         description='자가진단 페이지를 벗어나시겠습니까? 답변은 저장되지 않습니다.'
         onConfirm={() => { 
           setIsPopupVisible(false);
-          navigation.navigate('SelfTest');
+          navigation.navigate('SelfTestMain');
         }}
         onCancel={() => {
           setIsPopupVisible(false);
@@ -96,20 +100,39 @@ const TestReport: React.FC<TestReportProps> = ({ route, navigation }) => {
 
 export default TestReport;
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#FDFDED',
+  },
+  header: {
+    width: '100%',
+    height: height * 0.2,
+    backgroundColor: '#6487E5',
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingTop: 20,
-    paddingBottom: 60,
+    flexDirection: 'row', 
+  },
+  backButton: {
+    position: 'absolute',
+    left: 25,
+    top: 82,
+  },
+  title: {
+    fontWeight: '600',
+    fontSize: 20,
+    color: '#FFFFFF',
+    textAlign: 'center',
+    flex: 1, 
   },
   contentContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
-    
   },
   resultContainer: {
     backgroundColor: '#ffffff',
@@ -120,15 +143,18 @@ const styles = StyleSheet.create({
     elevation: 2,
     alignItems: 'center',
     marginTop: 0,
+    overflow: 'hidden',
   },
   resultText: {
     fontSize: 18,
     marginBottom: 30,
     textAlign: 'center', 
+    width: '100%',
   },
   adviceContainer: {
     marginBottom: 20,
-    alignItems: 'center', 
+    alignItems: 'center',
+    width: '100%',
   },
   score: {
     fontSize: 20,
@@ -149,11 +175,11 @@ const styles = StyleSheet.create({
     textAlign: 'center', 
   },
   findCenterButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#6487E5',
     padding: 10,
     borderRadius: 5,
     marginBottom: 10,
-    width: 200,
+    width: 220,
     height: 40,
     borderColor: 'black',
     borderWidth: 0.5,
@@ -164,27 +190,31 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   completeButton: {
-    backgroundColor: '#2196F3',
+    backgroundColor: '#FFFFFF',
     padding: 10,
     borderRadius: 5,
-    width: 200,
+    width: 220,
     height: 40,
     borderColor: 'black',
     borderWidth: 0.5,
   },
   completeButtonText: {
-    color: 'white',
+    color: 'black',
     textAlign: 'center',
     fontSize: 18,
   },
   image: {
-    width: 150,
-    height: 150,
+    width: 240, 
+    height: 190, 
     marginBottom: 10,
-    borderColor: 'black',
-    borderWidth: 1,
+    resizeMode: 'contain',
   },
 });
+
+
+
+
+
 
 
 

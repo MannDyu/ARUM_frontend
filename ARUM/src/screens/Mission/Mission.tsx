@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import React, { useEffect, useState } from 'react';
+import { View, Text, StyleSheet, Image } from 'react-native';
 import ToggleButton from '../../components/ToggleButton';
-import DailyMission from './DailyMisison'; 
+import DailyMission from './DailyMission'; 
 import CompletedMission from './CompletedMission';
 import { RootStackScreenProps, NavigationProp } from '../../navigation/types';
 
-type MissionProps = RootStackScreenProps<'Mission'>;
+type MissionProps = RootStackScreenProps<'MissionMain'>;
 
 export default function Mission({ route, navigation }: MissionProps) {
   const [selectedButton, setSelectedButton] = useState<'left' | 'right'>('left');
@@ -41,6 +41,26 @@ export default function Mission({ route, navigation }: MissionProps) {
     }
   };
 
+  const renderCharacterImage = () => {
+    if (missionStatus === 'success') {
+      return (
+        <Image
+          source={require('../../assets/images/mission/missionCompleteCharacter.png')}
+          style={styles.characterImage}
+          resizeMode="cover"
+        />
+      );
+    } else {
+      return (
+        <Image
+          source={require('../../assets/images/mission/missionCharacter.png')}
+          style={styles.characterImage}
+          resizeMode="cover"
+        />
+      );
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>일일미션</Text>
@@ -51,19 +71,22 @@ export default function Mission({ route, navigation }: MissionProps) {
         onToggle={handleToggle}
       />
       {selectedButton === 'left' ? 
-        <DailyMission
-          navigation={navigation as NavigationProp<'DailyMission'>}
-          route={{
-            params: {
-              selectedArea,
-              missionStatus,
-              onMissionComplete: handleMissionComplete,
-              onMissionSuccess: handleMissionSuccess
-            },
-            key: '',
-            name: 'DailyMission'
-          }}
-        /> : 
+        <>
+          <DailyMission
+            navigation={navigation as NavigationProp<'DailyMission'>}
+            route={{
+              params: {
+                selectedArea,
+                missionStatus,
+                onMissionComplete: handleMissionComplete,
+                onMissionSuccess: handleMissionSuccess
+              },
+              key: '',
+              name: 'DailyMission'
+            }}
+          />
+          {renderCharacterImage()}
+        </> : 
         <CompletedMission />
       }
     </View>
@@ -73,8 +96,8 @@ export default function Mission({ route, navigation }: MissionProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
     paddingTop: 40,
+    backgroundColor: '#FDFDED',
   },
   title: {
     fontSize: 24,
@@ -88,5 +111,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 10,
     marginBottom: 20,
+  },
+  characterImage: {
+    width: '100%',
+    height: 250,  
+    position: 'absolute',
+    bottom: -70,
   },
 });

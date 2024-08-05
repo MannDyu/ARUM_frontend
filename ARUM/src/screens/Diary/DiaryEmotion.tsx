@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import React, { useState } from 'react';
 import Header from '../../components/Header';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
@@ -41,11 +41,21 @@ const titles = [
   "바람"
 ];
 
+const emotions = [
+  require('../../assets/images/emotion/joy.png'),
+  require('../../assets/images/emotion/mad.png'),
+  require('../../assets/images/emotion/sad.png'),
+  require('../../assets/images/emotion/playful.png'),
+  require('../../assets/images/emotion/love.png'),
+  require('../../assets/images/emotion/dislike.png'),
+  require('../../assets/images/emotion/want.png'),
+];
+
 interface DiaryEmotionOptionProps {
   title: string;
   color: string;
-  unselectedColor: string; // Rename for consistency
-  image: string;
+  unselectedColor: string;
+  image: object;
   isSelected: boolean;
   onSelect: (index: number) => void;
   index: number;
@@ -71,8 +81,8 @@ const DiaryEmotionOption: React.FC<DiaryEmotionOptionProps> = ({
         backgroundColor: isSelected || !hasSelection ? color : unselectedColor,
         borderColor: isSelected || !hasSelection ? 'black' : 'gray',
       }}
-      checkedIcon={<View style={styles.checkedIcon} />}
-      uncheckedIcon={<View style={styles.uncheckedIcon} />}
+      checkedIcon={<Image source={image} style={styles.icon} />}
+      uncheckedIcon={<Image source={image} style={styles.icon} />}
       size={20}
       title={title}
       textStyle={{
@@ -95,7 +105,7 @@ export default function Diary() {
 
   const handleConfirm = () => {
     setIsPopupVisible(false);
-    navigation.goBack();
+    navigation.navigate('Diary'); //! Home으로 돌아가야함!
   };
 
   const onSelect = (index: number) => {
@@ -135,8 +145,8 @@ export default function Diary() {
               <DiaryEmotionOption
                 key={index}
                 color={color}
+                image={emotions[index]}
                 unselectedColor={unselectedColors[index]}
-                image=""
                 isSelected={selected === index}
                 onSelect={onSelect}
                 index={index}
@@ -157,7 +167,7 @@ export default function Diary() {
             title="다음"
             buttonStyle={styles.buttonStyle}
             containerStyle={styles.containerStyle}
-            onPress={() => navigation.navigate('RecordDiary')} //! 선택되면 활성화 -> 선택되어야 넘어가야함!!
+            onPress={() => navigation.navigate('RecordDiary')}
             disabled={selected !== null ? false : true}
           />
         </View>
@@ -165,6 +175,7 @@ export default function Diary() {
           selectedEmotion={selected !== null ? titles[selected] : null}
           isVisible={bottomSheetVisible}
           onClose={onClose}
+          index={selected}
         />
       </View>
     </View>
@@ -223,8 +234,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginBottom: '2%',
   },
-  checkedIcon: {},
-  uncheckedIcon: {},
+  icon: {
+    width: 20,
+    height: 20,
+  },
   checkboxTextStyle: {
     textAlign: 'center',
     flex: 1,

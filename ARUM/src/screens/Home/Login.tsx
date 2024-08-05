@@ -59,7 +59,7 @@ export default function Login() {
         Alert.alert('로그인 성공', '메인 화면으로 이동합니다.');
         console.log(username)
         // navigation.navigate('Home', { username });
-        navigation.navigate('Home', { username: response.data.username });
+        navigation.navigate('HomeMain', { username: response.data.username });
       }
     } catch (error) {
       console.error('Login error:', error);

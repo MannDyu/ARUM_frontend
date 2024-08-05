@@ -76,12 +76,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 20,
+    paddingTop: 0,
     backgroundColor: '#FFFFEB',
   },
   title: {
-    fontSize: 22,
-    fontWeight: '600',
-    margin: 20,
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
   },
   profile: {
     borderWidth: 1,

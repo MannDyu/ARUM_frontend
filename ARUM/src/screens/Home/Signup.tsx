@@ -56,7 +56,7 @@ export default function Signup() {
       console.log('Registration response:', response.data);
 
       // 회원가입 성공 시 Home 화면으로 이동하고 사용자 이름 전달
-      navigation.navigate('Home', { username: response.data.username });
+      navigation.navigate('HomeMain', { username: response.data.username });
     } catch (error) {
       if (axios.isAxiosError(error)) {
         console.error('Axios error:', error.message);

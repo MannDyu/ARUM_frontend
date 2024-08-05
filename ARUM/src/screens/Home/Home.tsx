@@ -8,7 +8,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 
-type HomeScreenNavigationProp = NavigationProp<'Home'>;
+type HomeScreenNavigationProp = NavigationProp<'HomeMain'>;
+
+
 type TabParamList = {
   "홈": undefined;
   "감정일기": undefined;
@@ -19,21 +21,19 @@ type TabParamList = {
 
 const HomeScreen = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
-  const route = useRoute<RouteProp<RootStackParamList, 'Home'>>();
+  const navigateToDiary = () => navigation.navigate('DiaryMain');
+  
+  const navigateToMission = (params: RootStackParamList['MissionMain']) => navigation.navigate('MissionMain', params); 
+  
+  const navigateToSelfTest = () => navigation.navigate('SelfTestMain');
+  
+  const navigateToFindCenter = () => navigation.navigate('FindCenter');
   const [username, setUsername] = useState<string>('Guest');
   const [selectedDistricts, setSelectedDistricts] = useState<string[]>([]);
 
   
 
-  const navigateToDiary = () => navigation.navigate('Diary');
-  
-  const navigateToMission = (params: RootStackParamList['Mission']) => navigation.navigate('Mission', params); 
-  
-  const navigateToSelfTest = () => navigation.navigate('SelfTest');
-  
-  const navigateToFindCenter = () => {
-    navigation.navigate('FindCenter', { selectedDistricts });
-  };
+
 
   // 일단 주석처리
   // useEffect(() => {
@@ -118,9 +118,10 @@ const HomeScreen = () => {
   };
 
   return (
+    
     <View style={styles.container}>
       <View style={styles.grid}>
-        <Text style={styles.title}>Welcome, {username}</Text>
+        {/* <Text style={styles.title}>Welcome, {username}</Text>
         <TouchableOpacity style={styles.button} onPress={handleSignup}>
           <Text style={styles.buttonText}>회원가입</Text>
         </TouchableOpacity>
@@ -129,10 +130,7 @@ const HomeScreen = () => {
         </TouchableOpacity>
         <TouchableOpacity style={styles.button} onPress={handleLogout}>
           <Text style={styles.buttonText}>로그아웃</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button} onPress={navigateToFindCenter}>
-          <Text style={styles.buttonText}>센터 찾기</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
         <TouchableOpacity style={styles.card}  onPress={navigateToDiary}>
           <Text style={styles.cardText}>감정일기 쓰기</Text>
         </TouchableOpacity>
@@ -148,13 +146,13 @@ const HomeScreen = () => {
         </TouchableOpacity>
       </View>
     </View>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: 'center',  // 화면 중앙에 컨텐츠 배치
+    justifyContent: 'center',  // 화면 중앙에 컨텐츠 배치
     // alignItems: 'center',       // 화면 중앙에 컨텐츠 배치
     backgroundColor: '#FDFDED', // 배경색상
     paddingBottom: 1,         // 하단 바와의 여백

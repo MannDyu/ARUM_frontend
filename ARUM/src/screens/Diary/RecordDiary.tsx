@@ -30,6 +30,7 @@ const RecordDiary: React.FC = () => {
     }
   };
 
+
   const handlePrev = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
