@@ -13,7 +13,6 @@ export default function MyPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('Guest');
 
-
   useEffect(() => {
     checkLoginStatus();
   }, []);

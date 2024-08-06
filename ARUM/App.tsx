@@ -41,9 +41,6 @@ export default function App() {
     // 여기에 스플래시 스크린 렌더링
     return null; 
   }
-
-
-
   
   return (
     <>
@@ -64,15 +61,5 @@ export default function App() {
         </NavigationContainer>
       </MissionProvider>
     </>
-    // <>
-    //   <StatusBar style="inverted" />
-    //   <MissionProvider>
-    //   <NavigationContainer>
-    //   <Stack.Navigator screenOptions={{ headerShown: false }}>
-    //     <Stack.Screen name="Main" component={TabNavigator} />
-    //   </Stack.Navigator>
-    //   </NavigationContainer>
-    //   </MissionProvider>
-    // </>
   );
 }

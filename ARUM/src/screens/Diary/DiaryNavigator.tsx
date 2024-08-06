@@ -14,7 +14,7 @@ const Stack = createStackNavigator<RootStackParamList>();
 export function DiaryNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="DiaryMain" component={Diary} />
+      <Stack.Screen name="Diary" component={Diary} />
       <Stack.Screen name="RecordDiary" component={RecordDiary} />
       <Stack.Screen name="DiaryEmoji" component={DiaryEmoji} />
       <Stack.Screen name="DiaryEmotion" component={DiaryEmotion} />

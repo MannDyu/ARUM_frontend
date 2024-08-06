@@ -6,6 +6,8 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { MissionStackScreenProps } from '../../assets/MissionTypes';
+import axios from 'axios';
+import { API_URL } from '../../api_url';
 
 const TitleContainer = styled.View`
   display: flex;
@@ -25,14 +27,14 @@ const Title = styled.Text`
 const SelectSection = () => {
   const [selectedArea, setSelectedArea] = useState<string>('none');
   type RootStackParamList = {
-    DailyMission: { selectedArea: string };
+    DailyMission: { selectedArea: string; questData: any };
   };
   const options = [
-    { title: '일상', value: 'daily' },
-    { title: '운동', value: 'exercise' },
-    { title: '취미', value: 'hobby' },
+    { title: '일상', value: 'dy' },
+    { title: '운동', value: 'ex' },
+    { title: '취미', value: 'hb' },
     { title: '나', value: 'me' },
-    { title: '청결', value: 'tidy' }
+    { title: '청결', value: 'cl' }
   ];
   
   const navigation = useNavigation<MissionStackScreenProps<'SelectSection'>['navigation']>();
@@ -66,7 +68,10 @@ const SelectSection = () => {
               key={option.value}
               title={option.title}
               checked={isSelected}
-              onPress={() => setSelectedArea(isSelected && selectedArea !=='none' ? 'none' : option.value)}
+              onPress={() => {
+                console.log(`previous SelectedArea: ${selectedArea}`);
+                setSelectedArea(isSelected && selectedArea !=='none' ? 'none' : option.value);
+              }}
               containerStyle={{
                 backgroundColor: isSelected ? 'white' : 'lightgrey',
                 borderWidth: 1,
@@ -107,8 +112,17 @@ const SelectSection = () => {
       <Button
         title="완료"
         onPress={() => {
+          console.log(`SelectedArea: ${selectedArea}`);
           if (selectedArea !== 'none') {
-            navigation.navigate('Mission', { selectedArea });
+            axios.post(`${API_URL}/quest/randomQuest/`, {
+              qs_theme: selectedArea,
+            }).then(response => {
+              console.log(`response data: ${JSON.stringify(response.data)}`)
+              // navigation.navigate('MissionMain', { selectedArea, questData: response.data }); //! mission 으로 넘어가야하나?
+              navigation.navigate('DailyMission', { questData: response.data }); 
+            }).catch(error => {console.log(error)});
+          } else {
+            console.log('선택되지 않음');
           }
         }}
         containerStyle={{

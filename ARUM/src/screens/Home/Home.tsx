@@ -16,21 +16,13 @@ const HomeScreen = () => {
   
   const navigateToFindCenter = () => navigation.navigate('FindCenter');
 
-  // 현재 날짜 가져오기
-  const today = new Date();
-  const formattedDate = `${today.getFullYear()}.${('0' + (today.getMonth() + 1)).slice(-2)}.${('0' + today.getDate()).slice(-2)}`;
-
   return (
     <ImageBackground 
       source={require('../../assets/images/home/homemainCharacter.png')} 
       style={styles.backgroundImage}
+      // resizeMode="cover"
     >
       <View style={styles.container}>
-        {/* 어플 이름 표시 */}
-        <Text style={styles.appName}>어루만짐</Text>
-        {/* 오늘 날짜 표시 */}
-        <Text style={styles.dateText}>{formattedDate}</Text>
-        
         <View style={styles.grid}>
           <TouchableOpacity style={styles.card} onPress={navigateToDiary}>
             <Image 
@@ -77,32 +69,17 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     width: '100%',
     height: '100%',
-    top: 120,
   },
   container: {
     flex: 1,
     justifyContent: 'center', 
     alignItems: 'center',      
     backgroundColor: 'transparent',
-  },
-  appName: {
-    position: 'absolute',
-    top: -30, 
-    left: 30, 
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: 'black',
-  },
-  
-  dateText: {
-    fontSize: 22,
-    color: 'black',
-    marginBottom: 20, 
-    textAlign: 'center',
+    marginBottom: 45,
   },
   grid: {
     width: 330,
-    height: 240,
+    height: 30,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
@@ -121,8 +98,8 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   cardImage: {
-    width: 60,
-    height: 60,
+    width: 60,  // 이미지 너비를 설정
+    height: 60,  // 이미지 높이를 설정
     marginBottom: 10,
   },
   cardText: {

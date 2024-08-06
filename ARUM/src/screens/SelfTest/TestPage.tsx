@@ -10,6 +10,8 @@ import Question3 from './Questions/Questions3';
 import Question4 from './Questions/Questions4';
 import Popup from '../../components/Popup';
 import { QuestionProps, SelfTestScreenNavigationProp } from '../../navigation/types';
+import { API_URL } from '../../api_url';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
@@ -19,6 +21,11 @@ const TestPage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false);
   const navigation = useNavigation<SelfTestScreenNavigationProp>();
+  const [totalScore, setTotalScore] = useState(0);
+
+  const updateTotalScore = (score: number) => {
+    setTotalScore(prevScore => prevScore + score);
+  };
 
   const data = [Question1, Question2, Question3, Question4];
 
@@ -49,18 +56,50 @@ const TestPage = () => {
     }
   };
 
-  const onPressLast = () => {
-    const calculatedScore = Math.floor(Math.random() * 60);
-    navigation.navigate('TestLoading', { score: calculatedScore });   //TestLoading 페이지로 이동 필요!
-    const nextIndex = currentIndex + 1;
-    console.log(`currentIndex: ${currentIndex}`);
-    console.log('로딩페이지로 이동')
+  const getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      return token;
+    } catch (error) {
+      console.error('Error retrieving token');
+      return null;
+    }
+  };
+  
+  const onPressLast = async () => {
+    // const calculatedScore = Math.floor(Math.random() * 60);
+    // navigation.navigate('TestLoading', { score: calculatedScore });   //TestLoading 페이지로 이동 필요!
+    // const nextIndex = currentIndex + 1;
+    // console.log(`currentIndex: ${currentIndex}`);
+    // console.log('로딩페이지로 이동')
+    const calculatedScore = totalScore;
+    try {
+      const userToken = getToken();
+      const response = await fetch(`${API_URL}/selfTest/getResult`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${userToken}`,
+        },
+        body: JSON.stringify({
+          test_score: calculatedScore.toString(),
+        }),
+      });
+      if (response.ok) {
+        navigation.navigate('TestLoading', { score: calculatedScore });
+      } else {
+        console.error(`Failed to send test score: ${calculatedScore}`)
+      }
+    } catch (error) {
+      console.error(`Error sending test score(${calculatedScore}): `, error)
+    }
   };
 
   const renderQuestion = ({ item: QuestionComponent, index }: { item: React.ComponentType<QuestionProps>, index: number }) => (
     <QuestionComponent
       onPressNext={index === data.length - 1 ? onPressLast : onPressNext}
       isLastQuestion={index === data.length - 1}
+      updateTotalScore={updateTotalScore}
     />
   );
 

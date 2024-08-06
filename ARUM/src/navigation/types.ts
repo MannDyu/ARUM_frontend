@@ -37,6 +37,7 @@ export type RootStackParamList = {
   SelectSection: undefined;
   DailyMission: { 
     selectedArea?: string;
+    questData: object;
     missionStatus: 'select' | 'finish' | 'completed' | 'success';
     onMissionComplete: () => void;
     onMissionSuccess: () => void;
