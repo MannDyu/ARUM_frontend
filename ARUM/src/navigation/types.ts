@@ -112,7 +112,7 @@ export type SelectSectionScreenNavigationProp = NavigationProp<'SelectSection'>;
 export type AuthScreenNavigationProp = NavigationProp<'Auth'>;
 export type HomeScreenNavigationProp = NavigationProp<'HomeMain'>;
 export type SignupScreenNavigationProp = NavigationProp< 'Signup'>;
-export type LoginScreenNavigationProp = NavigationProp<'Login'>;
+export type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
 
 // Self Test
 export type TestStartScreenNavigationProp = NavigationProp<'TestStart'>;

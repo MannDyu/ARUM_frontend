@@ -26,8 +26,7 @@ export default function Login() {
     }
 
     try {
-      // const response = await axios.post(`${API_URL}/users/login/`, {
-      const response = await axios.post(`http://52.78.233.229:8000/users/login/`, {
+      const response = await axios.post(`${API_URL}/users/login/`, {
         username, // 사용자 이름으로 로그인
         password,
       });
@@ -63,11 +62,16 @@ export default function Login() {
 
         Alert.alert('로그인 성공', '메인 화면으로 이동합니다.');
         console.log(username)
+        navigation.navigate('HomeMain');
+        // navigation.reset({
+        //   index: 0,
+        //   routes: [{ name: 'Auth', params: { screen: 'HomeMain' } }],
+        // });
 
-        navigation.reset({
-          index: 0,
-          routes: [{ name: 'Home' }],
-        });
+        // navigation.reset({
+        //   index: 0,
+        //   routes: [{ name: 'HomeMain' }],
+        // });
       }
     } catch (error) {
       console.error('Login error:', error);
@@ -90,7 +94,7 @@ export default function Login() {
         <Text style={styles.title}>로그인</Text>
         <TextInput
           style={styles.input}
-          placeholder="아이디"
+          placeholder="닉네임"
           value={username}
           onChangeText={setUsername}
         />

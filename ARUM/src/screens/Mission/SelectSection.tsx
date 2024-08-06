@@ -75,7 +75,7 @@ const SelectSection = () => {
       if (!response.ok) throw new Error('Network response was not ok.');
       const responseData = await response.json();
       console.log(`response data: ${JSON.stringify(responseData.data)}`)
-      navigation.navigate('DailyMission', { questData: responseData })
+      navigation.navigate('DailyMission', { questData: responseData, missionStatus: 'finish' })
     } catch (error) {
       console.error('Error handleQuest', error);
     }

@@ -40,6 +40,7 @@ export default function SelfTest() {
         const response = await fetch(`${API_URL}/selfTest/getSelfTestDate`, {
           method: 'GET',
           headers: {
+            'Content-Type': 'application/json',
             'Authorization': `Token ${userToken}`,
           },
         });

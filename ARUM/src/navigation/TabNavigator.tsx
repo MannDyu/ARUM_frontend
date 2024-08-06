@@ -5,7 +5,7 @@ import MyPage from '../screens/MyPage/MyPage';
 // import Mission from '../screens/Mission/Mission';
 import SelfTest from '../screens/SelfTest/SelfTest';
 import Diary from '../screens/Diary/Diary';
-import Home from '../screens/Home/Home';
+import Home from '../screens/Home/HomeScreen';
 import Community from '../screens/Community/Community';
 
 // Mission 네비게이터 import

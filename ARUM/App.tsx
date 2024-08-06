@@ -4,7 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import { MissionProvider } from './src/context/MissionContext';
 import { createStackNavigator } from '@react-navigation/stack';
 import { TabNavigator } from './src/navigation/TabNavigator';
-import Home from './src/screens/Home/Home';
+import Home from './src/screens/Home/HomeScreen';
 import FindCenter from './src/screens/SelfTest/FindCenter';
 import TestReport from './src/screens/SelfTest/TestReport';
 import RecordDiary from './src/screens/Diary/RecordDiary';
@@ -61,15 +61,5 @@ export default function App() {
         </NavigationContainer>
       </MissionProvider>
     </>
-    // <>
-    //   <StatusBar style="inverted" />
-    //   <MissionProvider>
-    //   <NavigationContainer>
-    //   <Stack.Navigator screenOptions={{ headerShown: false }}>
-    //     <Stack.Screen name="Main" component={TabNavigator} />
-    //   </Stack.Navigator>
-    //   </NavigationContainer>
-    //   </MissionProvider>
-    // </>
   );
 }
