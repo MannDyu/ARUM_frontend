@@ -204,8 +204,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   image: {
-    width: 240, 
-    height: 190, 
+    width: 160, 
+    height: 110, 
     marginBottom: 10,
     resizeMode: 'contain',
   },

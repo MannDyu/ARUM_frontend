@@ -7,10 +7,13 @@ import { ImageSourcePropType } from 'react-native';
 
 
 export type RootStackParamList = {
+  Auth: undefined;
   Main: undefined; //! 추가: 중복방지 위해 수정
-  HomeMain: { username: string };
+  HomeMain: undefined,
   Signup: undefined; //! Home -> HomeMain 중복방지 위해 수정
   Login: undefined;
+
+  TabNavigator: undefined;
   DrawerNavigator: undefined;
   
   // 탭 네비게이터 스크린들
@@ -28,7 +31,14 @@ export type RootStackParamList = {
     missionStatus?: 'select' | 'finish' | 'completed' | 'success' 
   };
   CompletedMission: undefined;
-  CompletedMissionRecord: { selectedArea?: string };
+  CompletedMissionRecord: { 
+    selectedArea?: string;
+    questData?: {
+      id: number;
+      qs_theme: string;
+      qs_content: string;
+    } | null;
+  };
   CompletedMissionDetail: { missionId: string };
   EditCompletedMission: { missionId: string };
   SelectSection: undefined;
@@ -37,6 +47,11 @@ export type RootStackParamList = {
     missionStatus: 'select' | 'finish' | 'completed' | 'success';
     onMissionComplete: () => void;
     onMissionSuccess: () => void;
+    questData: {
+      id: number;
+      qs_theme: string;
+      qs_content: string;
+    };
   };
   
 
@@ -59,6 +74,7 @@ export type RootStackParamList = {
   DiaryEmotion: undefined;
   // RecordDiary: { date?: string; editMode?: boolean; diaryId?: string };
   DiaryThumbnail: { diaryId?: string };
+  Diary: undefined;
   DiaryDetail: { 
     diaryId?: string;
     emoji: any;
@@ -68,6 +84,14 @@ export type RootStackParamList = {
   };
   MyPage: undefined; 
 
+};
+
+export type TabNavigatorParamList = {
+  HomeMain: undefined;
+  Diary: undefined;
+  Mission: undefined;
+  SelfTest: undefined;
+  MyPage: undefined;
 };
 
 
@@ -93,9 +117,10 @@ export type EditCompletedMissionScreenNavigationProp = NavigationProp<'EditCompl
 export type SelectSectionScreenNavigationProp = NavigationProp<'SelectSection'>;
 
 // Home 
+export type AuthScreenNavigationProp = NavigationProp<'Auth'>;
 export type HomeScreenNavigationProp = NavigationProp<'HomeMain'>;
-export type SignupScreenNavigationProp = NavigationProp<'Signup'>;
-export type LoginScreenNavigationProp = NavigationProp<'Login'>;
+export type SignupScreenNavigationProp = NavigationProp< 'Signup'>;
+export type LoginScreenNavigationProp = StackNavigationProp<RootStackParamList, 'Login'>;
 
 // Self Test
 export type TestStartScreenNavigationProp = NavigationProp<'TestStart'>;
@@ -117,4 +142,11 @@ export interface ImageUploaderProps {
 export interface QuestionProps {
   onPressNext: () => void;
   isLastQuestion: boolean;
+}
+
+export interface QuestData {
+  id: number;
+  qs_theme: string;
+  qs_content: string;
+  //
 }

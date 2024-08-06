@@ -8,11 +8,10 @@ import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../navigation/types';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import DiaryEmoji from './DiaryEmoji';
+import {API_URL} from '../../api_url';
 
-// type DiaryProps = StackScreenProps<RootStackParamList, 'Diary'>;
-type DiaryProps = StackScreenProps<RootStackParamList, 'DiaryMain'>; //! 이름 수정!
+type DiaryProps = StackScreenProps<RootStackParamList, 'DiaryMain'>; 
 type RecordDiaryNavigationProp = StackNavigationProp<RootStackParamList, 'RecordDiary'>;
-
 
 const Diary: React.FC<DiaryProps> = ({ navigation, route }) => {
   const [selectedButton, setSelectedButton] = useState<'left' | 'right'>('left');
@@ -38,7 +37,7 @@ const Diary: React.FC<DiaryProps> = ({ navigation, route }) => {
     }
   };
   if (showRecordDiary) {
-    return <RecordDiary />;
+    return <RecordDiary navigation={undefined} route={undefined} />;
   }
 
   return (

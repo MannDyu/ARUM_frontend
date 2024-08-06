@@ -5,12 +5,22 @@ import SelectItem from './SelectItem';
 interface TestItemProps {
   questionNum: number;
   question: string;
+  onScoreChange: (score:number) => void;
 }
-const TestItem: React.FC<TestItemProps> = ({ questionNum, question }) => {
+const TestItem: React.FC<TestItemProps> = ({ questionNum, question, onScoreChange }) => {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [scores, setScores] = useState<number[]>([0, 0, 0, 0]);
 
   const handleSelect = (index: number) => {
     setSelectedIndex(index);
+  };
+
+  const handleSelectItemScore = (index: number, score: number) => {
+    const newScores = [...scores];
+    newScores[index] = score;
+    setScores(newScores);
+    console.log(`newScores: ${newScores}`);
+    onScoreChange(newScores.reduce((a, b) => a + b, 0))
   };
 
   return (

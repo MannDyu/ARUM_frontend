@@ -8,7 +8,7 @@ type HomeScreenNavigationProp = NavigationProp<'HomeMain'>;
 const HomeScreen = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
 
-  const navigateToDiary = () => navigation.navigate('DiaryMain');
+  const navigateToDiary = () => navigation.navigate('Diary');
   
   const navigateToMission = (params: RootStackParamList['MissionMain']) => navigation.navigate('MissionMain', params); 
   
@@ -69,14 +69,13 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     width: '100%',
     height: '100%',
-    
   },
   container: {
     flex: 1,
     justifyContent: 'center', 
     alignItems: 'center',      
     backgroundColor: 'transparent',
-          
+    marginBottom: 45,
   },
   grid: {
     width: 330,
@@ -120,4 +119,3 @@ const styles = StyleSheet.create({
 });
 
 export default HomeScreen;
-

@@ -13,7 +13,6 @@ export default function MyPage() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState('Guest');
 
-
   useEffect(() => {
     checkLoginStatus();
   }, []);
@@ -53,7 +52,7 @@ export default function MyPage() {
         console.log('No token found, proceeding with local logout');
         setUsername('Guest');
         setIsLoggedIn(false);
-        navigation.navigate('Login');
+        navigation.navigate('MyPage');
         return;
       }
   
@@ -89,7 +88,10 @@ export default function MyPage() {
         await AsyncStorage.removeItem('username');
         setUsername('Guest');
         setIsLoggedIn(false);
-        navigation.navigate('Login');
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Login' }],
+        });
       } catch (e) {
         console.error('Error removing data from AsyncStorage:', e);
       }

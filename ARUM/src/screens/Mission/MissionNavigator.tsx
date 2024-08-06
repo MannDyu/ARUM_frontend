@@ -22,7 +22,7 @@ export function MissionNavigator() {
         component={CompletedMissionDetail} 
         options={{ 
           gestureEnabled: false,
-          headerLeft: () => null  // 헤더의 뒤로가기 버튼도 제거
+          headerLeft: () => null  
         }}
       />
       <Stack.Screen name="EditCompletedMission" component={EditCompletedMission} />

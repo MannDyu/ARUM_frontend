@@ -5,7 +5,7 @@ import MyPage from '../screens/MyPage/MyPage';
 // import Mission from '../screens/Mission/Mission';
 import SelfTest from '../screens/SelfTest/SelfTest';
 import Diary from '../screens/Diary/Diary';
-import Home from '../screens/Home/Home';
+import Home from '../screens/Home/HomeScreen';
 import Community from '../screens/Community/Community';
 
 // Mission 네비게이터 import
@@ -20,19 +20,25 @@ import { createIconSet } from 'react-native-vector-icons';
 
 const Tab = createBottomTabNavigator();
 
-const TabBarIcon = (focused: any, name: string) => {
+const TabBarIcon = (focused: boolean, name: string) => {
   let iconImagePath;
 
-  if (name == 'Home') {
-    iconImagePath = require('../assets/images/home.png');
-  } else if (name == 'Mission') {
-    iconImagePath = require('../assets/images/mission.png');
-  } else if (name == 'Diary') {
-    iconImagePath = require('../assets/images/diary.png');
-  } else if (name == 'MyPage') {
-    iconImagePath = require('../assets/images/user.png');
-  } else if (name == 'SelfTest') {
-    iconImagePath = require('../assets/images/exam2.png');
+  switch (name) {
+    case 'HomeMain':
+      iconImagePath = require('../assets/images/home.png');
+      break;
+    case 'Mission':
+      iconImagePath = require('../assets/images/mission.png');
+      break;
+    case 'Diary':
+      iconImagePath = require('../assets/images/diary.png');
+      break;
+    case 'MyPage':
+      iconImagePath = require('../assets/images/user.png');
+      break;
+    case 'SelfTest':
+      iconImagePath = require('../assets/images/exam2.png');
+      break;
   }
 
   return (
@@ -49,19 +55,18 @@ const TabBarIcon = (focused: any, name: string) => {
 export function TabNavigator() {
   return (
     <Tab.Navigator
-      initialRouteName='Home'
+      initialRouteName='HomeMain'
       screenOptions={({route}) => ({
         headerShown: false,
         tabBarLabel: route.name,
         tabBarIcon: ({focused}) => TabBarIcon(focused, route.name)
       })}
     >
-      <Tab.Screen name="Home" component={HomeNavigator} />
+      <Tab.Screen name="HomeMain" component={HomeNavigator} />
       <Tab.Screen name="Diary" component={DiaryNavigator} />
       <Tab.Screen name="Mission" component={MissionNavigator} />
       <Tab.Screen name="SelfTest" component={SelfTestNavigator} />
       <Tab.Screen name="MyPage" component={MyPage} />
-      {/* <Tab.Screen name="Community" component={Community} /> */}
     </Tab.Navigator>
   );
 }

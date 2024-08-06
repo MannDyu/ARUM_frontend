@@ -6,6 +6,8 @@ import { RootStackParamList, RootStackScreenProps } from '../../navigation/types
 import Header from '../../components/Header';
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { API_URL } from '../../api_url';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const emotions = [
   require('../../assets/images/emotion/joy.png'),
@@ -26,20 +28,92 @@ const RecordDiary: React.FC<RecordDiaryProps> = () => {
   const [answers, setAnswers] = useState<string[]>(['', '', '']);
 
   // selectedEmotionIndex와 selectedTags 가져오기
-  const selectedEmotionIndex = route.params?.selectedEmotionIndex ?? 0;
-  const selectedTags = route.params?.selectedTags ?? [];
+  // const selectedEmotionIndex = route.params?.selectedEmotionIndex ?? 0;
+  const selectedEmotionIndex = (route.params as { selectedEmotionIndex?: number }).selectedEmotionIndex ?? 0;
+  // const selectedTags = route.params?.selectedTags ?? [];
+  const selectedTags = (route.params as { selectedTags?: string[] }).selectedTags ?? [];
+
+  const [diaryData, setDiaryData] = useState({
+    feel: '',
+    emotion: '',
+    tag1: '',
+    tag2: '',
+    tag3: '',
+    content1: '',
+    content2: '',
+    content3: '',
+  });
+
+  const handleEmotionSelected = (emotion: string | null, tags: string[], emotionIndex: number) => {
+    setDiaryData(prevData => ({
+      ...prevData,
+      emotion: emotion || '',
+      tag1: tags[0] || '',
+      tag2: tags[1] || '',
+      tag3: tags[2] || '',
+    }));
+  };
+
+  const getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      return token;
+    } catch (error) {
+      console.error('Error retrieving token');
+      return null;
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      const userToken = await getToken();
+      if (!userToken) {
+        console.error('Token not found');
+        return;
+      }
+      const response = await fetch(`${API_URL}/diary/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${userToken}`,
+        },
+        body: JSON.stringify(diaryData),
+      });
+      if (!response.ok) throw new Error('Network response was not ok.');
+      const responseData = await response.json();
+      console.log('Diary saved successfully:', responseData);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
 
   const handleAnswerChange = (text: string) => {
     const newAnswers = [...answers];
     newAnswers[currentQuestionIndex] = text;
     setAnswers(newAnswers);
+
+    setDiaryData(prevData => ({
+      ...prevData,
+      [`content${currentQuestionIndex + 1}`]: text,
+    }));
   };
+
+  const emotionNames = [
+    "기쁨",
+    "화남",
+    "슬픔",
+    "즐거움",
+    "사랑",
+    "미움",
+    "바람"
+  ];
 
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
+      handleEmotionSelected(emotionNames[selectedEmotionIndex], selectedTags, selectedEmotionIndex);
     } else {
-      navigation.navigate('DiaryThumbnail', { diaryId: 'some-diary-id' });
+      navigation.navigate('DiaryThumbnail', { diaryId: 'some-diary-id' }); //! 썸네일로 정보 전송
     }
   };
 
@@ -68,12 +142,7 @@ const RecordDiary: React.FC<RecordDiaryProps> = () => {
     <View style={styles.container}>
       <Header title="오늘의 일기" onBack={() => navigation.goBack()} />
       <RecordDiaryComponent
-        emoji={
-          <Image 
-            source={emotions[selectedEmotionIndex]} 
-            style={styles.emoji}
-          />
-        }
+        emotion={emotions[selectedEmotionIndex]}
         tags={selectedTags.map(tag => `#${tag}`)}  // selectedTags를 해시태그로 변환하여 전달
         fixedQuestion={questions[currentQuestionIndex].fixedQuestion}
         placeholderQuestion={questions[currentQuestionIndex].placeholderQuestion}
@@ -91,7 +160,7 @@ const RecordDiary: React.FC<RecordDiaryProps> = () => {
         />
         <Button
           title={currentQuestionIndex === questions.length - 1 ? '완료' : '다음'}
-          onPress={handleNext}
+          onPress={currentQuestionIndex === questions.length -1 ? handleSubmit : handleNext} // 수정하였음!!
           buttonStyle={[styles.button, currentQuestionIndex === questions.length - 1 && styles.completeButton]}
           titleStyle={styles.buttonTitle}
         />

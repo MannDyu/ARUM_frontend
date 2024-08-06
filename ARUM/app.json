@@ -21,7 +21,8 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+       "bundler": "metro"
     },
     "extra": {
       "apiUrl": "http://172.24.160.50:8000"

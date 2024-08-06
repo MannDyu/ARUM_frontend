@@ -7,7 +7,6 @@ import TestLoading from './TestLoading'
 import TestPage from './TestPage';
 import FindCenter from './FindCenter';
 import { RootStackParamList } from '../../navigation/types';
-import RegionSelection from './RegionSelection';
 
 const Stack = createStackNavigator<RootStackParamList>();
 

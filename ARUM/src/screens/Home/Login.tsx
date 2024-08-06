@@ -45,6 +45,7 @@ export default function Login() {
           if (storedToken !== token) {
             throw new Error('Token storage failed');
           }
+          
 
 
         } catch (error) {
@@ -61,9 +62,16 @@ export default function Login() {
 
         Alert.alert('로그인 성공', '메인 화면으로 이동합니다.');
         console.log(username)
-        // navigation.navigate('Home', { username });
-        // navigation.navigate('HomeMain', { username: response.data.username });
-        navigation.navigate('MyPage');
+        navigation.navigate('HomeMain');
+        // navigation.reset({
+        //   index: 0,
+        //   routes: [{ name: 'Auth', params: { screen: 'HomeMain' } }],
+        // });
+
+        // navigation.reset({
+        //   index: 0,
+        //   routes: [{ name: 'HomeMain' }],
+        // });
       }
     } catch (error) {
       console.error('Login error:', error);
@@ -82,25 +90,35 @@ export default function Login() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>로그인</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="사용자 이름"
-        value={username}
-        onChangeText={setUsername}
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="비밀번호"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      {error ? <Text style={styles.errorText}>{error}</Text> : null}
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>로그인</Text>
-      </TouchableOpacity>
+      <View style={styles.loginBox}>
+        <Text style={styles.title}>로그인</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="닉네임"
+          value={username}
+          onChangeText={setUsername}
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="비밀번호"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
+        <TouchableOpacity onPress={() => {}}>
+          <Text style={styles.forgotPassword}>아이디/비밀번호 찾기</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+          <Text style={styles.loginButtonText}>로그인</Text>
+        </TouchableOpacity>
+        <View style={styles.divider} />
+        <Text style={styles.signupText}>
+          계정을 생성하여 어루만짐 서비스를 이용하세요
+        </Text>
+        <TouchableOpacity style={styles.signupButton} onPress={() => navigation.navigate('Signup')}>
+          <Text style={styles.signupButtonText}>회원가입</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -108,35 +126,97 @@ export default function Login() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#FDFDED',
     justifyContent: 'center',
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-  },
-  button: {
-    backgroundColor: '#007AFF',
-    padding: 15,
-    borderRadius: 5,
     alignItems: 'center',
   },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
+  loginBox: {
+    width: 261,
+    height: 401,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#000000',
+    borderRadius: 20,
+    padding: 20,
+    alignItems: 'center',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 4,
+      height: 4,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  title: {
+    fontFamily: 'Pretendard',
+    fontWeight: '600',
+    fontSize: 20,
+    color: '#353535',
+    marginBottom: 20,
+  },
+  input: {
+    width: 216,
+    height: 34,
+    borderWidth: 1,
+    borderColor: '#000000',
+    borderRadius: 50,
+    marginBottom: 10,
+    paddingLeft: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 1,
+    elevation: 2,
+  },
+  forgotPassword: {
+    fontFamily: 'Pretendard',
+    fontSize: 10,
+    color: '#353535',
+    alignSelf: 'flex-end',
+    marginBottom: 15,
+  },
+  loginButton: {
+    width: 216,
+    height: 34,
+    backgroundColor: '#6487E5',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 40,
+    marginBottom: 15,
+  },
+  loginButtonText: {
+    color: '#FFFFFF',
     fontWeight: 'bold',
   },
-  errorText: {
-    color: 'red',
+  divider: {
+    width: 217,
+    height: 1,
+    backgroundColor: '#000000',
+    marginVertical: 15,
+  },
+  signupText: {
+    fontFamily: 'Pretendard',
+    fontSize: 10,
+    color: '#353535',
+    textAlign: 'center',
     marginBottom: 10,
+  },
+  signupButton: {
+    width: 216,
+    height: 34,
+    backgroundColor: '#FFFFFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 40,
+    borderWidth: 1,
+    borderColor: 'black',
+  },
+  signupButtonText: {
+    color: 'black',
+    fontWeight: 'bold',
   },
 });

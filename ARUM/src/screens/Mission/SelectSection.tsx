@@ -6,6 +6,9 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { MissionStackScreenProps } from '../../assets/MissionTypes';
+import axios from 'axios';
+import { API_URL } from '../../api_url';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const TitleContainer = styled.View`
   display: flex;
@@ -25,14 +28,14 @@ const Title = styled.Text`
 const SelectSection = () => {
   const [selectedArea, setSelectedArea] = useState<string>('none');
   type RootStackParamList = {
-    DailyMission: { selectedArea: string };
+    DailyMission: { selectedArea: string; questData: any };
   };
   const options = [
-    { title: '일상', value: 'daily' },
-    { title: '운동', value: 'exercise' },
-    { title: '취미', value: 'hobby' },
+    { title: '일상', value: 'dy' },
+    { title: '운동', value: 'ex' },
+    { title: '취미', value: 'hb' },
     { title: '나', value: 'me' },
-    { title: '청결', value: 'tidy' }
+    { title: '청결', value: 'cl' }
   ];
   
   const navigation = useNavigation<MissionStackScreenProps<'SelectSection'>['navigation']>();
@@ -43,8 +46,43 @@ const SelectSection = () => {
     }, [])
   );
   
+  const getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      return token;
+    } catch (error) {
+      console.error('Error retrieving token');
+      return null;
+    }
+  };
+
+  const handleQuest = async () => {
+    try {
+      const userToken = await getToken();
+      if (!userToken) console.error(`Token not found`);
+
+      console.log(selectedArea);
+      const response = await fetch(`${API_URL}/quest/randomQuest`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${userToken}`,
+        },
+        body: JSON.stringify({
+          "qs_theme": selectedArea,
+        }),
+      });
+      if (!response.ok) throw new Error('Network response was not ok.');
+      const responseData = await response.json();
+      console.log(`response data: ${JSON.stringify(responseData.data)}`)
+      navigation.navigate('DailyMission', { questData: responseData, missionStatus: 'finish' })
+    } catch (error) {
+      console.error('Error handleQuest', error);
+    }
+  }
+
   return (
-    <View style={{ alignItems: 'center', backgroundColor: '#FDFDED', height: 1200 }}>
+    <View style={{ flex:1, alignItems: 'center', backgroundColor: '#FDFDED', width: '100%', height: '100%',}}>
       <TitleContainer>
         <TouchableOpacity
           onPress={() => navigation.goBack()}
@@ -66,7 +104,10 @@ const SelectSection = () => {
               key={option.value}
               title={option.title}
               checked={isSelected}
-              onPress={() => setSelectedArea(isSelected && selectedArea !=='none' ? 'none' : option.value)}
+              onPress={() => {
+                console.log(`previous SelectedArea: ${selectedArea}`);
+                setSelectedArea(isSelected && selectedArea !=='none' ? 'none' : option.value);
+              }}
               containerStyle={{
                 backgroundColor: isSelected ? 'white' : 'lightgrey',
                 borderWidth: 1,
@@ -106,11 +147,7 @@ const SelectSection = () => {
       </View>
       <Button
         title="완료"
-        onPress={() => {
-          if (selectedArea !== 'none') {
-            navigation.navigate('Mission', { selectedArea });
-          }
-        }}
+        onPress={() => handleQuest()}
         containerStyle={{
           marginBottom: 20,
           marginTop: 12,
@@ -127,6 +164,20 @@ const SelectSection = () => {
           backgroundColor: 'black',
         }}
       />
+      {/* {
+          console.log(`SelectedArea: ${selectedArea}`);
+          if (selectedArea !== 'none') {
+            axios.post(`${API_URL}/quest/randomQuest/`, {
+              qs_theme: selectedArea,
+            }).then(response => {
+              console.log(`response data: ${JSON.stringify(response.data)}`)
+              // navigation.navigate('MissionMain', { selectedArea, questData: response.data }); //! mission 으로 넘어가야하나?
+              navigation.navigate('DailyMission', { questData: response.data }); //! 여기서 오류 나는건 DailyMission이 다른 변수들도 요구하기 때문! -> 할 필요 없을 듯.
+            }).catch(error => {console.log(error)});
+          } else {
+            console.log('선택되지 않음');
+          }
+        } */}
     </View>
   )
 };
