@@ -108,7 +108,7 @@ export default function Mission({ route, navigation }: MissionProps) {
       />
       {selectedButton === 'left' ? 
         <>
-          //! quest Data 추가했는데, 어떻게 작동하는지 모르겠음
+          
           <DailyMission
             navigation={navigation as NavigationProp<'DailyMission'>}
             route={{

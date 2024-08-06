@@ -240,6 +240,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   subtitle: {
+    paddingLeft:20,
+    paddingRight:20,
     fontSize: 16,
     color: '#333',
   },
@@ -276,7 +278,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   centerList: {
+    paddingLeft:20,
     paddingBottom: 20,
+    paddingRight: 20
   },
   modalContainer: {
     flex: 1,

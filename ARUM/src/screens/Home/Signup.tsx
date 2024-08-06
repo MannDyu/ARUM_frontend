@@ -83,10 +83,7 @@ export default function Signup() {
 
               console.log('Token stored successfully, navigating to HomeMain...');
               Alert.alert('회원가입 및 로그인 성공', '메인 화면으로 이동합니다.');
-              navigation.reset({
-                index: 0,
-                routes: [{ name: 'Main' }],
-              });
+              navigation.navigate('HomeMain');
 
 
             } catch (storageError) {
