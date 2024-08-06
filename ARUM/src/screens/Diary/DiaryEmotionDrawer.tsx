@@ -25,6 +25,7 @@ interface EmotionBottomSheetProps {
   onClose: () => void;
   index: number;
   onSelected: (emotion: string | null, tags: string[], emotionIndex: number) => void;
+  emoji: string;
   onSubmit: (data: {
     feel: string | null;
     emotion: string;
@@ -47,7 +48,17 @@ const emotions = [
   require('../../assets/images/emotion/want.png'),
 ];
 
-const EmotionBottomSheet: React.FC<EmotionBottomSheetProps> = ({ selectedEmotion, isVisible, onClose, index, onSubmit }) => {
+const emotionNames = [
+  "기쁨",
+  "화남",
+  "슬픔",
+  "즐거움",
+  "사랑",
+  "미움",
+  "바람"
+];
+
+const EmotionBottomSheet: React.FC<EmotionBottomSheetProps> = ({ selectedEmotion, isVisible, onClose, index, emoji }) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const adjectives = useMemo(() => {
     if (selectedEmotion) {
@@ -85,31 +96,10 @@ const EmotionBottomSheet: React.FC<EmotionBottomSheetProps> = ({ selectedEmotion
     setIsPopupVisible(false);
   };
 
-  // const onSelected = (selectedEmotion: string | null, selectedAdjectives: string[], index: number) => {
-  //   const data = {
-  //     feel: selectedEmotion,
-  //     emotion: index.toString(),
-  //     tag1: selectedAdjectives[0] || "",
-  //     tag2: selectedAdjectives[1] || "",
-  //     tag3: selectedAdjectives[2] || "",
-  //     content1: "",
-  //     content2: "",
-  //     content3: ""
-  //   };
-  //   props.onSubmit(data);
-  // }; //! 삭제
-
   const handleSave = () => {
-    // // selectedAdjectives (선택된 해시태그)와 index (선택된 감정) 전달
-    // navigation.navigate('RecordDiary', {
-    //   selectedTags: selectedAdjectives,
-    //   selectedEmotionIndex: index,
-    // });
-    // onClose();
-    // onSelected(selectedEmotion, selectedAdjectives, index); //! 삭제
     const data = {
-      feel: selectedEmotion,
-      emotion: index.toString(),
+      feel: emoji,
+      emotion: emotionNames[index],
       tag1: selectedAdjectives[0] || "",
       tag2: selectedAdjectives[1] || "",
       tag3: selectedAdjectives[2] || "",

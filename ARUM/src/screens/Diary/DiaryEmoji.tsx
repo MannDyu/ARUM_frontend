@@ -33,11 +33,11 @@ const unselectedEmojis = [
 export default function DiaryEmoji() {
   const navigation = useNavigation<DiaryScreenNavigationProp>();
   const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false);
-  const [isEmoji, setEmoji] = useState<number | null>(null);
+  const [isEmoji, setEmoji] = useState<number>(-1);
 
   useFocusEffect(
     React.useCallback(() => {
-      setEmoji(null);
+      setEmoji(-1);
     }, [])
   );
 
@@ -84,7 +84,7 @@ export default function DiaryEmoji() {
                   <CheckBox 
                     key={index}
                     checked={isEmoji === index}
-                    onPress={() => setEmoji(isEmoji === index ? null : index)}
+                    onPress={() => setEmoji(isEmoji === index ? -1 : index)}
                     checkedIcon={<Image source={emoji} style={{ width: 40, height: 40, margin: -10, marginTop: 5, marginBottom: 10 }} />}
                     uncheckedIcon={<Image source={isEmoji === null || isEmoji === index ? emoji : unselectedEmojis[index]} style={{ width: 40, height: 40, margin: -10, marginTop: 5, marginBottom: 10 }} />}
                     containerStyle={{backgroundColor: 'transparent', borderWidth: 0}}
@@ -106,7 +106,7 @@ export default function DiaryEmoji() {
           title="다음"
           buttonStyle={styles.buttonStyle}
           containerStyle={styles.containerStyle}
-          onPress={() => navigation.navigate('DiaryEmotion')} //! 선택되면 활성화 -> 선택되어야 넘어가야함!!
+          onPress={() => navigation.navigate('DiaryEmotion', {emoji: emojiComments[isEmoji]})}
           disabled={isEmoji !== null ? false : true}
         />
       </View>

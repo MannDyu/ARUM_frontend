@@ -28,7 +28,12 @@ export type RootStackParamList = {
   MissionMain: {  //! Mission -> MissionMain 중복방지 위해 수정
     selectedArea?: string; 
     completedMissionId?: string; 
-    missionStatus?: 'select' | 'finish' | 'completed' | 'success' 
+    missionStatus?: 'select' | 'finish' | 'completed' | 'success' ;
+    questData: {
+      id: number;
+      qs_theme: string;
+      qs_content: string;
+    }
   };
   CompletedMission: undefined;
   CompletedMissionRecord: { selectedArea?: string };
@@ -64,7 +69,9 @@ export type RootStackParamList = {
     diaryId?: string;
   };
   DiaryEmoji: undefined; //! 일단 undefined 🔽 !!수정필요!
-  DiaryEmotion: undefined;
+  DiaryEmotion: {
+    emoji: string;
+  };
   // RecordDiary: { date?: string; editMode?: boolean; diaryId?: string };
   DiaryThumbnail: { diaryId?: string };
   DiaryDetail: { 

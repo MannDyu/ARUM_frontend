@@ -19,7 +19,7 @@ const getToken = async () => {
   }
 };
 
-export default function Mission({ route, navigation }: MissionProps) {
+export default function Mission({ route, navigation, questData }: MissionProps) {
   const [selectedButton, setSelectedButton] = useState<'left' | 'right'>('left');
   const [missionStatus, setMissionStatus] = useState<'select' | 'finish' | 'completed' | 'success'>('select');
   const [selectedArea, setSelectedArea] = useState<string | undefined>(undefined);
@@ -43,8 +43,10 @@ export default function Mission({ route, navigation }: MissionProps) {
     setSelectedButton(button);
   };
 
+
   const handleMissionComplete = () => {
-    navigation.navigate('CompletedMissionRecord', { selectedArea });
+    console.log(JSON.stringify(questData));
+    navigation.navigate('CompletedMissionRecord', { questData: questData });
   };
 
   const handleMissionSuccess = () => {
@@ -62,7 +64,7 @@ export default function Mission({ route, navigation }: MissionProps) {
           resizeMode="cover"
         />
       );
-    } else {
+    } else if (missionStatus === 'finish' || missionStatus === 'completed') {
       return (
         <Image
           source={require('../../assets/images/mission/missionCharacter.png')}
