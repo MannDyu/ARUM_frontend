@@ -6,7 +6,7 @@ import DiaryEmoji from './DiaryEmoji';
 import DiaryEmotion from './DiaryEmotion'
 import DiaryDetail from './DiaryDetail';
 import DiaryThumbnail from './DiaryThumbnail';
-import Home from '../Home/Home'
+import Home from '../Home/HomeScreen'
 import { RootStackParamList } from '../../navigation/types';
 
 const Stack = createStackNavigator<RootStackParamList>();
