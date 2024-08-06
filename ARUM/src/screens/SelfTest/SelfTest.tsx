@@ -1,8 +1,10 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, Dimensions, Image } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, Dimensions, Image, TouchableOpacity } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../navigation/types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { API_URL } from '../../api_url';
 
 const { width, height } = Dimensions.get('window');
 
@@ -16,6 +18,69 @@ export default function SelfTest() {
     navigation.navigate('TestStart');
   };
 
+  const getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      return token;
+    } catch (error) {
+      console.error('Error retrieving token');
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    const needRetest = async () => {
+      try {
+        const userToken = await getToken();
+        if (!userToken) {
+          console.error(`Token not found`);
+          return;
+        }
+
+        const response = await fetch(`${API_URL}/selfTest/getSelfTestDate`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Token ${userToken}`,
+          },
+        });
+        const responseData = await response.json();
+        const testDate = new Date(responseData.test_date);
+        const currentDate = new Date();
+        const oneMonthAgo = new Date(currentDate.setMonth(currentDate.getMonth() - 1));
+
+        setIsRetest(testDate < oneMonthAgo);
+      } catch (error) {
+        console.error(`Error fetching self test date: ${error}`);
+      }
+    };
+
+    needRetest();
+  }, []);
+
+  const getPrevScore = async () => {
+    try {
+      const userToken = await getToken();
+      if (!userToken) {
+        console.error(`Token not found`);
+        return;
+      }
+
+      const response = await fetch(`${API_URL}/selfTest/getSelfTestScore/`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Token ${userToken}`,
+        },
+      });
+
+      const responseData = await response.json();
+      const score = responseData?.test_score ?? 0;  // Fallback to 0 if test_score is undefined
+
+      navigation.navigate('TestReport', { score: score });
+    } catch (error) {
+      console.error(`Error fetching self test data: ${error}`);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -24,12 +89,12 @@ export default function SelfTest() {
       </View>
 
       <View style={styles.content}>
-        {isRetest &&
+        {isRetest && (
           <View style={styles.infoBar}>
             <View style={styles.infoBarDot} />
             <Text style={styles.infoBarText}>마지막 테스트로부터 30일이 경과했어요!</Text>
           </View>
-        }
+        )}
 
         <View style={{ position: 'relative' }}>
           <View style={styles.character}>
@@ -51,7 +116,9 @@ export default function SelfTest() {
         <TouchableOpacity style={styles.startButton} onPress={handleStartTest}>
           <Text style={styles.startButtonText}>자가진단 시작</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.reportButton} onPress={() => navigation.navigate('TestReport', { score: 0 })}>
+        <TouchableOpacity
+          style={styles.reportButton}
+          onPress={getPrevScore}>
           <Text style={styles.reportButtonText}>자가진단 결과 보고서</Text>
         </TouchableOpacity>
       </View>
@@ -137,7 +204,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#000000',
     textAlign: 'center',
-    bottom:15,
+    bottom: 15,
   },
   footer: {
     width: '100%',
@@ -149,7 +216,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     paddingVertical: 15,
     alignItems: 'center',
-    marginBottom:10,
+    marginBottom: 10,
   },
   startButtonText: {
     color: '#FFFFFF',
@@ -168,4 +235,3 @@ const styles = StyleSheet.create({
     fontWeight: '600',
   },
 });
-

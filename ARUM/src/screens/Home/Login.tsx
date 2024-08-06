@@ -26,7 +26,8 @@ export default function Login() {
     }
 
     try {
-      const response = await axios.post(`${API_URL}/users/login/`, {
+      // const response = await axios.post(`${API_URL}/users/login/`, {
+      const response = await axios.post(`http://52.78.233.229:8000/users/login/`, {
         username, // 사용자 이름으로 로그인
         password,
       });
@@ -65,7 +66,7 @@ export default function Login() {
 
         navigation.reset({
           index: 0,
-          routes: [{ name: 'HomeMain' }],
+          routes: [{ name: 'Home' }],
         });
       }
     } catch (error) {

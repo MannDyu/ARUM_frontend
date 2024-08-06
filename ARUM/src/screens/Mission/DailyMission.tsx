@@ -19,8 +19,6 @@ const DailyMission: React.FC<DailyMissionProps> = ({ route, navigation }) => {
   const day = date.getDate();
   const currentDate = `${year}.${month}.${day}`;
 
-  //! 다른 파일에서 가져와야할 변수값들
-  const days = 1; // 며칠째 도전 중?
   const iconContent: Record<IconContentType, string> = {
     none: '?',
     dy: '📅',
@@ -52,7 +50,7 @@ const DailyMission: React.FC<DailyMissionProps> = ({ route, navigation }) => {
       <Text style={{ margin: '3%', marginLeft: '7%' }}>미션은 매일 오전 6시에 초기화됩니다.</Text>
       <MissionContainer>
         <Text style={{ marginTop: -10, }}>{currentDate}</Text>
-        <Text style={styles.missionText}>{days}번째 일일 랜덤미션</Text>
+        <Text style={styles.missionText}>일일 랜덤미션</Text>
         {/* 며칠째 랜덤미션 수행? 데이터 수신 */}
         <MissionSelectContainer>
           <Icon>
@@ -62,7 +60,7 @@ const DailyMission: React.FC<DailyMissionProps> = ({ route, navigation }) => {
             { missionStatus === "finish" ? 
               //! 미션 텍스트 SelectSection에서 받아오기!!
               //! quest data 중 qs_content만 보여줘야됨
-              <Text style={[styles.missionText, {margin: 15}]}>{questData}</Text> :
+              <Text style={[styles.missionText, {margin: 15}]}>{questData?.qs_content}</Text> :
               <MissionTextContainer>
                 <Text style={styles.missionText}>{`오늘은\n어떤 미션을 해볼까요?`}</Text>
               </MissionTextContainer> }

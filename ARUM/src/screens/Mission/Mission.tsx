@@ -5,33 +5,9 @@ import DailyMission from './DailyMission';
 import CompletedMission from './CompletedMission';
 import { RootStackScreenProps, NavigationProp } from '../../navigation/types';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { API_URL } from '../../api_url';
 
 type MissionProps = RootStackScreenProps<'MissionMain'>;
-
-// const getUserToken = async (username: string, password: string): Promise<string> => {
-//   try {
-//     const response = await fetch('/login/', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify({ username, password }),
-//     });
-
-//     if (!response.ok) {
-//       throw new Error('Login failed');
-//     }
-
-//     const data = await response.json(); // Parsing the JSON response
-//     const token = data.token; // Extracting the token
-
-//     console.log('Token:', token);
-//     return token; // Return the token for further use
-//   } catch (error) {
-//     console.error('Error during login:', error);
-//     throw error; // Rethrow or handle error as needed
-//   }
-// };
 
 const getToken = async () => {
   try {
@@ -41,7 +17,7 @@ const getToken = async () => {
     console.error('Error retrieving token');
     return null;
   }
-;}
+};
 
 export default function Mission({ route, navigation }: MissionProps) {
   const [selectedButton, setSelectedButton] = useState<'left' | 'right'>('left');
@@ -106,9 +82,9 @@ export default function Mission({ route, navigation }: MissionProps) {
         selectedButton={selectedButton}
         onToggle={handleToggle}
       />
+      {/* //! quest Data 추가했는데, 어떻게 작동하는지 모르겠음 */}
       {selectedButton === 'left' ? 
         <>
-          //! quest Data 추가했는데, 어떻게 작동하는지 모르겠음
           <DailyMission
             navigation={navigation as NavigationProp<'DailyMission'>}
             route={{
