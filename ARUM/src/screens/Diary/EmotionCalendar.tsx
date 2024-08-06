@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 10,
-    height: 300,
+    height: 350,
     width: 330,
   },
   dayContainer: {
