@@ -5,7 +5,7 @@ interface HashTagComponentProps {
   tags: string[];
 }
 
-const HashTag: React.FC<HashTagComponentProps> = ({ tags }) => {
+const HashTag: React.FC<HashTagComponentProps> = ({ tags = [] }) => {
   return (
     <View style={styles.tagsContainer}>
       {tags.map((tag, index) => (

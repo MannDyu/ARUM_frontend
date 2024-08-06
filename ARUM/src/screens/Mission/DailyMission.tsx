@@ -9,9 +9,9 @@ import { StackNavigationProp } from '@react-navigation/stack';
 type DailyMissionProps = RootStackScreenProps<'DailyMission'>;
 
 const DailyMission: React.FC<DailyMissionProps> = ({ route, navigation }) => {
-  const { selectedArea, missionStatus, onMissionComplete, onMissionSuccess } = route.params || {};
+  const { selectedArea, questData, missionStatus, onMissionComplete, onMissionSuccess } = route.params || {};
   
-  type IconContentType = 'none' | 'daily' | 'exercise' | 'hobby' | 'me' | 'tidy';
+  type IconContentType = 'none' | 'dy' | 'ex' | 'hb' | 'me' | 'cl';
   
   const date = new Date();
   const year = date.getFullYear();
@@ -23,20 +23,26 @@ const DailyMission: React.FC<DailyMissionProps> = ({ route, navigation }) => {
   const days = 1; // 며칠째 도전 중?
   const iconContent: Record<IconContentType, string> = {
     none: '?',
-    daily: '📅',
-    exercise: '🏋️',
-    hobby: '🎨',
+    dy: '📅',
+    ex: '🏋️',
+    hb: '🎨',
     me: '👤',
-    tidy: '🧹',
+    cl: '🧹',
   }; // 선택된 영역: none, daily, exercise, hobby, me, tidy
-
+  
+  console.log('미션 버튼 상태', missionStatus)
+  
   //! 네비게이션 지정!!
   const handleMissionNavigate = () => {
+    console.log(missionStatus)
     if (missionStatus === 'select') {
+      console.log('미션 선택 가능 상태');
       navigation.navigate('SelectSection');
     } else if (missionStatus === 'finish') {
+      console.log('미션 완료 가능 상태');
       onMissionComplete?.();
     } else if (missionStatus === 'success') {
+      console.log('미션 완료 상태');
       onMissionSuccess?.();
     }
   };
@@ -45,7 +51,7 @@ const DailyMission: React.FC<DailyMissionProps> = ({ route, navigation }) => {
     <>
       <Text style={{ margin: '3%', marginLeft: '7%' }}>미션은 매일 오전 6시에 초기화됩니다.</Text>
       <MissionContainer>
-        <Text>{currentDate}</Text>
+        <Text style={{ marginTop: -10, }}>{currentDate}</Text>
         <Text style={styles.missionText}>{days}번째 일일 랜덤미션</Text>
         {/* 며칠째 랜덤미션 수행? 데이터 수신 */}
         <MissionSelectContainer>
@@ -55,7 +61,8 @@ const DailyMission: React.FC<DailyMissionProps> = ({ route, navigation }) => {
           <View>
             { missionStatus === "finish" ? 
               //! 미션 텍스트 SelectSection에서 받아오기!!
-              <Text style={[styles.missionText, {margin: 15}]}>임시 : 일일 미션 텍스트</Text> :
+              //! quest data 중 qs_content만 보여줘야됨
+              <Text style={[styles.missionText, {margin: 15}]}>{questData}</Text> :
               <MissionTextContainer>
                 <Text style={styles.missionText}>{`오늘은\n어떤 미션을 해볼까요?`}</Text>
               </MissionTextContainer> }
@@ -83,7 +90,7 @@ const MissionContainer = styled.View`
   text-align: center;
   padding: 20px;
   margin: 15px;
-  margin-top: 10px;
+  margin-top: 0px;
 `;
 
 const MissionSelectContainer = styled.View`
@@ -95,7 +102,7 @@ const MissionSelectContainer = styled.View`
   align-items: center;
   text-align: center;
   padding: 20px;
-  margin: 10%;
+  margin: 7%;
   position: relative;
   background-color: #fff;
   box-shadow: 0 3px 1px black;
@@ -114,7 +121,7 @@ const Icon = styled.View`
 `;
 
 const MissionTextContainer = styled.View`
-  margin: 10%;
+  margin: 3%;
 `;
 
 const styles = StyleSheet.create({

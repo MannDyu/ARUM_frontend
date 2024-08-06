@@ -2,14 +2,18 @@
 
 import { Route } from '@react-navigation/native';
 import { StackScreenProps, StackNavigationProp } from '@react-navigation/stack';
+import { ImageSourcePropType } from 'react-native';
 
 
 
 export type RootStackParamList = {
+  Auth: undefined;
   Main: undefined; //! 추가: 중복방지 위해 수정
-  HomeMain: { username: string };
+  HomeMain: undefined,
   Signup: undefined; //! Home -> HomeMain 중복방지 위해 수정
   Login: undefined;
+
+  TabNavigator: undefined;
   DrawerNavigator: undefined;
   
   // 탭 네비게이터 스크린들
@@ -33,10 +37,12 @@ export type RootStackParamList = {
   SelectSection: undefined;
   DailyMission: { 
     selectedArea?: string;
+    questData: object;
     missionStatus: 'select' | 'finish' | 'completed' | 'success';
     onMissionComplete: () => void;
     onMissionSuccess: () => void;
   };
+  
 
   // SelfTest related screens
   SelfTestMain: undefined;  //! SelfTest -> SelfTestMain 중복방지 위해 수정
@@ -44,10 +50,7 @@ export type RootStackParamList = {
   TestReport: { score: number };
   TestPage: undefined;
   TestLoading: { score: number };
-  
-  FindCenter: { selectedDistricts?: string[] }; // 선택된 구 정보를 전달받음
-  RegionSelection: { selectedDistricts: string[] }; // 선택된 구 정보를 전달
-  
+  FindCenter: undefined;
 
   // Diary related screens
   DiaryMain: undefined; //! Diary -> DiaryMain 중복방지 위해 수정
@@ -60,7 +63,23 @@ export type RootStackParamList = {
   DiaryEmotion: undefined;
   // RecordDiary: { date?: string; editMode?: boolean; diaryId?: string };
   DiaryThumbnail: { diaryId?: string };
-  DiaryDetail: { diaryId?: string };
+  DiaryDetail: { 
+    diaryId?: string;
+    emoji: any;
+    date: string;
+    tags: string[];
+    answers: string[];
+  };
+  MyPage: undefined; 
+
+};
+
+export type TabNavigatorParamList = {
+  HomeMain: undefined;
+  Diary: undefined;
+  Mission: undefined;
+  SelfTest: undefined;
+  MyPage: undefined;
 };
 
 
@@ -86,16 +105,20 @@ export type EditCompletedMissionScreenNavigationProp = NavigationProp<'EditCompl
 export type SelectSectionScreenNavigationProp = NavigationProp<'SelectSection'>;
 
 // Home 
-export type HomeScreenNavigationProp = NavigationProp<'Home'>;
-export type SignupScreenNavigationProp = NavigationProp<'Signup'>;
+export type AuthScreenNavigationProp = NavigationProp<'Auth'>;
+export type HomeScreenNavigationProp = NavigationProp<'HomeMain'>;
+export type SignupScreenNavigationProp = NavigationProp< 'Signup'>;
 export type LoginScreenNavigationProp = NavigationProp<'Login'>;
 
 // Self Test
-export type TestStartScreenNavigationProp = StackNavigationProp<RootStackParamList, 'TestStart'>;
-export type TestReportScreenNavigationProp = StackNavigationProp<RootStackParamList, 'TestReport'>;
-export type TestPageScreenNavigationProp = StackNavigationProp<RootStackParamList, 'TestPage'>;
-export type TestLoadingScreenNavigationProp = StackNavigationProp<RootStackParamList, 'TestLoading'>;
-export type FindCenterScreenNavigationProp = StackNavigationProp<RootStackParamList, 'FindCenter'>;
+export type TestStartScreenNavigationProp = NavigationProp<'TestStart'>;
+export type TestReportScreenNavigationProp = NavigationProp<'TestReport'>;
+export type TestPageScreenNavigationProp = NavigationProp<'TestPage'>;
+export type TestLoadingScreenNavigationProp = NavigationProp<'TestLoading'>;
+export type FindCenterScreenNavigationProp = NavigationProp<'FindCenter'>;
+
+
+export type MyPageNavigationProp = StackNavigationProp<RootStackParamList, 'MyPage'>;
 
 
 // 인터페이스 정의

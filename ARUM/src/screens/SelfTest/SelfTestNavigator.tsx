@@ -20,7 +20,6 @@ export function SelfTestNavigator() {
       <Stack.Screen name="TestPage" component={TestPage} />
       <Stack.Screen name="TestLoading" component={TestLoading} />
       <Stack.Screen name="FindCenter" component={FindCenter} />
-      <Stack.Screen name="RegionSelection" component={RegionSelection} />
     </Stack.Navigator>
   );
 }

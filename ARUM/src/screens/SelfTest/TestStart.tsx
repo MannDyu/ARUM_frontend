@@ -20,7 +20,7 @@ const TestStart: React.FC = () => {
       
       <View style={styles.content}>
         <Image
-          source={require('../../assets/images/test.png')}
+          source={require('../../assets/images/selfTest/loading.png')}
           style={styles.image}
         />
         <Text style={styles.description}>
@@ -54,12 +54,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   image: {
-    width: width * 0.9,
+    marginBottom: -20,
+    width: width * 0.85,
     height: height * 0.3,
     resizeMode: 'contain',
   },
   description: {
-    marginTop: 20,
+    marginTop: 10,
     fontSize: 16,
     textAlign: 'center',
     lineHeight: 24,

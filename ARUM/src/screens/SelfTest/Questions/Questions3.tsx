@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {  ScrollView, StyleSheet, View } from 'react-native';
 import TestItem from '../TestItem';
 import { Button } from '@rneui/themed';
@@ -9,13 +9,20 @@ interface QuestionProps {
 }
 
 const Question3 : React.FC<QuestionProps> = ({ onPressNext, isLastQuestion }) => {
+  console.log('작동 Question3')
+  const [totalScore, setTotalScore] = useState(0);
+
+  const handleScoreChange = (score: number) => {
+    setTotalScore(prevScore => prevScore + score);
+    console.log(totalScore);
+  };
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <TestItem question={`아무렇지도 않던 일들이\n괴롭고 귀찮게 느껴졌다`} questionNum={11} />
-      <TestItem question={`먹고 싶지 않고 식욕이 없다`} questionNum={12} />
-      <TestItem question={`아무렇지도 않던 일들이\n괴롭고 귀찮게 느껴졌다`} questionNum={13} />
-      <TestItem question={`어느 누가 도와준다 하더라도\n울적한 기분을 떨쳐 버릴 수 없을 것 같다.`} questionNum={14} />
-      <TestItem question={`아무렇지도 않던 일들이\n괴롭고 귀찮게 느껴졌다`} questionNum={15} />
+      <TestItem question={`잠을 설쳤다.\n(잠을 잘 이루지 못했다.)`} questionNum={11}  onScoreChange={handleScoreChange}/>
+      <TestItem question={`두려움을 느꼈다.`} questionNum={12}  onScoreChange={handleScoreChange}/>
+      <TestItem question={`평소에 비해 말수가 적었다.`} questionNum={13}  onScoreChange={handleScoreChange}/>
+      <TestItem question={`세상에 홀로 있는 듯한 외로움을 느꼈다.`} questionNum={14}  onScoreChange={handleScoreChange}/>
+      <TestItem question={`생활하는데 불만이 많았다.`} questionNum={15}  onScoreChange={handleScoreChange}/>
       <View style={styles.buttonContainer}>
         <Button
           title={isLastQuestion ? "완료" : "다음"}
