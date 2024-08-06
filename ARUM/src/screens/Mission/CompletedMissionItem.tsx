@@ -5,13 +5,17 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../navigation/types';
 import { CompletedItem } from '../../assets/MissionTypes';
 
-
-
 type CompletedMissionItemNavigationProp = StackNavigationProp<RootStackParamList, 'CompletedMissionDetail'>;
 
 interface CompletedMissionItemProps {
-  mission: CompletedItem;
+  mission: {
+    id: number;
+    qs_date: string;
+    qs_theme: string;
+    qs_content: string;
+  };
 }
+
 
 const CompletedMissionItem: React.FC<CompletedMissionItemProps> = ({ mission }) => {
   const navigation = useNavigation<CompletedMissionItemNavigationProp>();
@@ -19,11 +23,11 @@ const CompletedMissionItem: React.FC<CompletedMissionItemProps> = ({ mission }) 
   return (
     <TouchableOpacity 
       style={styles.container} 
-      onPress={() => navigation.navigate('CompletedMissionDetail', { missionId: mission.id })}
+      onPress={() => navigation.navigate('CompletedMissionDetail', { missionId: mission.id.toString() })}
     >
-      <Text style={styles.date}>{mission.date}</Text>
-      <Text style={styles.category}>{mission.tag}</Text>
-      <Text style={styles.title}>{mission.title}</Text>
+      <Text style={styles.date}>{mission.qs_date}</Text>
+      <Text style={styles.category}>{mission.qs_theme}</Text>
+      <Text style={styles.title}>{mission.qs_content}</Text>
       <Text style={styles.detailButton}>자세히 보기</Text>
     </TouchableOpacity>
   );

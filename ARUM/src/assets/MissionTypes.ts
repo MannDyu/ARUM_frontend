@@ -37,6 +37,11 @@ export type MissionStackParamList = {
     missionStatus: 'select' | 'finish' | 'completed' | 'success';
     onMissionComplete: () => void;
     onMissionSuccess: () => void;
+    questData: {
+      id: number;
+      qs_theme: string;
+      qs_content: string;
+    }
   };
 };
 

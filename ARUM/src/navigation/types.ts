@@ -31,16 +31,27 @@ export type RootStackParamList = {
     missionStatus?: 'select' | 'finish' | 'completed' | 'success' 
   };
   CompletedMission: undefined;
-  CompletedMissionRecord: { selectedArea?: string };
+  CompletedMissionRecord: { 
+    selectedArea?: string;
+    questData?: {
+      id: number;
+      qs_theme: string;
+      qs_content: string;
+    } | null;
+  };
   CompletedMissionDetail: { missionId: string };
   EditCompletedMission: { missionId: string };
   SelectSection: undefined;
   DailyMission: { 
     selectedArea?: string;
-    questData: object;
     missionStatus: 'select' | 'finish' | 'completed' | 'success';
     onMissionComplete: () => void;
     onMissionSuccess: () => void;
+    questData: {
+      id: number;
+      qs_theme: string;
+      qs_content: string;
+    };
   };
   
 
@@ -63,6 +74,7 @@ export type RootStackParamList = {
   DiaryEmotion: undefined;
   // RecordDiary: { date?: string; editMode?: boolean; diaryId?: string };
   DiaryThumbnail: { diaryId?: string };
+  Diary: undefined;
   DiaryDetail: { 
     diaryId?: string;
     emoji: any;
@@ -130,4 +142,11 @@ export interface ImageUploaderProps {
 export interface QuestionProps {
   onPressNext: () => void;
   isLastQuestion: boolean;
+}
+
+export interface QuestData {
+  id: number;
+  qs_theme: string;
+  qs_content: string;
+  //
 }

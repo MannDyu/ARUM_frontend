@@ -66,9 +66,11 @@ const RecordDiary: React.FC<RecordDiaryProps> = () => {
 
   const handleSubmit = async () => {
     try {
-      const userToken = getToken();
-      if (!userToken) console.error(`Token not found`);
-
+      const userToken = await getToken();
+      if (!userToken) {
+        console.error('Token not found');
+        return;
+      }
       const response = await fetch(`${API_URL}/diary/`, {
         method: 'POST',
         headers: {
