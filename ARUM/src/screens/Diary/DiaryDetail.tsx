@@ -4,6 +4,7 @@ import { Button } from 'react-native-elements';
 import { StackScreenProps } from '@react-navigation/stack';
 import { RootStackParamList } from '../../navigation/types';
 import Header from '../../components/Header';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type DiaryDetailProps = StackScreenProps<RootStackParamList, 'DiaryDetail'>;
 
@@ -25,6 +26,16 @@ const emotions = [
 
 // 이모지에 해당하는 인덱스를 사용
 const selectedEmotionIndex = 1;  // 예시로 화남 이모지로 설정
+
+const getToken = async () => {
+  try {
+    const token = await AsyncStorage.getItem('userToken');
+    return token;
+  } catch (error) {
+    console.error('Error retrieving token');
+    return null;
+  }
+};
 
 const DiaryDetail: React.FC<DiaryDetailProps> = ({ navigation }) => {
   // 임시 데이터 설정
