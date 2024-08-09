@@ -58,7 +58,7 @@ const emotionNames = [
   "바람"
 ];
 
-const EmotionBottomSheet: React.FC<EmotionBottomSheetProps> = ({ selectedEmotion, isVisible, onClose, index, emoji }) => {
+const EmotionBottomSheet: React.FC<EmotionBottomSheetProps> = ({ selectedEmotion, isVisible, onClose, index, emoji, onSubmit }) => {
   const bottomSheetRef = useRef<BottomSheet>(null);
   const adjectives = useMemo(() => {
     if (selectedEmotion) {

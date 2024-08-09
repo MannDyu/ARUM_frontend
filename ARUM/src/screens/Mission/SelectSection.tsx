@@ -82,7 +82,7 @@ const SelectSection = () => {
   }
 
   return (
-    <View style={{ alignItems: 'center', backgroundColor: '#FDFDED', height: 1200 }}>
+    <View style={{ flex:1, alignItems: 'center', backgroundColor: '#FDFDED', width: '100%', height: '100%',}}>
       <TitleContainer>
         <TouchableOpacity
           onPress={() => navigation.goBack()}

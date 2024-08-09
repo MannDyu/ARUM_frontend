@@ -93,15 +93,14 @@ const DiaryEmotionOption: React.FC<DiaryEmotionOptionProps> = ({
   </View>
 );
 
-export default function Diary() {
+export default function Diary({ route } : { route: any }) {
   const navigation = useNavigation<DiaryScreenNavigationProp>();
   const [selected, setSelected] = useState<number>(-1);
   const [isPopupVisible, setIsPopupVisible] = useState<boolean>(false);
   const [bottomSheetVisible, setBottomSheetVisible] = useState<boolean>(false);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
-  const route = useRoute();
-  const { params: { emoji }} = route;
+  const {emoji} = route.params;
 
   const handleCancel = () => {
     setIsPopupVisible(false);

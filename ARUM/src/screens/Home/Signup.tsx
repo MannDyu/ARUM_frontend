@@ -83,12 +83,9 @@ export default function Signup() {
 
               console.log('Token stored successfully, navigating to HomeMain...');
               Alert.alert('회원가입 및 로그인 성공', '메인 화면으로 이동합니다.');
-              navigation.reset({
-                index: 0,
-                routes: [{ name: 'Main' }],
-              });
+              navigation.navigate('HomeMain');
 
-              
+
             } catch (storageError) {
               console.error('Error storing token:', storageError);
               Alert.alert('오류', '토큰 저장 중 문제가 발생했습니다.');
@@ -123,40 +120,46 @@ export default function Signup() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>회원가입</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="사용자 이름"
-        value={username}
-        onChangeText={setUsername}
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="이메일"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="비밀번호"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="비밀번호 확인"
-        value={password2}
-        onChangeText={setPassword2}
-        secureTextEntry
-      />
-      {error ? <Text style={styles.errorText}>{error}</Text> : null}
-      <TouchableOpacity style={styles.button} onPress={handleSignup}>
-        <Text style={styles.buttonText}>가입하기</Text>
-      </TouchableOpacity>
+      <View style={styles.signupBox}>
+        <Text style={styles.title}>회원가입</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="사용자 이름"
+          value={username}
+          onChangeText={setUsername}
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="이메일"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="비밀번호"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
+        <TextInput
+          style={styles.input}
+          placeholder="비밀번호 확인"
+          value={password2}
+          onChangeText={setPassword2}
+          secureTextEntry
+        />
+        {error ? <Text style={styles.errorText}>{error}</Text> : null}
+        <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
+          <Text style={styles.signupButtonText}>가입하기</Text>
+        </TouchableOpacity>
+        <View style={styles.divider} />
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+          <Text style={styles.backButtonText}>뒤로 가기</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
@@ -164,35 +167,88 @@ export default function Signup() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#FDFDED',
     justifyContent: 'center',
-    padding: 20,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-  },
-  button: {
-    backgroundColor: '#007AFF',
-    padding: 15,
-    borderRadius: 5,
     alignItems: 'center',
   },
-  buttonText: {
-    color: 'white',
-    fontSize: 16,
-    fontWeight: 'bold',
+  signupBox: {
+    width: 261,
+    height: 'auto',
+    backgroundColor: '#FFFFFF',
+    borderWidth: 1,
+    borderColor: '#000000',
+    borderRadius: 20,
+    padding: 20,
+    alignItems: 'center',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 4,
+      height: 4,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  title: {
+    fontFamily: 'Pretendard',
+    fontWeight: '600',
+    fontSize: 20,
+    color: '#353535',
+    marginBottom: 20,
+  },
+  input: {
+    width: 216,
+    height: 34,
+    borderWidth: 1,
+    borderColor: '#000000',
+    borderRadius: 50,
+    marginBottom: 10,
+    paddingLeft: 10,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 1,
+      height: 1,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 1,
+    elevation: 2,
   },
   errorText: {
     color: 'red',
     marginBottom: 10,
+    fontSize: 12,
+  },
+  signupButton: {
+    width: 216,
+    height: 34,
+    backgroundColor: '#6487E5',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 40,
+    marginBottom: 15,
+  },
+  signupButtonText: {
+    color: '#FFFFFF',
+    fontWeight: 'bold',
+  },
+  divider: {
+    width: 217,
+    height: 1,
+    backgroundColor: '#000000',
+    marginVertical: 15,
+  },
+  backButton: {
+    width: 216,
+    height: 34,
+    backgroundColor: '#FFFFFF',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 40,
+    borderWidth: 1,
+    borderColor: 'black',
+  },
+  backButtonText: {
+    color: 'black',
+    fontWeight: 'bold',
   },
 });

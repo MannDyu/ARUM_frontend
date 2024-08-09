@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { View, Text, TextInput, Button, StyleSheet, ScrollView, Image } from 'react-native';
 
 interface RecordDiaryComponentProps {
-  emotion: object;
+  emotion: string;
   tags: string[];
   fixedQuestion: string;
   placeholderQuestion: string;
@@ -11,6 +11,16 @@ interface RecordDiaryComponentProps {
   onNext: () => void;
   onPrev: () => void;
 }
+
+const emotions: { [key: string]: any } = {
+  기쁨: require('../../assets/images/emotion/joy.png'),
+  화남: require('../../assets/images/emotion/mad.png'),
+  슬픔: require('../../assets/images/emotion/sad.png'),
+  즐거움: require('../../assets/images/emotion/playful.png'),
+  사랑: require('../../assets/images/emotion/love.png'),
+  미움: require('../../assets/images/emotion/dislike.png'),
+  바람: require('../../assets/images/emotion/want.png'),
+};
 
 const RecordDiaryComponent: React.FC<RecordDiaryComponentProps> = ({ emotion, tags, fixedQuestion, placeholderQuestion, answer, onAnswerChange, onNext, onPrev }) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -26,7 +36,7 @@ const RecordDiaryComponent: React.FC<RecordDiaryComponentProps> = ({ emotion, ta
   return (
     <ScrollView contentContainerStyle={styles.container}>
       {/* <Text style={styles.emoji}>{emoji}</Text> */}
-      <Image source={emotion} style={styles.emoji} />
+      <Image source={emotions[emotion]} style={styles.emoji} />
       <Text style={styles.fixedQuestion}>{fixedQuestion}</Text>
       <View style={styles.tagsContainer}>
         {tags.map((tag, index) => (

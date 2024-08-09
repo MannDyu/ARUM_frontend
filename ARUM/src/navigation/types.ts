@@ -36,7 +36,14 @@ export type RootStackParamList = {
     }
   };
   CompletedMission: undefined;
-  CompletedMissionRecord: { selectedArea?: string };
+  CompletedMissionRecord: { 
+    selectedArea?: string;
+    questData?: {
+      id: number;
+      qs_theme: string;
+      qs_content: string;
+    } | null;
+  };
   CompletedMissionDetail: { missionId: string };
   EditCompletedMission: { missionId: string };
   SelectSection: undefined;
@@ -49,7 +56,7 @@ export type RootStackParamList = {
       id: number;
       qs_theme: string;
       qs_content: string;
-    }
+    };
   };
   
 
@@ -74,6 +81,7 @@ export type RootStackParamList = {
   };
   // RecordDiary: { date?: string; editMode?: boolean; diaryId?: string };
   DiaryThumbnail: { diaryId?: string };
+  Diary: undefined;
   DiaryDetail: { 
     diaryId?: string;
     emoji: any;
@@ -141,4 +149,11 @@ export interface ImageUploaderProps {
 export interface QuestionProps {
   onPressNext: () => void;
   isLastQuestion: boolean;
+}
+
+export interface QuestData {
+  id: number;
+  qs_theme: string;
+  qs_content: string;
+  //
 }

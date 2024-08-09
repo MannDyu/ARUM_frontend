@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,82 +8,46 @@ import {
   Modal,
   SafeAreaView,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { RootStackParamList } from '../../navigation/types';
 import CenterItem from './CenterItem';
 import Header from '../../components/Header';
-
-type FindCenterScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'FindCenter'
->;
-
-// Sample data
-const centerData = [
-  {
-    name: '상담센터 A',
-    address: '서울특별시 강남구 테헤란로 123',
-    phone: '02-123-4567',
-  },
-  {
-    name: '상담센터 B',
-    address: '서울특별시 서초구 강남대로 456',
-    phone: '02-987-6543',
-  },
-  // Additional data...
-];
-
-const regions = [
-  '서울',
-  '경기',
-  '인천',
-  '대전',
-  '세종',
-  '충청',
-  '대구',
-  '경상',
-  '울산',
-  '부산',
-  '광주',
-  '전라',
-  '강원',
-  '제주',
-];
-
-const districts: { [key: string]: string[] } = {
-  서울: ['송파구', '강서구', '강남구', '중랑구', '마포구'],
-  경기: ['구리시', '수원시'],
-  인천: ['남동구', '연수구', '계양구'],
-  대전: ['동구', '중구', '서구'],
-  세종: ['금남면', '대평동', '부강면'],
-  충청: ['청주시', '천안시', '아산시'],
-  대구: ['중구', '동구', '서구'],
-  경상: ['포항시', '경주시', '김천시'],
-  울산: ['중구', '남구', '동구'],
-  부산: ['해운대구', '부산진구', '남구'],
-  광주: ['동구', '서구', '남구'],
-  전라: ['목포시', '순천시', '여수시'],
-  강원: ['춘천시', '원주시', '강릉시'],
-  제주: ['제주시', '서귀포시'],
-  // More regions and districts...
-};
+import axios from 'axios';
+import {API_URL} from '../../api_url'
 
 
+
+interface CenterData {
+  hp_name: string;
+  hp_address: string;
+  hp_phone: string;
+}
+
+type FindCenterNavigationProp = StackNavigationProp<RootStackParamList, 'FindCenter'>;
 
 export default function FindCenter() {
-  const navigation = useNavigation<FindCenterScreenNavigationProp>();
+  // const navigation = useNavigation<FindCenterScreenNavigationProp>();
+  const navigation = useNavigation<FindCenterNavigationProp>();
   const [modalVisible, setModalVisible] = useState(false);
-  const [selectedRegion, setSelectedRegion] = useState<string | null>(null);
+  const [selectedCity, setSelectedCity] = useState<string | null>(null);
   const [selectedDistricts, setSelectedDistricts] = useState<string[]>([]);
+  const [districts, setDistricts] = useState<string[]>([]);
+  const [centers, setCenters] = useState<CenterData[]>([]);
 
   const toggleModal = () => {
     setModalVisible(!modalVisible);
   };
 
-  const selectRegion = (region: string) => {
-    setSelectedRegion(region);
+  const selectCity = async (city: string) => {
+    setSelectedCity(city);
     setSelectedDistricts([]);
+    try {
+      const response = await axios.post(`${API_URL}/selfTest/getDistrict`, { city });
+      setDistricts(response.data.districts);
+    } catch (error) {
+      console.error('Error fetching districts:', error);
+    }
   };
 
   const selectDistrict = (district: string) => {
@@ -94,15 +58,39 @@ export default function FindCenter() {
     }
   };
 
-  const applySelection = () => {
+  const applySelection = async () => {
     toggleModal();
-    console.log('Selected region:', selectedRegion);
-    console.log('Selected districts:', selectedDistricts);
+    if (selectedCity && selectedDistricts.length > 0) {
+      try {
+        const response = await axios.post<CenterData[]>(`${API_URL}/selfTest/getCenterInfo`, {
+          city: selectedCity,
+          district1: selectedDistricts[0],
+          district2: selectedDistricts[1] || '',
+          district3: selectedDistricts[2] || '',
+        });
+        setCenters(response.data);
+      } catch (error) {
+        console.error('Error fetching centers:', error);
+      }
+    }
   };
 
   const handleBackPress = () => {
-    navigation.navigate('Home', { username:'Guest' }); //수정 필요
+    navigation.navigate('HomeMain');
   };
+
+  useEffect(() => {
+    // 초기 센터 정보 로드 (서울 강남구)
+    const fetchInitialCenters = async () => {
+      try {
+        const response = await axios.get<CenterData[]>(`${API_URL}/selfTest/getCenterInfo`);
+        setCenters(response.data);
+      } catch (error) {
+        console.error('Error fetching initial centers:', error);
+      }
+    };
+    fetchInitialCenters();
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -133,15 +121,15 @@ export default function FindCenter() {
         </TouchableOpacity>
       </View>
       <ScrollView contentContainerStyle={styles.centerList}>
-          {centerData.map((center, index) => (
-            <CenterItem
-              key={index}
-              name={center.name}
-              address={center.address}
-              phone={center.phone}
-            />
-          ))}
-        </ScrollView>
+        {centers.map((center, index) => (
+          <CenterItem
+            key={index}
+            name={center.hp_name}
+            address={center.hp_address}
+            phone={center.hp_phone}
+          />
+        ))}
+      </ScrollView>
 
       {/* Region Selection Modal */}
       <Modal
@@ -170,55 +158,49 @@ export default function FindCenter() {
           <View style={styles.modalContent}>
             <View style={styles.regionDistrictContainer}>
               <ScrollView style={styles.regionList}>
-                {regions.map((region, index) => (
+                {['서울', '경기', '인천', '대전', '세종', '충청', '대구', '경상', '울산', '부산', '광주', '전라', '강원', '제주'].map((city, index) => (
                   <TouchableOpacity
                     key={index}
                     style={[
                       styles.regionItem,
-                      selectedRegion === region && styles.selectedRegionItem,
+                      selectedCity === city && styles.selectedRegionItem,
                     ]}
-                    onPress={() => selectRegion(region)}
+                    onPress={() => selectCity(city)}
                   >
                     <Text
                       style={[
                         styles.regionItemText,
-                        selectedRegion === region && styles.selectedRegionItemText,
+                        selectedCity === city && styles.selectedRegionItemText,
                       ]}
                     >
-                      {region}
+                      {city}
                     </Text>
                   </TouchableOpacity>
                 ))}
               </ScrollView>
               <ScrollView style={styles.districtList}>
-                {selectedRegion && districts[selectedRegion] ? (
-                  districts[selectedRegion].map((district, index) => (
-                    <TouchableOpacity
-                      key={index}
+                {districts.map((district, index) => (
+                  <TouchableOpacity
+                    key={index}
+                    style={[
+                      styles.districtItem,
+                      selectedDistricts.includes(district) && styles.selectedDistrictItem,
+                    ]}
+                    onPress={() => selectDistrict(district)}
+                  >
+                    <Text
                       style={[
-                        styles.districtItem,
-                        selectedDistricts.includes(district) && styles.selectedDistrictItem,
+                        styles.districtItemText,
+                        selectedDistricts.includes(district) && styles.selectedDistrictItemText,
                       ]}
-                      onPress={() => selectDistrict(district)}
                     >
-                      <Text
-                        style={[
-                          styles.districtItemText,
-                          selectedDistricts.includes(district) && styles.selectedDistrictItemText,
-                        ]}
-                      >
-                        {district}
-                      </Text>
-                    </TouchableOpacity>
-                  ))
-                ) : (
-                  <Text style={styles.noDistrictsText}>해당 지역에 등록된 구가 없습니다.</Text>
-                )}
+                      {district}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
               </ScrollView>
             </View>
           </View>
-          
-          
           
           <View style={styles.modalFooter}>
             <TouchableOpacity style={styles.cancelButton} onPress={toggleModal}>
@@ -233,7 +215,6 @@ export default function FindCenter() {
     </SafeAreaView>
   );
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -259,6 +240,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   subtitle: {
+    paddingLeft:20,
+    paddingRight:20,
     fontSize: 16,
     color: '#333',
   },
@@ -295,7 +278,9 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   centerList: {
+    paddingLeft:20,
     paddingBottom: 20,
+    paddingRight: 20
   },
   modalContainer: {
     flex: 1,

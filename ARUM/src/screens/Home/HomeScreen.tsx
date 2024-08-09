@@ -8,7 +8,7 @@ type HomeScreenNavigationProp = NavigationProp<'HomeMain'>;
 const HomeScreen = () => {
   const navigation = useNavigation<HomeScreenNavigationProp>();
 
-  const navigateToDiary = () => navigation.navigate('DiaryMain');
+  const navigateToDiary = () => navigation.navigate('Diary');
   
   const navigateToMission = (params: RootStackParamList['MissionMain']) => navigation.navigate('MissionMain', params); 
   
@@ -119,4 +119,3 @@ const styles = StyleSheet.create({
 });
 
 export default HomeScreen;
-

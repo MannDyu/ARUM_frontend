@@ -9,15 +9,15 @@ import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { API_URL } from '../../api_url';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const emotions = [
-  require('../../assets/images/emotion/joy.png'),
-  require('../../assets/images/emotion/mad.png'),
-  require('../../assets/images/emotion/sad.png'),
-  require('../../assets/images/emotion/playful.png'),
-  require('../../assets/images/emotion/love.png'),
-  require('../../assets/images/emotion/dislike.png'),
-  require('../../assets/images/emotion/want.png'),
-];
+const emotions: { [key: string]: any } = {
+  기쁨: require('../../assets/images/emotion/joy.png'),
+  화남: require('../../assets/images/emotion/mad.png'),
+  슬픔: require('../../assets/images/emotion/sad.png'),
+  즐거움: require('../../assets/images/emotion/playful.png'),
+  사랑: require('../../assets/images/emotion/love.png'),
+  미움: require('../../assets/images/emotion/dislike.png'),
+  바람: require('../../assets/images/emotion/want.png'),
+};
 
 type RecordDiaryProps = StackScreenProps<RootStackParamList, 'RecordDiary'>;
 
@@ -47,10 +47,11 @@ const RecordDiary: React.FC<RecordDiaryProps> = () => {
   const tag1 = JSON.stringify(incompleteData?.tag1);
   const tag2 = JSON.stringify(incompleteData?.tag2);
   const tag3 = JSON.stringify(incompleteData?.tag3);
+  const tags = [tag1, tag2, tag3];
 
   const [diaryData, setDiaryData] = useState({
-    feel: incompleteData?.feel || '',
-    emotion: emotion || '',
+    feel: feel || '',
+    emotion: emotion || {},
     tag1: tag1 || '',
     tag2: tag2 || '',
     tag3: tag3 || '',
@@ -60,7 +61,7 @@ const RecordDiary: React.FC<RecordDiaryProps> = () => {
   });
 
   // const handleEmotionSelected = () => {
-  //   setDiaryData(prevData => ({ //! 여기가 prevData가 아니라 emotion은 그대로인데 새로운 데이터를 받아들여야하는거 아닌가?
+  //   setDiaryData(prevData => ({
   //     ...prevData,
   //     emotion: emotion || '',
   //     tag1: tag1 || '',
@@ -68,16 +69,6 @@ const RecordDiary: React.FC<RecordDiaryProps> = () => {
   //     tag3: tag3 || '',
   //   }));
   // };
-
-  const handleEmotionSelected = () => {
-    setDiaryData(prevData => ({
-      ...prevData,
-      emotion: emotion || '',
-      tag1: tag1 || '',
-      tag2: tag2 || '',
-      tag3: tag3 || '',
-    }));
-  };
 
   const getToken = async () => {
     try {
@@ -92,7 +83,10 @@ const RecordDiary: React.FC<RecordDiaryProps> = () => {
   const handleSubmit = async () => {
     try {
       const userToken = await getToken();
-      if (!userToken) console.error(`Token not found`);
+      if (!userToken) {
+        console.error(`Token not found`);
+        return
+      }
 
       console.log(`diaryData: ${JSON.stringify(diaryData)}`);
       console.log(`Token: ${userToken}`);
@@ -136,7 +130,6 @@ const RecordDiary: React.FC<RecordDiaryProps> = () => {
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-      handleEmotionSelected(emotion, selectedTags, selectedEmotionIndex);
     } else {
       navigation.navigate('DiaryThumbnail', { diaryId: 'some-diary-id' }); //! 썸네일로 정보 전송
     }
@@ -167,8 +160,9 @@ const RecordDiary: React.FC<RecordDiaryProps> = () => {
     <View style={styles.container}>
       <Header title="오늘의 일기" onBack={() => navigation.goBack()} />
       <RecordDiaryComponent
-        emotion={incompleteData?.emotion}
-        tags={selectedTags.map(tag => `#${tag}`)}  // selectedTags를 해시태그로 변환하여 전달
+        emotion={emotions[emotion]}
+        // tags={selectedTags.map(tag => `#${tag}`)}  // selectedTags를 해시태그로 변환하여 전달
+        tags={tags.map(tag => `#${tag}`)}
         fixedQuestion={questions[currentQuestionIndex].fixedQuestion}
         placeholderQuestion={questions[currentQuestionIndex].placeholderQuestion}
         answer={answers[currentQuestionIndex]}
