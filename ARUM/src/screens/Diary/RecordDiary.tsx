@@ -27,30 +27,55 @@ const RecordDiary: React.FC<RecordDiaryProps> = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState<string[]>(['', '', '']);
 
-  // selectedEmotionIndex와 selectedTags 가져오기
-  // const selectedEmotionIndex = route.params?.selectedEmotionIndex ?? 0;
-  const selectedEmotionIndex = (route.params as { selectedEmotionIndex?: number }).selectedEmotionIndex ?? 0;
-  // const selectedTags = route.params?.selectedTags ?? [];
-  const selectedTags = (route.params as { selectedTags?: string[] }).selectedTags ?? [];
+  // const selectedEmotionIndex = (route.params as { selectedEmotionIndex?: number }).selectedEmotionIndex ?? 0;
+  // const selectedTags = (route.params as { selectedTags?: string[] }).selectedTags ?? [];
+
+  const {incompleteData } = (route.params as {
+    selectedEmotionIndex?: number;
+    selectedTags?: string[];
+    incompleteData?: {
+      feel: string;
+      emotion: string;
+      tag1: string;
+      tag2: string;
+      tag3: string;
+    };
+  }) || {};
+
+  const feel = JSON.stringify(incompleteData?.feel);
+  const emotion = JSON.stringify(incompleteData?.emotion);
+  const tag1 = JSON.stringify(incompleteData?.tag1);
+  const tag2 = JSON.stringify(incompleteData?.tag2);
+  const tag3 = JSON.stringify(incompleteData?.tag3);
 
   const [diaryData, setDiaryData] = useState({
-    feel: '',
-    emotion: '',
-    tag1: '',
-    tag2: '',
-    tag3: '',
+    feel: incompleteData?.feel || '',
+    emotion: emotion || '',
+    tag1: tag1 || '',
+    tag2: tag2 || '',
+    tag3: tag3 || '',
     content1: '',
     content2: '',
     content3: '',
   });
 
-  const handleEmotionSelected = (emotion: string | null, tags: string[], emotionIndex: number) => {
+  // const handleEmotionSelected = () => {
+  //   setDiaryData(prevData => ({ //! 여기가 prevData가 아니라 emotion은 그대로인데 새로운 데이터를 받아들여야하는거 아닌가?
+  //     ...prevData,
+  //     emotion: emotion || '',
+  //     tag1: tag1 || '',
+  //     tag2: tag2 || '',
+  //     tag3: tag3 || '',
+  //   }));
+  // };
+
+  const handleEmotionSelected = () => {
     setDiaryData(prevData => ({
       ...prevData,
       emotion: emotion || '',
-      tag1: tags[0] || '',
-      tag2: tags[1] || '',
-      tag3: tags[2] || '',
+      tag1: tag1 || '',
+      tag2: tag2 || '',
+      tag3: tag3 || '',
     }));
   };
 
@@ -111,7 +136,7 @@ const RecordDiary: React.FC<RecordDiaryProps> = () => {
   const handleNext = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
-      handleEmotionSelected(emotionNames[selectedEmotionIndex], selectedTags, selectedEmotionIndex);
+      handleEmotionSelected(emotion, selectedTags, selectedEmotionIndex);
     } else {
       navigation.navigate('DiaryThumbnail', { diaryId: 'some-diary-id' }); //! 썸네일로 정보 전송
     }
@@ -142,7 +167,7 @@ const RecordDiary: React.FC<RecordDiaryProps> = () => {
     <View style={styles.container}>
       <Header title="오늘의 일기" onBack={() => navigation.goBack()} />
       <RecordDiaryComponent
-        emotion={emotions[selectedEmotionIndex]}
+        emotion={incompleteData?.emotion}
         tags={selectedTags.map(tag => `#${tag}`)}  // selectedTags를 해시태그로 변환하여 전달
         fixedQuestion={questions[currentQuestionIndex].fixedQuestion}
         placeholderQuestion={questions[currentQuestionIndex].placeholderQuestion}

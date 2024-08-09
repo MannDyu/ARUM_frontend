@@ -127,13 +127,16 @@ export default function Diary() {
     setBottomSheetVisible(false);
   };
 
-  const onNextPress = () => {
+  let incompleteData: object;
 
+  const onNextPress = () => {
     if (selected !== -1) {
+      console.log('incompleteData: ', incompleteData);
       navigation.navigate('RecordDiary', {
-        selectedEmotion: titles[selected],
-        selectedTags: selectedTags,
-        selectedEmotionIndex: selected,
+        incompleteData: incompleteData,
+        // selectedEmotion: titles[selected],
+        // selectedTags: selectedTags,
+        // selectedEmotionIndex: selected,
       });
     }
   };
@@ -146,7 +149,6 @@ export default function Diary() {
     }, [])
   );
 
-  let incompleteData;
 
   return (
     <View style={{ backgroundColor: '#FDFDED' }}>
