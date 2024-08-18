@@ -26,13 +26,23 @@ export type CompletedMission = {
 };
 
 export type MissionStackParamList = {
-  Mission: { selectedArea?: string; completedMissionId?: string; missionStatus?: 'select' | 'finish' | 'completed' | 'success' };
+  Mission: {
+    selectedArea?: string;
+    completedMissionId?: string;
+    missionStatus?: 'select' | 'finish' | 'completed' | 'success';
+    questData: {
+      id: number;
+      qs_theme: string;
+      qs_content: string;
+    }
+  };
   CompletedMission: undefined;
   CompletedMissionRecord: { selectedArea?: string };
   CompletedMissionDetail: { missionId: string };
   EditCompletedMission: { missionId: string };
   SelectSection: undefined;
   DailyMission: { 
+    responseData: any; //! 추가 
     selectedArea?: string;
     missionStatus: 'select' | 'finish' | 'completed' | 'success';
     onMissionComplete: () => void;
@@ -48,10 +58,11 @@ export type MissionStackParamList = {
 export type MissionStackScreenProps<T extends keyof MissionStackParamList> = 
   StackScreenProps<MissionStackParamList, T>;
 
-  export interface CompletedMissionRecordProps {
-    navigation: StackNavigationProp<MissionStackParamList, 'CompletedMissionRecord'>;
-    route: RouteProp<MissionStackParamList, 'CompletedMissionRecord'>;
-  }
+export interface CompletedMissionRecordProps {
+  navigation: StackNavigationProp<MissionStackParamList, 'CompletedMissionRecord'>;
+  route: RouteProp<MissionStackParamList, 'CompletedMissionRecord'>;
+}
+
 export interface CompletedMissionDetailProps {
   route: RouteProp<MissionStackParamList, 'CompletedMissionDetail'>;
   navigation: StackNavigationProp<MissionStackParamList, 'CompletedMissionDetail'>;

@@ -62,7 +62,7 @@ const SelectSection = () => {
       if (!userToken) console.error(`Token not found`);
 
       console.log(selectedArea);
-      const response = await fetch(`${API_URL}/quest/randomQuest`, {
+      const response = await fetch(`${API_URL}/quest/randomQuest`, { //! 선택 영역 보내기
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -74,8 +74,9 @@ const SelectSection = () => {
       });
       if (!response.ok) throw new Error('Network response was not ok.');
       const responseData = await response.json();
-      console.log(`response data: ${JSON.stringify(responseData.data)}`)
-      navigation.navigate('DailyMission', { questData: responseData, missionStatus: 'finish' })
+      console.log(`response data: ${JSON.stringify(responseData.data)}`); //! response Data 출력
+      // navigation.navigate('DailyMission', { questData: responseData, missionStatus: 'finish' })
+      navigation.navigate('DailyMission', responseData); //! response Data 전송
     } catch (error) {
       console.error('Error handleQuest', error);
     }

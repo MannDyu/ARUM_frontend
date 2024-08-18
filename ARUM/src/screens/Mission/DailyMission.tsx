@@ -1,69 +1,97 @@
+import styled from "styled-components/native";
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
-import styled from 'styled-components/native';
 import { Button } from 'react-native-elements';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { MissionStackParamList } from '../../assets/MissionTypes';
-import { StackNavigationProp } from '@react-navigation/stack';
 import { API_URL } from '../../api_url';
+import { StackNavigationProp } from '@react-navigation/stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+import { RootStackParamList, RootStackScreenProps } from '../../navigation/types'; 
 
 type DailyMissionRouteProp = RouteProp<MissionStackParamList, 'DailyMission'>;
-type DailyMissionProps = {
-  route: DailyMissionRouteProp;
-  navigation: StackNavigationProp<MissionStackParamList, 'DailyMission'>;
-};
+type DailyMissionProps = {};
+type IconContentType = 'none' | 'dy' | 'ex' | 'hb' | 'me' | 'cl';
 
-const DailyMission: React.FC<DailyMissionProps> = ({ route, navigation }) => {
-  const { selectedArea, questData, missionStatus, onMissionComplete, onMissionSuccess } = route.params;
+const DailyMission: React.FC<DailyMissionProps> = () => {
+  const navigation = useNavigation<RootStackScreenProps<'DailyMission'>['navigation']>();
+  const route = useRoute<RouteProp<MissionStackParamList, 'DailyMission'>>();
+  const { responseData } = route.params;
+
+  //! 필요한 데이터 추출
+  const questData = responseData.qs_content;
+  const selectedArea = responseData.qs_theme;
+
   const [currentQuest, setCurrentQuest] = useState(questData);
-  
-  type IconContentType = 'none' | 'dy' | 'ex' | 'hb' | 'me' | 'cl';
+  const [missionStatus, setMissionStatus] = useState<'select' | 'finish' | 'success'>('select'); // 상태로 관리
 
   useEffect(() => {
-    if (missionStatus === 'select') {
-      fetchRandomQuest();
-    }
-  }, [missionStatus]);
+    handleMissionStatus(); // 컴포넌트가 처음 렌더링될 때 미션 상태를 가져옴
+  }, []);
 
-
-  const fetchRandomQuest = async () => {
+  const getToken = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
-      console.log('Current token:', token);
-      if (!token) {
-        throw new Error('User token not found.');
-      }
-      const response = await axios.post(`${API_URL}/quest/questPerform`,
-        { qs_theme: selectedArea },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      setCurrentQuest(response.data);
+      return token;
     } catch (error) {
-      console.error('Error fetching random quest:', error);
-      Alert.alert('Error', 'Failed to fetch a random quest. Please try again.');
+      console.error('Error retrieving token');
+      return null;
     }
   };
 
-  const handleMissionNavigate = () => {
-    if (missionStatus === 'select') {
-      navigation.navigate('SelectSection');
-    } else if (missionStatus === 'finish') {
-      // handleMissionComplete();
-      navigation.navigate('CompletedMissionRecord', { 
-        selectedArea, 
-        questData: currentQuest 
+  const handleMissionStatus = async () => {
+    try {
+      const userToken = await getToken();
+      if (!userToken) {
+        console.error(`Token not found`);
+        return;
+      }
+
+      const response = await fetch(`${API_URL}/quest/checkQuestCreatePerformToday`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${userToken}`,
+        }
       });
-    } else if (missionStatus === 'success') {
-      onMissionSuccess();
+      if (!response.ok) throw new Error('Network response was not ok.');
+      const responseData = await response.json();
+      console.log(`response data: ${JSON.stringify(responseData.data)}`);
+
+      const newMissionStatus = !responseData.quest_created_today ? "select" : responseData.qs_perform_yn ? "success" : "finish";
+      console.log(`missionStatus: ${newMissionStatus}`);
+      setMissionStatus(newMissionStatus); // 상태 업데이트
+    } catch (error) {
+      console.error('Error handleMissionStatus', error);
     }
   };
-  
-  
+
+  const handleMissionNavigate = async () => {
+    try {
+      switch (missionStatus) {
+        case 'select':
+          setMissionStatus('finish');
+          navigation.navigate('SelectSection');
+          break;
+        case 'finish':
+          setMissionStatus('success');
+          navigation.navigate('CompletedMissionRecord', { selectedArea, questData: currentQuest });
+          break;
+        case 'success':
+          // 성공 상태일 때의 로직
+          break;
+        default:
+          // 기타 처리
+          break;
+      }
+    } catch (error) {
+      console.error('Error navigating based on mission status', error);
+    }
+  };
+
   const date = new Date();
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const currentDate = `${year}.${month}.${day}`;
+  const currentDate = `${date.getFullYear()}.${date.getMonth() + 1}.${date.getDate()}`;
 
   const iconContent: Record<IconContentType, string> = {
     none: '?',
@@ -72,11 +100,7 @@ const DailyMission: React.FC<DailyMissionProps> = ({ route, navigation }) => {
     hb: '🎨',
     me: '👤',
     cl: '🧹',
-  }; // 선택된 영역: none, daily, exercise, hobby, me, tidy
-  
-  console.log('미션 버튼 상태', missionStatus)
-  
-  
+  };
 
   return (
     <>
@@ -84,38 +108,38 @@ const DailyMission: React.FC<DailyMissionProps> = ({ route, navigation }) => {
       <MissionContainer>
         <Text style={{ marginTop: -10, }}>{currentDate}</Text>
         <Text style={styles.missionText}>일일 랜덤미션</Text>
-        {/* 며칠째 랜덤미션 수행? 데이터 수신 */}
         <MissionSelectContainer>
           <Icon>
             <Text style={styles.missionText}>{iconContent[selectedArea as IconContentType] || '?'}</Text>
           </Icon>
           <View>
             {missionStatus === "finish" ?
-              //! 미션 텍스트 SelectSection에서 받아오기!!
-              //! quest data 중 qs_content만 보여줘야됨
               <Text style={[styles.missionText, { margin: 15 }]}>{questData?.qs_content}</Text> :
               <MissionTextContainer>
                 <Text style={styles.missionText}>{`오늘은\n어떤 미션을 해볼까요?`}</Text>
               </MissionTextContainer>}
           </View>
           <Button
-            title={missionStatus === 'select' ? "미션 선택" : missionStatus === 'finish' ? "미션 완료" : missionStatus === 'success' ? "미션 성공" : "완료됨"}
+            title={
+              missionStatus === 'select' 
+              ? "미션 선택" 
+              : missionStatus === 'finish' 
+              ? "미션 완료" 
+              : missionStatus === 'success' 
+              ? "미션 성공" 
+              : "완료됨"
+            }
             buttonStyle={{ borderRadius: 10, borderWidth: 1, borderColor: 'black' }}
             containerStyle={{ width: 250 }}
             onPress={handleMissionNavigate}
-            disabled={missionStatus === 'completed'}
+            disabled={missionStatus === 'success'}
             titleStyle={{ fontSize: 22 }}
           />
         </MissionSelectContainer>
       </MissionContainer>
     </>
-  )
-}
-
-
-import { RootStackParamList, RootStackScreenProps } from '../../navigation/types'; 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
+  );
+};
 
 const MissionContainer = styled.View`
   display: flex;

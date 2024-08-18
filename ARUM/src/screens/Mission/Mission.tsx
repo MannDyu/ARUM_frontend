@@ -9,7 +9,8 @@ import { API_URL } from '../../api_url';
 import axios from 'axios';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { MissionStackParamList } from '../../assets/MissionTypes';
-type MissionScreenNavigationProp = StackNavigationProp<MissionStackParamList, 'MissionMain'>;
+
+type MissionScreenNavigationProp = StackNavigationProp<MissionStackParamList, 'Mission'>;
 
 type MissionProps = RootStackScreenProps<'MissionMain'>;
 
@@ -23,7 +24,7 @@ const getToken = async () => {
   }
 };
 
-export default function Mission({ route, navigation, questData }: MissionProps) {
+export default function Mission({ route, navigation}: MissionProps) {
   const [selectedButton, setSelectedButton] = useState<'left' | 'right'>('left');
   const [missionStatus, setMissionStatus] = useState<'select' | 'finish' | 'completed' | 'success'>('select');
   const [selectedArea, setSelectedArea] = useState<string | undefined>(undefined);
@@ -52,7 +53,10 @@ export default function Mission({ route, navigation, questData }: MissionProps) 
     try {
       const token = await getToken();
       const response = await axios.get(`${API_URL}/quest/checkQuestCreatePerformToday`, {
-        headers: { Authorization: `Bearer ${token}` }
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Token ${token}`,
+        }
       });
       setIsQuestCreated(response.data.quest_created_today);
       setIsQuestPerformed(response.data.qs_perform_yn);
@@ -80,17 +84,16 @@ export default function Mission({ route, navigation, questData }: MissionProps) 
     setSelectedButton(button);
   };
 
-
   const handleMissionComplete = async () => {
     try {
       const token = await getToken();
       await axios.put(`${API_URL}/quest/questPerform`, {
-        qs_perform_content: 'Mission completed', // You might want to pass this from DailyMission component
+        qs_perform_content: '수행완료', // You might want to pass this from DailyMission component
         // qs_perform_image: imageFile, // If you have an image to upload
       }, {
         headers: { 
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'multipart/form-data',
+          'Authorization': `Token ${token}`
         }
       });
       setIsQuestPerformed(true);
@@ -138,20 +141,7 @@ export default function Mission({ route, navigation, questData }: MissionProps) 
       />
       {selectedButton === 'left' ? 
         <>
-          <DailyMission
-            navigation={navigation as NavigationProp<'DailyMission'>}
-            route={{
-              params: {
-                selectedArea,
-                missionStatus,
-                onMissionComplete: handleMissionComplete,
-                onMissionSuccess: handleMissionSuccess,
-                questData: questData,
-              },
-              key: '',
-              name: 'DailyMission'
-            }}
-          />
+          <DailyMission />
           {renderCharacterImage()}
         </> : 
         <CompletedMission />
