@@ -76,7 +76,7 @@ const SelectSection = () => {
       const responseData = await response.json();
       console.log(`response data: ${JSON.stringify(responseData.data)}`); //! response Data 출력
       // navigation.navigate('DailyMission', { questData: responseData, missionStatus: 'finish' })
-      navigation.navigate('DailyMission', responseData); //! response Data 전송
+      navigation.navigate('DailyMission', { responseData: responseData }); //! response Data 전송
     } catch (error) {
       console.error('Error handleQuest', error);
     }

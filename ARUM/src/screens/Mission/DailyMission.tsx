@@ -1,14 +1,13 @@
 import styled from "styled-components/native";
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { View, Text, StyleSheet, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 import { useNavigation, useRoute, RouteProp } from '@react-navigation/native';
 import { MissionStackParamList } from '../../assets/MissionTypes';
 import { API_URL } from '../../api_url';
-import { StackNavigationProp } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
-import { RootStackParamList, RootStackScreenProps } from '../../navigation/types'; 
+import { RootStackParamList, RootStackScreenProps } from '../../navigation/types';
 
 type DailyMissionRouteProp = RouteProp<MissionStackParamList, 'DailyMission'>;
 type DailyMissionProps = {};

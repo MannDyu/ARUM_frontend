@@ -143,6 +143,7 @@ export default function MyPage() {
         <Icon name="close-circle-outline" size={24} color="white" style={styles.adIcon} />
         <Text style={styles.adTitle}>광고 제거 상품</Text>
         <Text style={styles.adDescription}>어루만짐을 광고 없이 편하게 이용할 수 있어요!</Text>
+        <Text style={styles.adWarning}>아직 개발 중이에요!</Text>
         <Icon name="chevron-forward-outline" size={24} color="white" style={styles.adArrow} />
       </TouchableOpacity>
     </View>
@@ -228,17 +229,26 @@ const styles = StyleSheet.create({
   adIcon: {
     position: 'absolute',
     top: 10,
-    left: 10,
+    left: 15,
   },
   adTitle: {
     color: 'white',
     fontSize: 20,
     fontWeight: 'bold',
     marginBottom: 5,
+    marginTop: 20,
   },
   adDescription: {
     color: 'white',
     fontSize: 14,
+  },
+  adWarning:{
+    color: 'white',
+    fontWeight: '600',
+    fontSize: 16,
+    padding: 10,
+    paddingBottom: 0,
+    textAlign: 'center',
   },
   adArrow: {
     position: 'absolute',

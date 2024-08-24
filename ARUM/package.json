@@ -28,8 +28,8 @@
     "expo-navigation-bar": "~3.0.7",
     "expo-status-bar": "~1.12.1",
     "ngrok": "^5.0.0-beta.2",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-native": "0.74.3",
     "react-native-calendars": "^1.1305.0",
     "react-native-config": "^1.5.3",
@@ -54,5 +54,4 @@
     "typescript": "~5.3.3"
   },
   "private": true
-  
 }

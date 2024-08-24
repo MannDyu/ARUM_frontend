@@ -40,18 +40,20 @@ export type MissionStackParamList = {
   CompletedMissionRecord: { selectedArea?: string };
   CompletedMissionDetail: { missionId: string };
   EditCompletedMission: { missionId: string };
-  SelectSection: undefined;
+  SelectSection: {
+    responseData: any; //! 추가 
+  };
   DailyMission: { 
     responseData: any; //! 추가 
-    selectedArea?: string;
-    missionStatus: 'select' | 'finish' | 'completed' | 'success';
-    onMissionComplete: () => void;
-    onMissionSuccess: () => void;
-    questData: {
-      id: number;
-      qs_theme: string;
-      qs_content: string;
-    }
+  //   selectedArea?: string;
+  //   missionStatus: 'select' | 'finish' | 'completed' | 'success';
+  //   onMissionComplete: () => void;
+  //   onMissionSuccess: () => void;
+  //   questData: {
+  //     id: number;
+  //     qs_theme: string;
+  //     qs_content: string;
+  //   }
   };
 };
 

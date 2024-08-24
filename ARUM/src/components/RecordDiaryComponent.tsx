@@ -13,13 +13,13 @@ interface RecordDiaryComponentProps {
 }
 
 const emotions: { [key: string]: any } = {
-  기쁨: require('../../assets/images/emotion/joy.png'),
-  화남: require('../../assets/images/emotion/mad.png'),
-  슬픔: require('../../assets/images/emotion/sad.png'),
-  즐거움: require('../../assets/images/emotion/playful.png'),
-  사랑: require('../../assets/images/emotion/love.png'),
-  미움: require('../../assets/images/emotion/dislike.png'),
-  바람: require('../../assets/images/emotion/want.png'),
+  기쁨: require('../assets/images/emotion/joy.png'),
+  화남: require('../assets/images/emotion/mad.png'),
+  슬픔: require('../assets/images/emotion/sad.png'),
+  즐거움: require('../assets/images/emotion/playful.png'),
+  사랑: require('../assets/images/emotion/love.png'),
+  미움: require('../assets/images/emotion/dislike.png'),
+  바람: require('../assets/images/emotion/want.png'),
 };
 
 const RecordDiaryComponent: React.FC<RecordDiaryComponentProps> = ({ emotion, tags, fixedQuestion, placeholderQuestion, answer, onAnswerChange, onNext, onPrev }) => {
