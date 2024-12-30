@@ -11,8 +11,6 @@ npm install -g yarn
 ```sh
 npm install -g expo-cli
 ```
-- Android Studio (Android 개발용)
-- Xcode (iOS 개발용, macOS에서만 필요)
 
 ## 프로젝트 클론 방법
 ```sh
